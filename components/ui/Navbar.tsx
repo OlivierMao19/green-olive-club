@@ -5,9 +5,16 @@ import Image from 'next/image';
 import { LogOut } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Button from "@/components/ui/customButton";
+import NavLink from "@/components/NavLink";
 
 const Navbar = async () => {
     const session = await auth();
+    const navLinks = [
+        { href: "/about", text: "About Us" },
+        { href: "/events", text: "Event Calendar" },
+        { href: "/executives", text: "Executives" },
+        { href: "/contact", text: "Contact Us" },
+    ];
     return (
         <header className="px-15 py-3 bg-white shadow-sm font-work-sans">
             <nav className="flex justify-between items-center">
@@ -16,18 +23,9 @@ const Navbar = async () => {
                         <Image src="/logo.png" alt="Logo" width={50} height={50} />
                     </Link>
 
-                    <Link href="/about">
-                        <span className="cursor-pointer">About Us</span>
-                    </Link>
-                    <Link href="/events">
-                        <span className="cursor-pointer">Event Calendar</span>
-                    </Link>
-                    <Link href="/executives">
-                        <span className="cursor-pointer">Executives</span>
-                    </Link>
-                    <Link href="/contact">
-                        <span className="cursor-pointer">Contact Us</span>
-                    </Link>
+                    {navLinks.map((link, index) => (
+                        <NavLink key={index} href={link.href}>{link.text}</NavLink>)
+                    )}
                 </div>
                 <div className="flex items-center gap-5 text-black">
                     {session && session?.user ? (
