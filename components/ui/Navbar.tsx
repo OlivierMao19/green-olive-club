@@ -16,16 +16,16 @@ const Navbar = async () => {
                         <Image src="/logo.png" alt="Logo" width={50} height={50} />
                     </Link>
 
-                    <Link href="/login">
+                    <Link href="/about">
                         <span className="cursor-pointer">About Us</span>
                     </Link>
-                    <Link href="/login">
+                    <Link href="/events">
                         <span className="cursor-pointer">Event Calendar</span>
                     </Link>
-                    <Link href="/login">
+                    <Link href="/executives">
                         <span className="cursor-pointer">Executives</span>
                     </Link>
-                    <Link href="/login">
+                    <Link href="/contact">
                         <span className="cursor-pointer">Contact Us</span>
                     </Link>
                 </div>
