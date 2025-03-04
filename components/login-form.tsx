@@ -27,7 +27,7 @@ export function LoginForm({
         <CardContent>
           <div className="grid gap-6">
             <div className="flex flex-col gap-4">
-              <form action={async () => { "use server"; await signIn("github"); }}>
+              <form action={async () => { "use server"; await signIn("github", { redirectTo: "/" }); }}>
                 <Button variant="outline" className="w-full" type="submit">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                     <path
@@ -39,7 +39,7 @@ export function LoginForm({
                 </Button>
               </form>
 
-              <form action={async () => { "use server"; await signIn("google"); }}>
+              <form action={async () => { "use server"; await signIn("google", { redirectTo: "/" }); }}>
                 <Button variant="outline" className="w-full" type="submit">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                     <path
