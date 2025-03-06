@@ -58,18 +58,29 @@ export function LoginForm({
               </span>
             </div>
             <div className="grid gap-6">
-              <div className="grid gap-3">
-                <Label htmlFor="email">Email</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="m@example.com"
-                  required
-                />
-              </div>
-              <Button type="submit" className="w-full">
-                Login
-              </Button>
+
+              <form
+                action={async (formData) => {
+                  "use server"
+                  await signIn("resend", formData, { redirectTo: "/" })
+                }}
+              >
+
+                <div className="grid gap-3">
+                  <Label htmlFor="email">Email</Label>
+                  <Input
+                    id="email"
+                    type="email"
+                    name="email"
+                    placeholder="m@example.com"
+                    required
+                  />
+                  <Button type="submit" className="w-full">
+                    Login
+                  </Button>
+                </div>
+
+              </form>
             </div>
           </div>
         </CardContent>
