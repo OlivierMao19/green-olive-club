@@ -1,14 +1,15 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
-import { Calendar } from "@/components/ui/calendar"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { useToast } from "@/components/ui/use-toast"
-import { useAuth } from "@/lib/auth"
+import { auth } from '@/auth'
 import { ChevronRight, CalendarIcon, Clock, MapPin } from "lucide-react"
 import Link from "next/link"
+import { useSession } from "next-auth/react"
+
 const activities = [
     {
         id: 1,
@@ -56,12 +57,16 @@ const activities = [
         registered: false,
     },
 ]
+
+
 export default function events() {
     // Mock data for activities
     const [date, setDate] = useState<Date | undefined>(new Date())
     const [userActivities, setUserActivities] = useState(activities)
     const { toast } = useToast()
-    const { user } = useAuth()
+    const { data: session } = useSession()
+    const userIsAdmin = session?.user?.isAdmin
+
 
     const formatDate = (date: Date) => {
         return date.toLocaleDateString("en-US", {
@@ -97,7 +102,7 @@ export default function events() {
     }
 
     const handleRegister = (id: number) => {
-        if (!user) {
+        if (!session?.user) {
             toast({
                 title: "Sign in required",
                 description: "Please sign in to register for activities",
@@ -137,24 +142,8 @@ export default function events() {
                 Club Activities
             </h1>
 
-            <div className="grid gap-8 md:grid-cols-3">
-                <div className="md:col-span-1">
+            {/* <div className="md:col-span-1">
                     <div className="sticky top-20 space-y-6">
-                        <Card>
-                            <CardHeader>
-                                <CardTitle>Calendar</CardTitle>
-                                <CardDescription>Select a date to view activities</CardDescription>
-                            </CardHeader>
-                            <CardContent>
-                                <Calendar mode="single" selected={date} onSelect={setDate} className="rounded-md border" />
-                            </CardContent>
-                            <CardFooter>
-                                <Button variant="outline" onClick={() => setDate(new Date())} className="w-full">
-                                    Reset to Today
-                                </Button>
-                            </CardFooter>
-                        </Card>
-
                         <Card>
                             <CardHeader>
                                 <CardTitle>Activity Types</CardTitle>
@@ -178,80 +167,79 @@ export default function events() {
                             </CardContent>
                         </Card>
                     </div>
-                </div>
+                </div> */}
 
-                <div className="md:col-span-2">
-                    <div className="mb-6 flex items-center justify-between">
-                        <h2 className="text-2xl font-bold text-green-700">
-                            {date ? `Activities for ${formatDate(date)}` : "All Upcoming Activities"}
-                        </h2>
-                        {user && user.isAdmin && (
-                            <Button asChild>
-                                <Link href="/activities/create">Create Activity</Link>
-                            </Button>
-                        )}
-                    </div>
-
-                    {filteredActivities.length === 0 ? (
-                        <Card>
-                            <CardContent className="flex flex-col items-center justify-center py-12">
-                                <CalendarIcon className="mb-4 h-12 w-12 text-gray-400" />
-                                <p className="text-center text-lg text-gray-600">No activities scheduled for this date</p>
-                                <Button variant="outline" onClick={() => setDate(undefined)} className="mt-4">
-                                    View All Activities
-                                </Button>
-                            </CardContent>
-                        </Card>
-                    ) : (
-                        <div className="space-y-6">
-                            {filteredActivities.map((activity) => (
-                                <Card key={activity.id}>
-                                    <CardHeader>
-                                        <div className="flex items-start justify-between">
-                                            <div>
-                                                <CardTitle className="text-xl text-green-800">{activity.title}</CardTitle>
-                                                <CardDescription className="mt-1">{activity.description}</CardDescription>
-                                            </div>
-                                            <Badge className={getTypeColor(activity.type)}>
-                                                {activity.type.replace("-", " ").replace(/\b\w/g, (l) => l.toUpperCase())}
-                                            </Badge>
-                                        </div>
-                                    </CardHeader>
-                                    <CardContent>
-                                        <div className="space-y-2">
-                                            <div className="flex items-center text-gray-600">
-                                                <CalendarIcon className="mr-2 h-4 w-4" />
-                                                {formatDate(activity.date)}
-                                            </div>
-                                            <div className="flex items-center text-gray-600">
-                                                <Clock className="mr-2 h-4 w-4" />
-                                                {formatTime(activity.date)}
-                                            </div>
-                                            <div className="flex items-center text-gray-600">
-                                                <MapPin className="mr-2 h-4 w-4" />
-                                                {activity.location}
-                                            </div>
-                                        </div>
-                                    </CardContent>
-                                    <CardFooter className="flex justify-between">
-                                        <Button variant="outline" asChild>
-                                            <Link href={`/activities/${activity.id}`}>
-                                                Details <ChevronRight className="ml-1 h-4 w-4" />
-                                            </Link>
-                                        </Button>
-                                        <Button
-                                            onClick={() => handleRegister(activity.id)}
-                                            variant={activity.registered ? "destructive" : "default"}
-                                            className={activity.registered ? "" : "bg-green-700 hover:bg-green-800"}
-                                        >
-                                            {activity.registered ? "Cancel Registration" : "Register"}
-                                        </Button>
-                                    </CardFooter>
-                                </Card>
-                            ))}
-                        </div>
+            <div className="md:col-span-2">
+                <div className="mb-6 flex items-center justify-between">
+                    <h2 className="text-2xl font-bold text-green-700">
+                        {date ? `Activities for ${formatDate(date)}` : "All Upcoming Activities"}
+                    </h2>
+                    {session?.user && userIsAdmin && (
+                        <Button asChild>
+                            <Link href="/activities/create">Create Activity</Link>
+                        </Button>
                     )}
                 </div>
+
+                {filteredActivities.length === 0 ? (
+                    <Card>
+                        <CardContent className="flex flex-col items-center justify-center py-12">
+                            <CalendarIcon className="mb-4 h-12 w-12 text-gray-400" />
+                            <p className="text-center text-lg text-gray-600">No activities scheduled for this date</p>
+                            <Button variant="outline" onClick={() => setDate(undefined)} className="mt-4">
+                                View All Activities
+                            </Button>
+                        </CardContent>
+                    </Card>
+                ) : (
+                    <div className="space-y-6">
+                        {filteredActivities.map((activity) => (
+                            <Card key={activity.id}>
+                                <CardHeader>
+                                    <div className="flex items-start justify-between">
+                                        <div>
+                                            <CardTitle className="text-xl text-green-800">{activity.title}</CardTitle>
+                                            <CardDescription className="mt-1">{activity.description}</CardDescription>
+                                        </div>
+                                        <Badge className={getTypeColor(activity.type)}>
+                                            {activity.type.replace("-", " ").replace(/\b\w/g, (l) => l.toUpperCase())}
+                                        </Badge>
+                                    </div>
+                                </CardHeader>
+                                <CardContent>
+                                    <div className="space-y-2">
+                                        <div className="flex items-center text-gray-600">
+                                            <CalendarIcon className="mr-2 h-4 w-4" />
+                                            {formatDate(activity.date)}
+                                        </div>
+                                        <div className="flex items-center text-gray-600">
+                                            <Clock className="mr-2 h-4 w-4" />
+                                            {formatTime(activity.date)}
+                                        </div>
+                                        <div className="flex items-center text-gray-600">
+                                            <MapPin className="mr-2 h-4 w-4" />
+                                            {activity.location}
+                                        </div>
+                                    </div>
+                                </CardContent>
+                                <CardFooter className="flex justify-between">
+                                    <Button variant="outline" asChild>
+                                        <Link href={`/activities/${activity.id}`}>
+                                            Details <ChevronRight className="ml-1 h-4 w-4" />
+                                        </Link>
+                                    </Button>
+                                    <Button
+                                        onClick={() => handleRegister(activity.id)}
+                                        variant={activity.registered ? "destructive" : "default"}
+                                        className={activity.registered ? "" : "bg-green-700 hover:bg-green-800"}
+                                    >
+                                        {activity.registered ? "Cancel Registration" : "Register"}
+                                    </Button>
+                                </CardFooter>
+                            </Card>
+                        ))}
+                    </div>
+                )}
             </div>
         </div>
     );
