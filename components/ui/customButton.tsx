@@ -3,28 +3,28 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Button = () => {
-    return (
-        <StyledWrapper>
-            <button>
-                <span>Log In</span>
-            </button>
-        </StyledWrapper>
-    );
+  return (
+    <StyledWrapper>
+      <button>
+        <span>Log In</span>
+      </button>
+    </StyledWrapper>
+  );
 }
 
 const StyledWrapper = styled.div`
   button {
     background: transparent;
     position: relative;
-    padding: 5px 12px;
+    padding: 3px 8px;
     display: flex;
     align-items: center;
-    font-size: 17px;
+    font-size: 14px;
     font-weight: 600;
     text-decoration: none;
     cursor: pointer;
     border: 2px solid rgb(34 197 94);
-    border-radius: 25px;
+    border-radius: 15px;
     outline: none;
     overflow: hidden;
     color: rgb(34 197 94);
@@ -34,7 +34,7 @@ const StyledWrapper = styled.div`
   }
 
   button span {
-    margin: 10px;
+    margin: 5px;
     z-index: 2; /* Keep text above */
   }
 

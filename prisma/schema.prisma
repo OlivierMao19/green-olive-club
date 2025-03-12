@@ -15,13 +15,35 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
+  isAdmin       Boolean         @default(false)
+  events        UserOnEvent[]
   // Optional for WebAuthn support
   Authenticator Authenticator[]
  
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
- 
+
+model Event {
+  id            String          @id @default(cuid())
+  title         String
+  description   String?
+  scheduledAt   DateTime
+  attendees     UserOnEvent[]
+}
+
+model UserOnEvent {
+  id            String          @id @default(cuid())
+  user          User            @relation(fields: [userId], references: [id])
+  userId        String
+  event         Event           @relation(fields: [eventId], references: [id])
+  eventId       String
+
+  createdAt     DateTime        @default(now())
+
+  @@unique([userId, eventId])
+}
+
 model Account {
   userId            String
   type              String

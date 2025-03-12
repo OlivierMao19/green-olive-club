@@ -9,12 +9,18 @@ import NavLink from "@/components/NavLink";
 
 const Navbar = async () => {
     const session = await auth();
+
     const navLinks = [
         { href: "/about", text: "About Us" },
         { href: "/events", text: "Event Calendar" },
         { href: "/executives", text: "Executives" },
         { href: "/contact", text: "Contact Us" },
     ];
+
+    if (session?.user?.isAdmin) {
+        navLinks.push({ href: "/admin", text: "Admin (Create Event)" });
+    }
+
     return (
         <header className="px-15 py-3 bg-white shadow-sm font-work-sans">
             <nav className="flex justify-between items-center">
@@ -22,7 +28,6 @@ const Navbar = async () => {
                     <Link href="/">
                         <Image src="/logo.png" alt="Logo" width={50} height={50} />
                     </Link>
-
                     {navLinks.map((link, index) => (
                         <NavLink key={index} href={link.href}>{link.text}</NavLink>)
                     )}
@@ -33,7 +38,6 @@ const Navbar = async () => {
                             <form
                                 action={async () => {
                                     "use server";
-
                                     await signOut({ redirectTo: "/" });
                                 }}
                             >
@@ -41,7 +45,7 @@ const Navbar = async () => {
                                     <LogOut className="size-6 text-red-500 cursor-pointer" />
                                 </button>
                             </form>
-                            <Link href={`/user/${session?.id}`}>
+                            <Link href={`/user/${session?.user?.id}`}>
                                 <Avatar className="size-10">
                                     <AvatarImage
                                         src={session?.user?.image || ""}
