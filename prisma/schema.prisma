@@ -11,6 +11,7 @@ model User {
   id            String          @id @default(cuid())
   name          String?
   email         String          @unique
+  mcgillId      String?
   emailVerified DateTime?
   image         String?
   accounts      Account[]
@@ -28,6 +29,7 @@ model Event {
   id            String          @id @default(cuid())
   title         String
   description   String?
+  location      String?
   scheduledAt   DateTime
   attendees     UserOnEvent[]
 }
