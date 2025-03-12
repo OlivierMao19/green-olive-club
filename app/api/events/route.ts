@@ -4,12 +4,13 @@ import { NextResponse } from "next/server";
 export async function POST(req: Request) {
 
     try {
-        const { title, description, scheduledAt } = await req.json();
+        const { title, description, location, scheduledAt } = await req.json();
         const parsedDate = new Date(scheduledAt)
         const event = await prisma.event.create({
             data: {
                 title,
                 description,
+                location,
                 scheduledAt: parsedDate,
 
             },

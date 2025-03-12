@@ -11,6 +11,7 @@ export default function CreateEventForm() {
     const [title, setTitle] = useState("")
     const [description, setDescription] = useState("")
     const [dateTime, setDateTime] = useState("")
+    const [location, setLocation] = useState("")
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
@@ -29,16 +30,18 @@ export default function CreateEventForm() {
         console.log({
             title,
             description,
+            location,
             scheduledAt: isoDateTime,
         })
         try {
-            const response = await fetch("api/events", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ title, description, scheduledAt }) })
+            const response = await fetch("api/events", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ title, description, location, scheduledAt }) })
             if (!response.ok) {
                 throw new Error("Failed to create event")
             }
             setTitle("")
             setDescription("")
             setDateTime("")
+            setLocation("")
             alert(`Event created successfully scheduled at: ${dateTime}`)
 
         } catch (error) {
@@ -62,6 +65,19 @@ export default function CreateEventForm() {
                             placeholder="Enter event title"
                             value={title}
                             onChange={(e) => setTitle(e.target.value)}
+                            required
+                            className="w-full"
+                        />
+                    </div>
+                    <div className="space-y-2 mt-3">
+                        <Label htmlFor="location" className="text-base">
+                            Location
+                        </Label>
+                        <Input
+                            id="location"
+                            placeholder="Enter Location"
+                            value={location}
+                            onChange={(e) => setLocation(e.target.value)}
                             required
                             className="w-full"
                         />
