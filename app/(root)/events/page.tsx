@@ -192,18 +192,14 @@ export default function events() {
                                             Details <ChevronRight className="ml-1 h-4 w-4" />
                                         </Link>
                                     </Button>
-                                    <Button
-                                        onClick={() => {
-                                            // TODO: Add your registration logic here
-                                            // This should connect to your backend API
-                                            // Example: await fetch('/api/register', { method: 'POST', body: JSON.stringify({ activityId: activity.id }) })
-                                            alert("Registration functionality coming soon!")
-                                        }}
-                                        variant="default"
-                                        className="bg-green-700 hover:bg-green-800"
-                                    >
-                                        Register
-                                    </Button>
+                                    <Link href={`/events/${activity.id}`}>
+                                        <Button
+                                            variant="default"
+                                            className="bg-green-700 hover:bg-green-800"
+                                        >
+                                            Register
+                                        </Button>
+                                    </Link>
                                 </CardFooter>
                             </Card>
                         ))}
