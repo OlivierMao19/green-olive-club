@@ -2,9 +2,14 @@ import Image from "next/image";
 import Head from "next/head";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { CalendarDays, Users, BookOpen } from "lucide-react"
+import { CalendarDays, Users, BookOpen } from "lucide-react";
+import toast, { Toaster } from "react-hot-toast";
+import { auth } from "@/auth";
+import HomeRegisterButton from "@/components/HomeRegisterButton";
 
-export default function Home() {
+export default async function Home() {
+  const session = await auth();
+  const user = session?.user;
 
   return (
     <div className="min-h-screen bg-lime-100">
@@ -15,14 +20,20 @@ export default function Home() {
       </Head>
       <div className="flex flex-col justify-between ">
         {/* Main */}
+        <Toaster />
         <section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-b from-green-100 to-white min-h-screen bg-lime-100">
           <div className="container mx-auto px-4 py-2">
             <main className="flex flex-col md:flex-row items-center justify-between mt-2 mb-24">
               <div className="md:w-1/2 mb-8 md:mb-0">
                 <p className="text-gray-600 italic mb-2">Become a member!</p>
-                <h1 className="text-6xl font-bold text-gray-800 mb-6">Welcome to Our<br />Wonderful Club</h1>
+                <h1 className="text-6xl font-bold text-gray-800 mb-6">
+                  Welcome to Our
+                  <br />
+                  Wonderful Club
+                </h1>
                 <p className="text-gray-700 text-xl mb-8">
-                  YEYEYYEYEYEYEYEY!<br />
+                  YEYEYYEYEYEYEYEY!
+                  <br />
                   YEYEYEYEYYEYEYEYYEE
                 </p>
                 <Link href="/events">
@@ -34,11 +45,7 @@ export default function Home() {
 
               <div className="w-full md:w-1/3 mr:w-1/3 ml:w-1/10">
                 <div className="border-8 border-white rounded-lg shadow-lg transform rotate-355">
-                  <img
-                    src="/logo.png"
-                    alt="Logo"
-                    className="w-full"
-                  />
+                  <img src="/logo.png" alt="Logo" className="w-full" />
                 </div>
               </div>
             </main>
@@ -53,9 +60,12 @@ export default function Home() {
               <div className="flex h-16 w-16 items-center justify-center rounded-full bg-green-100">
                 <BookOpen className="h-8 w-8 text-green-700" />
               </div>
-              <h3 className="text-xl font-bold text-green-800">Bible Studies</h3>
+              <h3 className="text-xl font-bold text-green-800">
+                Bible Studies
+              </h3>
               <p className="text-gray-600">
-                Weekly Bible studies in both English and Chinese to deepen our understanding of God's word.
+                Weekly Bible studies in both English and Chinese to deepen our
+                understanding of God's word.
               </p>
             </div>
             <div className="flex flex-col items-center space-y-4 text-center">
@@ -64,7 +74,8 @@ export default function Home() {
               </div>
               <h3 className="text-xl font-bold text-green-800">Fellowship</h3>
               <p className="text-gray-600">
-                Regular social events, meals, and activities to build meaningful relationships.
+                Regular social events, meals, and activities to build meaningful
+                relationships.
               </p>
             </div>
             <div className="flex flex-col items-center space-y-4 text-center">
@@ -73,7 +84,8 @@ export default function Home() {
               </div>
               <h3 className="text-xl font-bold text-green-800">Events</h3>
               <p className="text-gray-600">
-                Special events throughout the year including retreats, holiday celebrations, and service projects.
+                Special events throughout the year including retreats, holiday
+                celebrations, and service projects.
               </p>
             </div>
           </div>
@@ -84,14 +96,18 @@ export default function Home() {
         <section className="w-full py-12 md:py-24 lg:py-32 bg-green-50">
           {/* <div className="container px-4 md:px-6"> */}
           <div className="flex flex-col items-center space-y-4 text-center px-4 md:px-6">
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl text-green-800">About Our Club</h2>
+            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl text-green-800">
+              About Our Club
+            </h2>
             <p className="max-w-[700px] text-gray-600 md:text-xl">
-              The Green Olive Chinese Christian Club was founded to provide a spiritual home for Chinese Christians and
-              those interested in learning about Christianity. Our name symbolizes peace, growth, and the nurturing of
-              faith.
+              The Green Olive Chinese Christian Club was founded to provide a
+              spiritual home for Chinese Christians and those interested in
+              learning about Christianity. Our name symbolizes peace, growth,
+              and the nurturing of faith.
             </p>
             <p className="max-w-[700px] text-gray-600 md:text-xl">
-              We welcome people of all backgrounds to join our community as we learn, worship, and serve together.
+              We welcome people of all backgrounds to join our community as we
+              learn, worship, and serve together.
             </p>
             <Button asChild variant="outline" className="mt-4">
               <Link href="/about">Learn More About Us</Link>
@@ -103,9 +119,12 @@ export default function Home() {
         <section className="w-full py-12 md:py-24 lg:py-32">
           {/* <div className="container px-4 md:px-6"> */}
           <div className="flex flex-col items-center space-y-4 text-center px-4 md:px-6">
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl text-green-800">Upcoming Event</h2>
+            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl text-green-800">
+              Upcoming Event
+            </h2>
             <p className="max-w-[700px] text-gray-600 md:text-xl">
-              Join us for our next event to connect with others, grow in faith, and have fun!
+              Join us for our next event to connect with others, grow in faith,
+              and have fun!
             </p>
             <Button asChild variant="outline" className="mt-4">
               <Link href="/events">View Event Calendar</Link>
@@ -117,18 +136,18 @@ export default function Home() {
         <section className="w-full py-12 md:py-24 lg:py-32 bg-green-50">
           {/* <div className="container px-4 md:px-6"> */}
           <div className="flex flex-col items-center space-y-4 text-center px-4 md:px-6">
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl text-green-800">Join Our Community</h2>
+            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl text-green-800">
+              Join Our Community
+            </h2>
             <p className="max-w-[700px] text-gray-600 md:text-xl">
-              Become a member to participate in activities, receive updates, and connect with other members.
+              Become a member to participate in activities, receive updates, and
+              connect with other members.
             </p>
-            <Button asChild size="lg" className="bg-green-700 hover:bg-green-800">
-              <Link href="/register">Register Now</Link>
-            </Button>
+            <HomeRegisterButton isLoggedIn={!!user} />
           </div>
           {/* </div> */}
         </section>
       </div>
-
     </div>
   );
 }
