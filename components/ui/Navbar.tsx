@@ -52,7 +52,7 @@ const Navbar = async () => {
                                     <LogOut className="size-6 text-red-500 cursor-pointer" />
                                 </button>
                             </form>
-                            <Link href={`/user/${session?.user?.id}`} className="hidden md:block">
+                            <Link href='/profile' className="hidden md:block">
                                 <Avatar className="size-10">
                                     <AvatarImage src={session?.user?.image || ""} alt={session?.user?.name || ""} />
                                     <AvatarFallback>AV</AvatarFallback>
