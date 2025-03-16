@@ -6,8 +6,8 @@ import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-//import { useToast } from "@/hooks/use-toast"
 import { User, Mail, IdCard } from "lucide-react"
+import toast, { Toaster } from "react-hot-toast";
 
 interface ProfileFormProps {
     initialData: {
@@ -58,7 +58,7 @@ export default function ProfileForm({ initialData, onSubmitSuccess }: ProfileFor
                 title: "Profile updated",
                 description: "Your profile information has been successfully updated.",
             })*/
-            alert("Success!")
+            toast.success("Successfully Updated!")
 
             if (onSubmitSuccess) {
                 onSubmitSuccess()
@@ -73,7 +73,7 @@ export default function ProfileForm({ initialData, onSubmitSuccess }: ProfileFor
     }
 
     return (
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <><Toaster /><form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-2">
                 <Label htmlFor="name" className="flex items-center gap-2">
                     <User className="h-4 w-4 text-green-700" />
@@ -87,14 +87,12 @@ export default function ProfileForm({ initialData, onSubmitSuccess }: ProfileFor
                     placeholder="Your full name"
                     required
                     onBlur={(e) => {
-                        e.target.value = e.target.value.trim();
+                        e.target.value = e.target.value.trim()
                         setFormData(prev => ({
                             ...prev,
                             name: e.target.value
-                        }));
-                    }}
-
-                />
+                        }))
+                    }} />
             </div>
 
             <div className="space-y-2">
@@ -111,13 +109,12 @@ export default function ProfileForm({ initialData, onSubmitSuccess }: ProfileFor
                     placeholder="Your email address"
                     required
                     onBlur={(e) => {
-                        e.target.value = e.target.value.trim();
+                        e.target.value = e.target.value.trim()
                         setFormData(prev => ({
                             ...prev,
                             email: e.target.value
-                        }));
-                    }}
-                />
+                        }))
+                    }} />
             </div>
 
             <div className="space-y-2">
@@ -134,21 +131,20 @@ export default function ProfileForm({ initialData, onSubmitSuccess }: ProfileFor
                     placeholder="Your mcgill ID"
                     required
                     onBlur={(e) => {
-                        e.target.value = e.target.value.trim();
+                        e.target.value = e.target.value.trim()
                         setFormData(prev => ({
                             ...prev,
                             mcgillId: e.target.value
-                        }));
-                    }}
-                />
+                        }))
+                    }} />
             </div>
 
             <div className="flex justify-end">
-                <Button type="submit" disabled={isLoading} className="bg-green-700 hover:bg-green-800">
+                <Button type="submit" disabled={isLoading} className="bg-green-700 hover:bg-green-800 cursor-pointer">
                     {isLoading ? "Saving..." : "Save Profile"}
                 </Button>
             </div>
-        </form>
+        </form></>
     )
 }
 

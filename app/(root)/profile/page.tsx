@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import ProfileForm from "./profile-form"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { IdCard, Mail, User } from "lucide-react"
+import { IdCard, LoaderIcon, Mail, User } from "lucide-react"
 
 export default function ProfilePage() {
     const [profileData, setProfileData] = useState({
@@ -37,7 +37,9 @@ export default function ProfilePage() {
     }, [refreshTrigger]);
 
     if (loading) {
-        return <div className="container mx-auto px-2 py-6 text-center">Loading profile...</div>;
+        return <div className="flex justify-center items-center w-full py-24">
+            <LoaderIcon className="animate-spin h-16 w-16 text-green-700" />
+        </div>
     }
 
 

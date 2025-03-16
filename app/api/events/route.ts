@@ -12,7 +12,6 @@ export async function POST(req: Request) {
                 description,
                 location,
                 scheduledAt: parsedDate,
-
             },
         })
         return NextResponse.json({ message: "Event created", event }, { status: 201 });

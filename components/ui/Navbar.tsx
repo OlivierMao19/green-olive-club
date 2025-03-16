@@ -1,11 +1,11 @@
-import { signOut, auth } from "@/auth"
-import Link from "next/link"
-import Image from "next/image"
-import { LogOut } from "lucide-react"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import Button from "@/components/ui/customButton"
-import NavLink from "@/components/NavLink"
-import MobileMenu from "@/components/ui/MobileMenu"
+import { signOut, auth } from "@/auth";
+import Link from "next/link";
+import Image from "next/image";
+import { LogOut } from "lucide-react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import Button from "@/components/ui/customButton";
+import NavLink from "@/components/NavLink";
+import MobileMenu from "@/components/ui/MobileMenu";
 
 const Navbar = async () => {
     const session = await auth()
@@ -73,5 +73,4 @@ const Navbar = async () => {
     )
 }
 
-export default Navbar
-
+export default Navbar;
