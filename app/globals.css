@@ -132,3 +132,21 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer components {
+  .executive-card {
+    @apply relative overflow-hidden rounded-lg bg-white p-6 shadow-md transition-all duration-300;
+  }
+
+  .executive-card:hover {
+    @apply shadow-xl transform -translate-y-1;
+  }
+
+  .executive-image {
+    @apply rounded-lg object-cover transition-all duration-500;
+  }
+
+  .executive-card:hover .executive-image {
+    @apply scale-105;
+  }
+}

@@ -6,8 +6,11 @@ export default function about() {
     <div className="relative flex flex-col">
       <section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-b from-green-400 via-green-100 to-white">
         <div className="container px-8 py-4 mx-auto">
-          <h1 className="text-5xl flex justify-center p-1 mt-5">
-            About Us - Green Olive Chinese Christian Club
+          <h1 className="text-5xl flex justify-center p-1 mt-5 text-center font-bold">
+            About Us
+          </h1>
+          <h1 className="text-4xl flex justify-center p-1 text-center font-bold">
+            Green Olive Chinese Christian Club
           </h1>
           <div className="flex justify-center mt-8">
             <img
