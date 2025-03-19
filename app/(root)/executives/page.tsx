@@ -28,7 +28,7 @@ const executivesList: ExecutiveInfo[] = [
   {
     id: 2,
     name: "Hao Yuan Lu",
-    role: "Internal Vice President",
+    role: "External Vice President",
     email: "haoyuan.lu@mail.mcgill.ca",
     phone: "514-533-1234",
     imagePath: undefined,
@@ -37,7 +37,7 @@ const executivesList: ExecutiveInfo[] = [
   {
     id: 3,
     name: "Lynne",
-    role: "External Vice President",
+    role: "Internal Vice President",
     email: "lynne@mail.mcgill.ca",
     phone: "543-123-1234",
     imagePath: "logo.png",
@@ -106,7 +106,7 @@ export default function executives() {
 
   return (
     <div className="bg-emerald-100 min-h-[100dvh]">
-      <div className="items-center p-2 flex flex-col px-3">
+      <div className="items-center p-2 flex flex-col px-5">
         <div className="container mb-10 md:w-[700px] justify-items-center">
           <div className="text-5xl py-6 font-bold text-center md:mt-5">
             Meet Our Executive Team
@@ -117,7 +117,7 @@ export default function executives() {
           </h1>
         </div>
         <motion.div
-          className="grid w-full gap-6 grid-cols-[repeat(auto-fit,minmax(230px,1fr))]"
+          className="grid w-full gap-6 grid-cols-[repeat(auto-fit,minmax(250px,1fr))]"
           initial="hidden"
           animate="visible"
           variants={containerVariants}
@@ -125,7 +125,7 @@ export default function executives() {
           {executivesList.map((executive, index) => (
             <motion.div
               key={executive.id}
-              className="executive-card group [perspective:1000px]"
+              className="executive-card group [perspective:1000px] overflow-hidden"
               variants={itemVariants}
               whileHover={{ y: -5 }}
               onClick={() => setSelectedExecutive(executive)}
