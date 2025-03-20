@@ -2,14 +2,47 @@ import Image from "next/image";
 import Head from "next/head";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { CalendarDays, Users, BookOpen } from "lucide-react";
-import toast, { Toaster } from "react-hot-toast";
+import {
+  CalendarDays,
+  Users,
+  BookOpen,
+  Phone,
+  Mail,
+  ContactRound,
+  MapPin,
+} from "lucide-react";
+import { Toaster } from "react-hot-toast";
 import { auth } from "@/auth";
 import HomeRegisterButton from "@/components/HomeRegisterButton";
+import CustomHomeButton from "@/components/CustomHomeButton";
+import AnimatedImageCarousel from "@/components/AnimatedImageCarousel";
 
 export default async function Home() {
   const session = await auth();
   const user = session?.user;
+
+  const carouselImages = [
+    {
+      src: "IMG_1.jpg",
+      alt: "Club Image 1",
+    },
+    {
+      src: "IMG_2.jpg",
+      alt: "Club Image 2",
+    },
+    {
+      src: "IMG_3.jpg",
+      alt: "Club Image 3",
+    },
+    {
+      src: "IMG_4.jpg",
+      alt: "Club Image 4",
+    },
+    {
+      src: "IMG_5.jpg",
+      alt: "Club Image 5",
+    },
+  ];
 
   return (
     <div className="min-h-screen bg-lime-100">
@@ -23,8 +56,8 @@ export default async function Home() {
         <Toaster />
         <section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-b from-green-100 to-white min-h-screen bg-lime-100">
           <div className="container mx-auto px-4 py-2">
-            <main className="flex flex-col md:flex-row items-center justify-between mt-2 mb-24">
-              <div className="md:w-1/2 mb-8 md:mb-0">
+            <main className="grid lg:grid-cols-2 gap-12 items-center mt-2 mb-24">
+              <div className="md:w-2/3 mb-8 md:mb-0">
                 <p className="text-gray-600 italic mb-2">Become a member!</p>
                 <h1 className="text-6xl font-bold text-gray-800 mb-6">
                   Welcome to Our
@@ -36,28 +69,25 @@ export default async function Home() {
                   <br />
                   YEYEYEYEYYEYEYEYYEE
                 </p>
-                <Link href="/events">
-                  <button className="bg-gray-800 mb-32 text-white py-4 px-8 flex items-center hover:bg-gray-600">
-                    Register to activities! <span className="ml-2">→</span>
-                  </button>
-                </Link>
-              </div>
-
-              <div className="w-full md:w-1/3 mr:w-1/3 ml:w-1/10">
-                <div className="border-8 border-white rounded-lg shadow-lg transform rotate-355">
-                  <img src="/logo.png" alt="Logo" className="w-full" />
+                <div>
+                  <CustomHomeButton
+                    link="/events"
+                    text="Register to activities!    →"
+                  />
                 </div>
               </div>
+
+              <AnimatedImageCarousel images={carouselImages} interval={8000} />
             </main>
           </div>
         </section>
 
         {/* Features Section */}
-        <section className="w-full py-12 md:py-24 lg:py-32">
+        <section className="w-full py-12 md:py-24 lg:py-32 bg-emerald-100">
           {/*<div className="w-full flex flex-row container px-0 md:px-0 justify-center">*/}
           <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3 px-4 md:px-6">
             <div className="flex flex-col items-center space-y-4 text-center">
-              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-green-100">
+              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-green-50">
                 <BookOpen className="h-8 w-8 text-green-700" />
               </div>
               <h3 className="text-xl font-bold text-green-800">
@@ -69,7 +99,7 @@ export default async function Home() {
               </p>
             </div>
             <div className="flex flex-col items-center space-y-4 text-center">
-              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-green-100">
+              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-green-50">
                 <Users className="h-8 w-8 text-green-700" />
               </div>
               <h3 className="text-xl font-bold text-green-800">Fellowship</h3>
@@ -79,7 +109,7 @@ export default async function Home() {
               </p>
             </div>
             <div className="flex flex-col items-center space-y-4 text-center">
-              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-green-100">
+              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-green-50">
                 <CalendarDays className="h-8 w-8 text-green-700" />
               </div>
               <h3 className="text-xl font-bold text-green-800">Events</h3>
@@ -116,7 +146,7 @@ export default async function Home() {
           {/* </div> */}
         </section>
         {/* Upcoming event */}
-        <section className="w-full py-12 md:py-24 lg:py-32">
+        <section className="w-full py-12 md:py-24 lg:py-32 bg-emerald-100">
           {/* <div className="container px-4 md:px-6"> */}
           <div className="flex flex-col items-center space-y-4 text-center px-4 md:px-6">
             <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl text-green-800">
@@ -146,6 +176,49 @@ export default async function Home() {
             <HomeRegisterButton isLoggedIn={!!user} />
           </div>
           {/* </div> */}
+        </section>
+        {/* Contact Us */}
+        <section className="w-full py-12 md:pt-20 bg-emerald-100 text-center items-center">
+          <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl text-green-800 mb-10">
+            Contact Us
+          </h1>
+          <div className="grid grid-cols-2 md:grid-cols-4 px-6 md:px-10">
+            <div className="flex flex-col text-center items-center">
+              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-green-50 ">
+                <Mail className="h-8 w-8 text-green-700" />
+              </div>
+              <div className="text-md font-semibold pt-2.5 pb-7 px-2 ">
+                goccc@gmail.com
+              </div>
+            </div>
+            <div className="flex flex-col text-center items-center">
+              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-green-50 ">
+                <Phone className="h-8 w-8 text-green-700" />
+              </div>
+              <div className="text-md font-semibold pt-2.5 pb-7 px-2">
+                234-123-1234
+              </div>
+            </div>
+            <div className="flex flex-col text-center items-center">
+              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-green-50 ">
+                <MapPin className="h-8 w-8 text-green-700" />
+              </div>
+              <div className="text-md font-semibold pt-2.5 pb-7 px-2">
+                845 Sherbrooke St W, Montreal, Quebec H3A 0G4
+              </div>
+            </div>
+            <div className="flex flex-col text-center items-center">
+              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-green-50 ">
+                <ContactRound className="h-8 w-8 text-green-700" />
+              </div>
+              <Link
+                href="/executives"
+                className="text-md font-semibold pt-2.5 pb-7 px-2"
+              >
+                See our executives →
+              </Link>
+            </div>
+          </div>
         </section>
       </div>
     </div>

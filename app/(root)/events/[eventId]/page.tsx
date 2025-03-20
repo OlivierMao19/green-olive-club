@@ -1,9 +1,7 @@
 import { auth } from "@/auth";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { prisma } from "@/lib/prisma";
 import { ArrowLeft } from "lucide-react";
-import { redirect } from "next/navigation";
 import Link from "next/link";
 import EventRegistrationButton from "@/components/EventRegistrationButton";
 
