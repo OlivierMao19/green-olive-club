@@ -23,12 +23,24 @@ export default async function Home() {
 
   const carouselImages = [
     {
-      src: "bigLogo.png",
+      src: "IMG_1.jpg",
       alt: "Club Image 1",
     },
     {
-      src: "logo.png",
+      src: "IMG_2.jpg",
       alt: "Club Image 2",
+    },
+    {
+      src: "IMG_3.jpg",
+      alt: "Club Image 3",
+    },
+    {
+      src: "IMG_4.jpg",
+      alt: "Club Image 4",
+    },
+    {
+      src: "IMG_5.jpg",
+      alt: "Club Image 5",
     },
   ];
 

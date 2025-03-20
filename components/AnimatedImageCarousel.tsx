@@ -32,7 +32,15 @@ const AnimatedImageCarousel: React.FC<AnimatedImageCarouselProps> = ({
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.5, delay: 0.2 }}
     >
-      <div className="relative aspect-square max-w-md mx-auto overflow-hidden">
+      <div className="relative aspect-square max-w-md mx-auto">
+        {/* <motion.div
+          className="absolute -bottom-4 -right-4 rounded-lg bg-club-green py-3 px-4 shadow-lg"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5 }}
+        >
+          <p className="text-black font-medium">Join us today!</p>
+        </motion.div> */}
         <AnimatePresence initial={false}>
           <motion.div
             key={currentIndex}
@@ -61,7 +69,8 @@ const AnimatedImageCarousel: React.FC<AnimatedImageCarouselProps> = ({
                 ease: "easeIn",
               },
             }}
-            className="absolute inset-0 rounded-lg bg-white shadow-xl overflow-hidden"
+            className="absolute inset-0 rounded-lg bg-white shadow-2xl overflow-hidden border border-gray-300 border-2 rotate-355"
+            style={{ transformOrigin: "center center" }}
           >
             <motion.img
               src={images[currentIndex].src}
@@ -79,15 +88,6 @@ const AnimatedImageCarousel: React.FC<AnimatedImageCarouselProps> = ({
             />
           </motion.div>
         </AnimatePresence>
-
-        <motion.div
-          className="absolute -bottom-4 -right-4 rounded-lg bg-club-green py-3 px-4 shadow-lg"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5 }}
-        >
-          <p className="text-white font-medium">Join us today!</p>
-        </motion.div>
       </div>
     </motion.div>
   );
