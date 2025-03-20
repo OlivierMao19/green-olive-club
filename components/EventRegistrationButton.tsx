@@ -24,10 +24,11 @@ export default function EventRegistrationButton({
 
   async function handleRegistration() {
     if (!userId) {
-      router.push("/signin");
+      router.push("/login");
+
       return;
     } else if (!hasMcGillId) {
-      router.push("/home");
+      router.push("/profile");
     } else {
       setIsLoading(true);
 
@@ -63,11 +64,10 @@ export default function EventRegistrationButton({
       <Toaster />
       <Button
         variant="default"
-        className={
-          isRegistered
-            ? "bg-red-700 hover:bg-red-800"
-            : "bg-green-700 hover:bg-green-800"
-        }
+        className={`cursor-pointer text-lg ${isRegistered
+          ? "bg-red-700/90 hover:bg-red-800"
+          : "bg-green-700 hover:bg-green-800"
+          }`}
         onClick={handleRegistration}
         disabled={isLoading}
       >
