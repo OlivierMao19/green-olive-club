@@ -105,10 +105,10 @@ export default function executives() {
   }, []);
 
   return (
-    <div className="bg-emerald-100 min-h-[100dvh]">
+    <div className="bg-emerald-100 min-h-[100dvh] text-gray-800">
       <div className="items-center p-2 flex flex-col px-5">
         <div className="container mb-10 md:w-[700px] justify-items-center">
-          <div className="text-5xl py-6 font-bold text-center md:mt-5">
+          <div className="text-5xl py-6 font-bold text-center md:mt-5 ">
             Meet Our Executive Team
           </div>
           <h1 className="text-center text-1xl text-gray-700">

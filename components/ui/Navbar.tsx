@@ -35,7 +35,7 @@ const Navbar = async () => {
                     </Link>
 
                     {/* Desktop Navigation */}
-                    <div className="hidden md:flex items-center gap-10">
+                    <div className="hidden md:flex items-center gap-10 text-gray-800">
                         {navLinks.map((link, index) => (
                             <NavLink key={index} href={link.href}>
                                 {link.text}

@@ -130,6 +130,11 @@
 
   body {
     @apply bg-background text-foreground;
+    font-family: var(--font-inter), sans-serif;
+  }
+
+  .about-heading {
+    font-family: var(--font-playfair-display), serif;
   }
 }
 

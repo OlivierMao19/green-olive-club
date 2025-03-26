@@ -147,7 +147,7 @@ export default function EventsPage({ isAdmin = false }) {
         ) : (
           <div className="space-y-6">
             {filteredEvents.map((activity) => (
-              <Card key={activity.id}>
+              <Card key={activity.id} className="bg-green-50/30 border border-green-100/60 shadow-sm">
                 <CardHeader>
                   <div className="flex items-start justify-between">
                     <div>
@@ -181,7 +181,7 @@ export default function EventsPage({ isAdmin = false }) {
                     </div>
                   </div>
                 </CardContent>
-                <CardFooter className="flex justify-between">
+                <CardFooter className="flex justify-between gap-1">
                   <Button variant="outline" asChild>
                     <Link href={`/events/${activity.id}`}>
                       Details <ChevronRight className="ml-1 h-4 w-4" />

@@ -36,7 +36,7 @@ export default function MobileMenu({ navLinks, session, signOutAction }: MobileM
         ${isOpen ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4 invisible"}
     `}
       >
-        <div className="flex flex-col p-4 space-y-4">
+        <div className="flex flex-col p-4 space-y-4 text-gray-800">
           {navLinks.map((link, index) => (
             <Link
               key={index}

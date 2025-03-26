@@ -45,7 +45,7 @@ export default async function Home() {
   ];
 
   return (
-    <div className="min-h-screen bg-lime-100">
+    <div className="min-h-screen bg-lime-100 text-gray-700">
       <Head>
         <title>Green Olive Chinese Christian Club</title>
         <meta name="description" content="Green Olive Chinese Christian Club" />
