@@ -5,12 +5,16 @@ import { ArrowLeft, Clock, Info, MapPin } from "lucide-react";
 import Link from "next/link";
 import EventRegistrationButton from "@/components/EventRegistrationButton";
 
+
+// Define a wrapper function that matches the expected PageProps constraint
 export default async function EventPage({
-  params,
+  params: paramsPromise
 }: {
-  params: { eventId: string };
+  params: Promise<{ eventId: string }>
 }) {
-  const { eventId } = await Promise.resolve(params);
+  // Await the params
+  const params = await paramsPromise;
+  const { eventId } = params;
   const event = await prisma.event.findUnique({
     where: { id: eventId },
   });
@@ -72,7 +76,7 @@ export default async function EventPage({
             userId={userId}
             eventId={eventId}
             initialRegistrationStatus={isRegistered}
-            hasMcGillId={hasMcGillId}
+            hasMcGillId={!!hasMcGillId}
           />
         </CardContent>
       </Card>

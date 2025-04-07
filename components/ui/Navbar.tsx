@@ -14,7 +14,6 @@ const Navbar = async () => {
         { href: "/about", text: "About Us" },
         { href: "/events", text: "Event Calendar" },
         { href: "/executives", text: "Executives" },
-        { href: "/contact", text: "Contact Us" },
     ]
 
     if (session?.user?.isAdmin) {
