@@ -36,7 +36,7 @@ export default function EventsPage({ isAdmin = false }) {
     registered: boolean;
   }
 
-  const [events, setEvents] = useState<Activity[]>([]);
+  const [, setEvents] = useState<Activity[]>([]);
   const [filteredEvents, setfilteredEvents] = useState<Activity[]>([]);
 
   const [attendeesOpen, setAttendeesOpen] = useState(false);

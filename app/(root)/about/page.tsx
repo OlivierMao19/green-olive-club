@@ -14,8 +14,10 @@ export default function about() {
           </h1>
           <div className="flex justify-center mt-8">
             <Image
-              src="bigLogo.png"
+              src="/bigLogo.png"
               alt="bigLogo"
+              width={300}
+              height={400}
               className="max-w-[300px] md:max-w-[350px] lg:max-w-[400px] z-10"
             />
           </div>

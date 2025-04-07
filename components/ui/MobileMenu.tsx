@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import MobileMenuToggle from "@/components/ui/MobileMenuToggle";
 import NavLink from "@/components/NavLink";
 import { LogOut } from "lucide-react";
+import { Session } from "next-auth";
 
 interface NavLink {
   href: string;
@@ -15,7 +16,7 @@ interface NavLink {
 
 interface MobileMenuProps {
   navLinks: NavLink[];
-  session: any;
+  session: Session | null;
   signOutAction: () => Promise<void>;
 }
 
