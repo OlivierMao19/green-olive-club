@@ -1,6 +1,5 @@
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
-import { auth } from "@/auth";
 
 export async function POST(req: Request) {
   //POST (Register Event)
@@ -33,7 +32,7 @@ export async function POST(req: Request) {
     // Handle registration or unregistration based on action and current status
     if (action === "register" && !existingRegistration) {
       // Register the user
-      const registration = await prisma.userOnEvent.create({
+      await prisma.userOnEvent.create({
         data: {
           user: { connect: { id: userId } },
           event: { connect: { id: eventId } },

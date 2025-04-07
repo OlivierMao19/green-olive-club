@@ -13,11 +13,11 @@ export default function about() {
             Green Olive Chinese Christian Club
           </h1>
           <div className="flex justify-center mt-8">
-            <img
+            <Image
               src="bigLogo.png"
               alt="bigLogo"
               className="max-w-[300px] md:max-w-[350px] lg:max-w-[400px] z-10"
-            ></img>
+            />
           </div>
         </div>
         <p className="text-2xl flex justify-center p-3 italic px-8 about-heading">
@@ -37,8 +37,8 @@ export default function about() {
         <h2 className="mb-4 text-2xl font-bold text-green-700">Our Vision</h2>
         <p className="text-gray-600">
           We envision a community where members are equipped to live out their
-          faith in daily life, support one another through life's challenges,
-          and share God's love with the broader community.
+          faith in daily life, support one another through life&apos;s challenges,
+          and share God&apos;s love with the broader community.
         </p>
 
         <h2 className="mb-4 text-2xl font-bold text-green-700">Our Values</h2>

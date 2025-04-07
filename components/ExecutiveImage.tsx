@@ -1,4 +1,4 @@
-import { Mail, LoaderIcon } from "lucide-react";
+import { LoaderIcon } from "lucide-react";
 
 interface ExecutiveImageProps {
   execName: string;
@@ -9,9 +9,6 @@ interface ExecutiveImageProps {
 }
 
 export default function ExecutiveImage({
-  execName,
-  execRole,
-  execMail,
   execPhotoPath,
   execDescription,
 }: ExecutiveImageProps) {
@@ -22,6 +19,7 @@ export default function ExecutiveImage({
           <div className="flex rounded-lg bg-gray-100 mb-4 overflow-hidden h-full w-full items-center justify-center">
             {execPhotoPath ? (
               <img
+                alt="photo"
                 src={execPhotoPath}
                 className={"executive-imag object-cover w-full"}
               ></img>

@@ -38,7 +38,7 @@ export default function AttendeeTable({ eventId }: AttendeeTableProps) {
           method: "GET",
         });
         const data = await response.json();
-        const eventAttendees = data.map((attendee: any) => ({
+        const eventAttendees = data.map((attendee: { userId: string; user: { email: string; name: string; mcgillId: string }; createdAt: string }) => ({
           id: attendee.userId,
           email: attendee.user.email,
           name: attendee.user.name,

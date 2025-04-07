@@ -48,7 +48,13 @@ export default function EventsPage({ isAdmin = false }) {
         setIsLoading(true);
         const response = await fetch("/api/calendar");
         const data = await response.json();
-        const activities = data.map((event: any) => ({
+        const activities = data.map((event: {
+          id: number;
+          title: string;
+          description: string;
+          location: string;
+          scheduledAt: string;
+        }) => ({
           id: event.id,
           title: event.title,
           description: event.description,

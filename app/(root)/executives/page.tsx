@@ -1,6 +1,6 @@
 "use client";
 
-import { Container, Mail, Phone } from "lucide-react";
+import { Mail, Phone } from "lucide-react";
 import { motion } from "framer-motion";
 import ExecutiveImage from "@/components/ExecutiveImage";
 import { useEffect, useState } from "react";
@@ -96,8 +96,8 @@ const itemVariants = {
   },
 };
 
-export default function executives() {
-  const [selectedExecutive, setSelectedExecutive] =
+export default function Executives() {
+  const [, setSelectedExecutive] =
     useState<ExecutiveInfo | null>(null);
 
   useEffect(() => {
@@ -122,7 +122,7 @@ export default function executives() {
           animate="visible"
           variants={containerVariants}
         >
-          {executivesList.map((executive, index) => (
+          {executivesList.map((executive) => (
             <motion.div
               key={executive.id}
               className="executive-card group [perspective:1000px] overflow-hidden"
