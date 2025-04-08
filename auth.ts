@@ -46,9 +46,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
       return session;
     },
-    async redirect({ url, baseUrl }) {
-      // After email verification, redirect to home page
-      return baseUrl;
-    },
+
   },
 });
