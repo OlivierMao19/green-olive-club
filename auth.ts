@@ -26,7 +26,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     }),
     Resend({
       // If your environment variable is named differently than default
-      from: "no-reply@company.com",
+      from: "no-reply@goccc.ca",
     }),
   ],
   callbacks: {
