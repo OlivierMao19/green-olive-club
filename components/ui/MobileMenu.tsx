@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import MobileMenuToggle from "@/components/ui/MobileMenuToggle";
 import NavLink from "@/components/NavLink";
 import { LogOut } from "lucide-react";
+import { Session } from "next-auth";
 
 interface NavLink {
   href: string;
@@ -15,7 +16,7 @@ interface NavLink {
 
 interface MobileMenuProps {
   navLinks: NavLink[];
-  session: any;
+  session: Session | null;
   signOutAction: () => Promise<void>;
 }
 
@@ -36,7 +37,7 @@ export default function MobileMenu({ navLinks, session, signOutAction }: MobileM
         ${isOpen ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4 invisible"}
     `}
       >
-        <div className="flex flex-col p-4 space-y-4">
+        <div className="flex flex-col p-4 space-y-4 text-gray-800">
           {navLinks.map((link, index) => (
             <Link
               key={index}

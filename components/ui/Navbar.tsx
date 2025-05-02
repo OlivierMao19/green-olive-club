@@ -10,11 +10,11 @@ import MobileMenu from "@/components/ui/MobileMenu";
 const Navbar = async () => {
   const session = await auth();
 
-  const navLinks = [
-    { href: "/about", text: "About Us" },
-    { href: "/events", text: "Event Calendar" },
-    { href: "/executives", text: "Executives" },
-  ];
+    const navLinks = [
+        { href: "/about", text: "About Us" },
+        { href: "/events", text: "Event Calendar" },
+        { href: "/executives", text: "Executives" },
+    ]
 
   if (session?.user?.isAdmin) {
     navLinks.push({ href: "/admin", text: "Admin (Create Event)" });
@@ -34,14 +34,14 @@ const Navbar = async () => {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-10">
-            {navLinks.map((link, index) => (
-              <NavLink key={index} href={link.href}>
-                {link.text}
-              </NavLink>
-            ))}
+          <div className="hidden md:flex items-center gap-10 text-gray-800">
+              {navLinks.map((link, index) => (
+                  <NavLink key={index} href={link.href}>
+                      {link.text}
+                  </NavLink>
+              ))}
           </div>
-        </div>
+      </div>
 
         <div className="flex items-center gap-5 text-black">
           {session && session?.user ? (

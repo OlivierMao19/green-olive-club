@@ -1,16 +1,20 @@
 import { auth } from "@/auth";
 import { Card, CardContent } from "@/components/ui/card";
 import { prisma } from "@/lib/prisma";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Clock, Info, MapPin } from "lucide-react";
 import Link from "next/link";
 import EventRegistrationButton from "@/components/EventRegistrationButton";
 
+
+// Define a wrapper function that matches the expected PageProps constraint
 export default async function EventPage({
-  params,
+  params: paramsPromise
 }: {
-  params: { eventId: string };
+  params: Promise<{ eventId: string }>
 }) {
-  const { eventId } = await Promise.resolve(params);
+  // Await the params
+  const params = await paramsPromise;
+  const { eventId } = params;
   const event = await prisma.event.findUnique({
     where: { id: eventId },
   });
@@ -55,8 +59,8 @@ export default async function EventPage({
 
   return (
     <div className="container mx-auto px-2 py-6 md:px-4 md:w-9/10 sm:w-full mt-6">
-      <Card className="h-[75svh]">
-        <CardContent className="flex flex-col items-between justify-center py-5 space-y-10">
+      <Card className="h-[70svh] bg-green-50/30 border border-green-100/60 shadow-sm">
+        <CardContent className="flex flex-col items-between justify-center py-5 space-y-10 text-gray-700">
           <Link className="" href="/events">
             <div className="flex gap-2">
               <ArrowLeft />
@@ -64,17 +68,15 @@ export default async function EventPage({
             </div>
           </Link>
           <h1 className="text-3xl font-bold">{event!.title}</h1>
-          <p className="text-gray-600 mt-2">Description: </p>
-          <p>{event!.description}</p>
-          <p className="text-gray-500 mt-4">Location: {event!.location}</p>
-          <p className="text-gray-500 mt-4">
-            Scheduled At: {new Date(event!.scheduledAt).toLocaleString()}
-          </p>
+          <div className="flex items-center font-bold"><Info className="mr-1 h-4 w-4" /><p>Description: <span className="font-normal">{event!.description}</span></p></div>
+          <div className="flex items-center font-bold"><MapPin className="mr-1 h-4 w-4" /><p>Location: <span className="font-normal">{event!.location}</span></p></div>
+          <div className="flex items-center font-bold"><Clock className="mr-1 h-4 w-4" /><p>Scheduled At: <span className="font-normal">{new Date(event!.scheduledAt).toLocaleString()}</span></p></div>
+
           <EventRegistrationButton
             userId={userId}
             eventId={eventId}
             initialRegistrationStatus={isRegistered}
-            hasMcGillId={hasMcGillId}
+            hasMcGillId={!!hasMcGillId}
           />
         </CardContent>
       </Card>

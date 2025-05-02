@@ -3,25 +3,27 @@ import Link from "next/link";
 
 export default function about() {
   return (
-    <div className="relative flex flex-col">
-      <section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-b from-green-400 via-green-100 to-white">
+    <div className="relative flex flex-col text-gray-800">
+      <section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-b from-green-200/70 to-white">
         <div className="container px-8 py-4 mx-auto">
-          <h1 className="text-5xl flex justify-center p-1 mt-5 text-center font-bold">
+          <h1 className="text-5xl flex justify-center p-1 mt-5 text-center font-bold about-heading">
             About Us
           </h1>
-          <h1 className="text-4xl flex justify-center p-1 text-center font-bold">
+          <h1 className="text-4xl flex justify-center p-1 text-center about-heading">
             Green Olive Chinese Christian Club
           </h1>
           <div className="flex justify-center mt-8">
-            <img
-              src="bigLogo.png"
+            <Image
+              src="/bigLogo.png"
               alt="bigLogo"
+              width={300}
+              height={400}
               className="max-w-[300px] md:max-w-[350px] lg:max-w-[400px] z-10"
-            ></img>
+            />
           </div>
         </div>
-        <p className="text-2xl flex justify-center p-3 italic px-8">
-          Welcome to Green Olive Chinese Christian Club! 🌿✝️
+        <p className="text-2xl flex justify-center p-3 italic px-8 about-heading">
+          Welcome to Green Olive Chinese Christian Club!
         </p>
       </section>
 
@@ -37,8 +39,8 @@ export default function about() {
         <h2 className="mb-4 text-2xl font-bold text-green-700">Our Vision</h2>
         <p className="text-gray-600">
           We envision a community where members are equipped to live out their
-          faith in daily life, support one another through life's challenges,
-          and share God's love with the broader community.
+          faith in daily life, support one another through life&apos;s challenges,
+          and share God&apos;s love with the broader community.
         </p>
 
         <h2 className="mb-4 text-2xl font-bold text-green-700">Our Values</h2>
@@ -65,7 +67,7 @@ export default function about() {
           Leadership Team
         </h2>
         <div className="grid gap-6 md:grid-cols-2">
-          <div className="rounded-lg bg-green-50 p-6">
+          <div className="rounded-lg bg-green-100/50 p-6 border border-green-100">
             <Link href="/executives">
               <h3 className="mb-2 text-xl font-semibold text-green-800">
                 Iris Liu
@@ -73,7 +75,7 @@ export default function about() {
             </Link>
             <p className="text-gray-600">Club President</p>
           </div>
-          <div className="rounded-lg bg-green-50 p-6">
+          <div className="rounded-lg bg-green-100/50 p-6 border border-green-100">
             <Link href="/executives">
               <h3 className="mb-2 text-xl font-semibold text-green-800">
                 Hao Yuan Lu
@@ -81,7 +83,7 @@ export default function about() {
             </Link>
             <p className="text-gray-600">External Vice President</p>
           </div>
-          <div className="rounded-lg bg-green-50 p-6">
+          <div className="rounded-lg bg-green-100/50 p-6 border border-green-100">
             <Link href="/executives">
               <h3 className="mb-2 text-xl font-semibold text-green-800">
                 Lynne
@@ -89,7 +91,7 @@ export default function about() {
             </Link>
             <p className="text-gray-600">Internal Vice President</p>
           </div>
-          <div className="rounded-lg bg-green-50 p-6">
+          <div className="rounded-lg bg-green-100/50 p-6 border border-green-100">
             <Link href="/executives">
               <h3 className="mb-2 text-xl font-semibold text-green-800">
                 Ewen Gueguen
@@ -97,7 +99,7 @@ export default function about() {
             </Link>
             <p className="text-gray-600">Treasurer</p>
           </div>
-          <div className="rounded-lg bg-green-50 p-6">
+          <div className="rounded-lg bg-green-100/50 p-6 border border-green-100">
             <Link href="/executives">
               <h3 className="mb-2 text-xl font-semibold text-green-800">
                 Enyi Hou
@@ -105,7 +107,7 @@ export default function about() {
             </Link>
             <p className="text-gray-600">Secretary</p>
           </div>
-          <div className="rounded-lg bg-green-50 p-6">
+          <div className="rounded-lg bg-green-100/50 p-6 border border-green-100">
             <Link href="/executives">
               <h3 className="mb-2 text-xl font-semibold text-green-800">
                 See all →

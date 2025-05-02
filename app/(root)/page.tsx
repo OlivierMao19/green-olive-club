@@ -1,4 +1,4 @@
-import Image from "next/image";
+
 import Head from "next/head";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -45,7 +45,7 @@ export default async function Home() {
   ];
 
   return (
-    <div className="min-h-screen bg-lime-100">
+    <div className="min-h-screen bg-lime-100 text-gray-700">
       <Head>
         <title>Green Olive Chinese Christian Club</title>
         <meta name="description" content="Green Olive Chinese Christian Club" />
@@ -94,7 +94,7 @@ export default async function Home() {
               </h3>
               <p className="text-gray-600">
                 Weekly Bible studies in both English and Chinese to deepen our
-                understanding of God's word.
+                understanding of God&apos;s word.
               </p>
             </div>
             <div className="flex flex-col items-center space-y-4 text-center">
