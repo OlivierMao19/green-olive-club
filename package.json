@@ -6,7 +6,8 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "migratedev": "prisma migrate dev"
   },
   "packageManager": "npm@10.5.2",
   "overrides": {

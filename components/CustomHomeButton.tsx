@@ -2,13 +2,16 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { PropsWithChildren } from "react";
 
 interface CustomHomeButtonProp {
   link: string;
-  text: string;
 }
 
-export default function CustomHomeButton({ link, text }: CustomHomeButtonProp) {
+export default function CustomHomeButton({
+  link,
+  children,
+}: PropsWithChildren<CustomHomeButtonProp>) {
   return (
     <Link href={link} className="inline-block">
       <motion.div
@@ -16,7 +19,7 @@ export default function CustomHomeButton({ link, text }: CustomHomeButtonProp) {
         whileHover={{ scale: 1.05 }}
       >
         <button className="text-white rounded-md font-medium flex items-center">
-          {text}
+          {children}
         </button>
       </motion.div>
     </Link>

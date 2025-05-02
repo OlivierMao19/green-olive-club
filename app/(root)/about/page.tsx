@@ -79,7 +79,7 @@ export default function about() {
                 Hao Yuan Lu
               </h3>
             </Link>
-            <p className="text-gray-600">Internal Vice President</p>
+            <p className="text-gray-600">External Vice President</p>
           </div>
           <div className="rounded-lg bg-green-50 p-6">
             <Link href="/executives">
@@ -87,7 +87,7 @@ export default function about() {
                 Lynne
               </h3>
             </Link>
-            <p className="text-gray-600">External Vice President</p>
+            <p className="text-gray-600">Internal Vice President</p>
           </div>
           <div className="rounded-lg bg-green-50 p-6">
             <Link href="/executives">

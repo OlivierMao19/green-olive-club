@@ -59,21 +59,20 @@ export default async function Home() {
             <main className="grid lg:grid-cols-2 gap-12 items-center mt-2 mb-24">
               <div className="md:w-2/3 mb-8 md:mb-0">
                 <p className="text-gray-600 italic mb-2">Become a member!</p>
-                <h1 className="text-6xl font-bold text-gray-800 mb-6">
+                <h1 className="text-5xl md:text-6xl font-bold text-gray-800 mb-6">
                   Welcome to Our
                   <br />
                   Wonderful Club
                 </h1>
                 <p className="text-gray-700 text-xl mb-8">
-                  YEYEYYEYEYEYEYEY!
+                  Register and Join Us
                   <br />
-                  YEYEYEYEYYEYEYEYYEE
+                  on our Next Activity!!
                 </p>
                 <div>
-                  <CustomHomeButton
-                    link="/events"
-                    text="Register to activities!    →"
-                  />
+                  <CustomHomeButton link="/events">
+                    Register to activities! →
+                  </CustomHomeButton>
                 </div>
               </div>
 
