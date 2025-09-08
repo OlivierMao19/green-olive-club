@@ -1,101 +1,206 @@
 import { executivesList } from "@/lib/consts";
+import { Brain, ChevronRight, Dumbbell, Heart, Users } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
 export default function about() {
   return (
-    <div className="relative flex flex-col text-gray-800">
-      <section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-b from-green-200/70 to-white">
-        <div className="container px-8 py-4 mx-auto">
-          <h1 className="text-5xl flex justify-center p-1 mt-5 text-center font-bold about-heading">
-            About Us
-          </h1>
-          <h1 className="text-4xl flex justify-center p-1 text-center about-heading">
-            Green Olive Chinese Christian Club
-          </h1>
-          <div className="flex justify-center mt-8">
-            <Image
-              src="/bigLogo.png"
-              alt="bigLogo"
-              width={300}
-              height={400}
-              className="max-w-[300px] md:max-w-[350px] lg:max-w-[400px] z-10"
-            />
+    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-green-50">
+      {/* Hero Section */}
+      <section className="relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-emerald-100/60 to-green-100/40"></div>
+        <div className="relative max-w-6xl mx-auto px-6 py-20">
+          <div className="text-center space-y-8">
+            <div className="space-y-4">
+              <h1 className="text-6xl md:text-7xl font-bold bg-gradient-to-r from-emerald-700 via-green-600 to-emerald-800 bg-clip-text text-transparent leading-tight">
+                About Us
+              </h1>
+              <h2 className="text-2xl md:text-3xl font-semibold text-emerald-800 tracking-wide">
+                Green Olive Chinese Christian Club
+              </h2>
+            </div>
+
+            <div className="flex justify-center py-8">
+              <div className="relative">
+                <Image
+                  src="/bigLogo.png"
+                  alt="bigLogo"
+                  width={400}
+                  height={500}
+                  className="max-w-[300px] md:max-w-[350px] lg:max-w-[400px] z-10"
+                />
+              </div>
+            </div>
+
+            <p className="text-xl md:text-2xl text-emerald-700 font-medium italic max-w-2xl mx-auto leading-relaxed">
+              Welcome to Green Olive Chinese Christian Club!
+            </p>
           </div>
         </div>
-        <p className="text-2xl flex justify-center p-3 italic px-8 about-heading">
-          Welcome to Green Olive Chinese Christian Club!
-        </p>
       </section>
 
-      <section className="space-y-8 px-8 md:px-12">
-        <h2 className="mb-4 text-2xl font-bold text-green-700">Our Mission</h2>
-        <p className="text-gray-600">
-          The Green Olive Chinese Christian Church (GOCCC) is dedicated to
-          fostering the holistic well-being of McGill students--physically,
-          mentally, and spiritually. Through cultural, social, and
-          faith-centered events, we celebrate Chinese traditions while grounding
-          our activities in the values of Christianity. Our mission is to create
-          a welcoming community where young adults can explore the essence of
-          Christian faith, develop meaningful friendships, and learn how to
-          integrate these values into their daily academic and personal lives.
-        </p>
-
-        <h2 className="mb-4 text-2xl font-bold text-green-700">Our Vision</h2>
-        <p className="text-gray-600">
-          We envision a community where members are equipped to live out their
-          faith in daily life, support one another through life's challenges,
-          and share God's love with the broader community.
-        </p>
-
-        <h2 className="mb-4 text-2xl font-bold text-green-700">Our Values</h2>
-        <ul className="list-disc pl-6 space-y-2 text-gray-600">
-          <li>
-            <span className="font-semibold">Spiritual Health:</span>{" "}
-            Strengthening our faith through Bible studies, worship, and
-            meaningful discussions.
-          </li>
-          <li>
-            <span className="font-semibold">Mental Health:</span> Encouraging
-            mindfulness, emotional well-being, and personal growth through
-            workshops and support.
-          </li>
-          <li>
-            <span className="font-semibold">Physical Health:</span> Promoting an
-            active lifestyle with fun group activities and recreational events.
-          </li>
-        </ul>
-      </section>
-
-      <section className="w-full py-8 md:py-12 px-8 md:px-12">
-        <h2 className="mb-4 text-2xl font-bold text-green-700">
-          Leadership Team
-        </h2>
-        <div className="grid gap-6 md:grid-cols-2">
-          {executivesList.map((executive) => (
-            <div
-              className="rounded-lg bg-green-100/50 p-6 border border-green-100"
-              key={executive.id}
-            >
-              <Link href="/executives">
-                <h3 className="mb-2 text-xl font-semibold text-green-800">
-                  {executive.name}
+      {/* Mission and Vision Cards */}
+      <section className="max-w-6xl mx-auto px-6 py-16">
+        <div className="grid md:grid-cols-2 gap-8">
+          <div className="group">
+            <div className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-emerald-100 h-full">
+              <div className="flex items-center gap-4 mb-6">
+                <div className="w-12 h-12 bg-gradient-to-br from-emerald-500 to-green-600 rounded-2xl flex items-center justify-center">
+                  <Heart className="w-6 h-6 text-white" />
+                </div>
+                <h3 className="text-3xl font-bold text-emerald-800">
+                  Our Mission
                 </h3>
-              </Link>
-              <p className="text-gray-600">{executive.role}</p>
+              </div>
+              <p className="text-gray-700 leading-relaxed text-lg">
+                The Green Olive Chinese Christian Church (GOCCC) is dedicated to
+                fostering the holistic well-being of McGill
+                students--physically, mentally, and spiritually. Through
+                cultural, social, and faith-centered events, we celebrate
+                Chinese traditions while grounding our activities in the values
+                of Christianity. Our mission is to create a welcoming community
+                where young adults can explore the essence of Christian faith,
+                develop meaningful friendships, and learn how to integrate these
+                values into their daily academic and personal lives.
+              </p>
+            </div>
+          </div>
+
+          <div className="group">
+            <div className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-emerald-100 h-full">
+              <div className="flex items-center gap-4 mb-6">
+                <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl flex items-center justify-center">
+                  <Users className="w-6 h-6 text-white" />
+                </div>
+                <h3 className="text-3xl font-bold text-emerald-800">
+                  Our Vision
+                </h3>
+              </div>
+              <p className="text-gray-700 leading-relaxed text-lg">
+                We envision a community where members are equipped to live out
+                their faith in daily life, support one another through life's
+                challenges, and share God's love with the broader community.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Values Section */}
+      <section className="bg-gradient-to-r from-emerald-50 to-green-50 py-16">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="text-center mb-12">
+            <h3 className="text-4xl font-bold text-emerald-800 mb-4">
+              Our Values
+            </h3>
+            <div className="w-24 h-1 bg-gradient-to-r from-emerald-500 to-green-500 mx-auto rounded-full"></div>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className="text-center group">
+              <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-emerald-100 hover:-translate-y-2">
+                <div className="w-16 h-16 bg-gradient-to-br from-emerald-500 to-green-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <Heart className="w-8 h-8 text-white" />
+                </div>
+                <h4 className="text-2xl font-bold text-emerald-800 mb-4">
+                  Spiritual Health
+                </h4>
+                <p className="text-gray-700 leading-relaxed">
+                  Strengthening our faith through Bible studies, worship, and
+                  meaningful discussions.
+                </p>
+              </div>
+            </div>
+
+            <div className="text-center group">
+              <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-emerald-100 hover:-translate-y-2">
+                <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <Brain className="w-8 h-8 text-white" />
+                </div>
+                <h4 className="text-2xl font-bold text-emerald-800 mb-4">
+                  Mental Health
+                </h4>
+                <p className="text-gray-700 leading-relaxed">
+                  Encouraging mindfulness, emotional well-being, and personal
+                  growth through workshops and support.
+                </p>
+              </div>
+            </div>
+
+            <div className="text-center group">
+              <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-emerald-100 hover:-translate-y-2">
+                <div className="w-16 h-16 bg-gradient-to-br from-emerald-600 to-green-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <Dumbbell className="w-8 h-8 text-white" />
+                </div>
+                <h4 className="text-2xl font-bold text-emerald-800 mb-4">
+                  Physical Health
+                </h4>
+                <p className="text-gray-700 leading-relaxed">
+                  Promoting an active lifestyle with fun group activities and
+                  recreational events.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Leadership Team */}
+      <section className="max-w-6xl mx-auto px-6 py-16">
+        <div className="text-center mb-12">
+          <h3 className="text-4xl font-bold text-emerald-800 mb-4">
+            Leadership Team
+          </h3>
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            Meet the passionate individuals leading our community forward
+          </p>
+        </div>
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {executivesList.map((executive) => (
+            <div key={executive.id} className="group cursor-pointer">
+              <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-emerald-100 hover:-translate-y-1">
+                <div className="flex items-center justify-between mb-4">
+                  <div className="w-12 h-12 bg-gradient-to-br from-emerald-400 to-green-500 rounded-full flex items-center justify-center">
+                    <span className="text-white font-bold text-lg">
+                      {executive.name
+                        .split(" ")
+                        .map((n) => n[0])
+                        .join("")}
+                    </span>
+                  </div>
+                  <ChevronRight className="w-5 h-5 text-emerald-600 group-hover:translate-x-1 transition-transform duration-300" />
+                </div>
+                <h4 className="text-xl font-bold text-emerald-800 mb-2">
+                  {executive.name}
+                </h4>
+                <p className="text-gray-600 font-medium">{executive.role}</p>
+              </div>
             </div>
           ))}
 
-          <div className="rounded-lg bg-green-100/50 p-6 border border-green-100">
-            <Link href="/executives">
-              <h3 className="mb-2 text-xl font-semibold text-green-800">
+          <div className="group cursor-pointer">
+            <div className="bg-gradient-to-br from-emerald-100 to-green-100 rounded-2xl p-6 border-2 border-dashed border-emerald-300 hover:border-emerald-500 transition-all duration-300 h-full flex flex-col justify-center items-center text-center hover:-translate-y-1">
+              <div className="w-12 h-12 bg-emerald-500 rounded-full flex items-center justify-center mb-4">
+                <ChevronRight className="w-6 h-6 text-white group-hover:translate-x-1 transition-transform duration-300" />
+              </div>
+              <h4 className="text-xl font-bold text-emerald-800 mb-2">
                 See all →
-              </h3>
-            </Link>
-            <p className="text-gray-600">Our board team</p>
+              </h4>
+              <p className="text-emerald-700 font-medium">Our board team</p>
+            </div>
           </div>
         </div>
       </section>
+
+      {/* Footer */}
+      <footer className="bg-gradient-to-r from-emerald-800 to-green-700 text-white py-8 mt-16">
+        <div className="max-w-6xl mx-auto px-6 text-center">
+          <p className="text-lg opacity-90">
+            Join us in our mission to build a stronger, more connected community
+          </p>
+        </div>
+      </footer>
     </div>
   );
 }
