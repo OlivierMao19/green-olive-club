@@ -69,7 +69,10 @@ export default function about() {
         </h2>
         <div className="grid gap-6 md:grid-cols-2">
           {executivesList.map((executive) => (
-            <div className="rounded-lg bg-green-100/50 p-6 border border-green-100">
+            <div
+              className="rounded-lg bg-green-100/50 p-6 border border-green-100"
+              key={executive.id}
+            >
               <Link href="/executives">
                 <h3 className="mb-2 text-xl font-semibold text-green-800">
                   {executive.name}

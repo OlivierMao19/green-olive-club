@@ -55,13 +55,13 @@ export const executivesList: ExecutiveInfo[] = [
     description:
       "Ewen manages our finances with precision and foresight. His strategic approach to budgeting has allowed us to expand our programs while maintaining financial stability.",
   },
-  {
-    id: 6,
-    name: "Olivier Mao",
-    role: "Senior Janitor",
-    email: "olivier.mao@mail.mcgill.ca",
-    phone: "514-298-0081",
-    imagePath: "logo.png",
-    description: undefined,
-  },
+  //   {
+  //     id: 6,
+  //     name: "Olivier Mao",
+  //     role: "Senior Janitor",
+  //     email: "olivier.mao@mail.mcgill.ca",
+  //     phone: "514-298-0081",
+  //     imagePath: "logo.png",
+  //     description: undefined,
+  //   },
 ];
