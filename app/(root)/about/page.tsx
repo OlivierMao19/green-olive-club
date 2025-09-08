@@ -1,3 +1,4 @@
+import { executivesList } from "@/lib/consts";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -39,8 +40,8 @@ export default function about() {
         <h2 className="mb-4 text-2xl font-bold text-green-700">Our Vision</h2>
         <p className="text-gray-600">
           We envision a community where members are equipped to live out their
-          faith in daily life, support one another through life&apos;s challenges,
-          and share God&apos;s love with the broader community.
+          faith in daily life, support one another through life&apos;s
+          challenges, and share God&apos;s love with the broader community.
         </p>
 
         <h2 className="mb-4 text-2xl font-bold text-green-700">Our Values</h2>
@@ -67,46 +68,17 @@ export default function about() {
           Leadership Team
         </h2>
         <div className="grid gap-6 md:grid-cols-2">
-          <div className="rounded-lg bg-green-100/50 p-6 border border-green-100">
-            <Link href="/executives">
-              <h3 className="mb-2 text-xl font-semibold text-green-800">
-                Iris Liu
-              </h3>
-            </Link>
-            <p className="text-gray-600">Club President</p>
-          </div>
-          <div className="rounded-lg bg-green-100/50 p-6 border border-green-100">
-            <Link href="/executives">
-              <h3 className="mb-2 text-xl font-semibold text-green-800">
-                Hao Yuan Lu
-              </h3>
-            </Link>
-            <p className="text-gray-600">External Vice President</p>
-          </div>
-          <div className="rounded-lg bg-green-100/50 p-6 border border-green-100">
-            <Link href="/executives">
-              <h3 className="mb-2 text-xl font-semibold text-green-800">
-                Lynne
-              </h3>
-            </Link>
-            <p className="text-gray-600">Internal Vice President</p>
-          </div>
-          <div className="rounded-lg bg-green-100/50 p-6 border border-green-100">
-            <Link href="/executives">
-              <h3 className="mb-2 text-xl font-semibold text-green-800">
-                Ewen Gueguen
-              </h3>
-            </Link>
-            <p className="text-gray-600">Treasurer</p>
-          </div>
-          <div className="rounded-lg bg-green-100/50 p-6 border border-green-100">
-            <Link href="/executives">
-              <h3 className="mb-2 text-xl font-semibold text-green-800">
-                Enyi Hou
-              </h3>
-            </Link>
-            <p className="text-gray-600">Secretary</p>
-          </div>
+          {executivesList.map((executive) => (
+            <div className="rounded-lg bg-green-100/50 p-6 border border-green-100">
+              <Link href="/executives">
+                <h3 className="mb-2 text-xl font-semibold text-green-800">
+                  {executive.name}
+                </h3>
+              </Link>
+              <p className="text-gray-600">{executive.role}</p>
+            </div>
+          ))}
+
           <div className="rounded-lg bg-green-100/50 p-6 border border-green-100">
             <Link href="/executives">
               <h3 className="mb-2 text-xl font-semibold text-green-800">

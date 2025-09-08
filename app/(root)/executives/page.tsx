@@ -4,74 +4,7 @@ import { Mail, Phone } from "lucide-react";
 import { motion } from "framer-motion";
 import ExecutiveImage from "@/components/ExecutiveImage";
 import { useEffect, useState } from "react";
-
-interface ExecutiveInfo {
-  id: number;
-  name: string;
-  role: string;
-  email: string;
-  phone: string;
-  imagePath: string | undefined;
-  description: string | undefined;
-}
-
-const executivesList: ExecutiveInfo[] = [
-  {
-    id: 1,
-    name: "Iris Liu",
-    role: "Club President",
-    email: "iris.liu@mail.mcgill.ca",
-    phone: "514-532-5432",
-    imagePath: "bigLogo.png",
-    description: undefined,
-  },
-  {
-    id: 2,
-    name: "Hao Yuan Lu",
-    role: "External Vice President",
-    email: "haoyuan.lu@mail.mcgill.ca",
-    phone: "514-533-1234",
-    imagePath: undefined,
-    description: undefined,
-  },
-  {
-    id: 3,
-    name: "Lynne",
-    role: "Internal Vice President",
-    email: "lynne@mail.mcgill.ca",
-    phone: "543-123-1234",
-    imagePath: "logo.png",
-    description: undefined,
-  },
-  {
-    id: 4,
-    name: "Enyi Hou",
-    role: "Secretary",
-    email: "enyi.hou@mail.mcgill.ca",
-    phone: "438-543-9832",
-    imagePath: undefined,
-    description: undefined,
-  },
-  {
-    id: 5,
-    name: "Ewen Gueguen",
-    role: "Treasurer",
-    email: "ewen.gueguen@mail.mcgill.ca",
-    phone: "438-855-2381",
-    imagePath: undefined,
-    description:
-      "Ewen manages our finances with precision and foresight. His strategic approach to budgeting has allowed us to expand our programs while maintaining financial stability.",
-  },
-  {
-    id: 6,
-    name: "Olivier Mao",
-    role: "Senior Janitor",
-    email: "olivier.mao@mail.mcgill.ca",
-    phone: "514-298-0081",
-    imagePath: undefined,
-    description: undefined,
-  },
-];
+import { ExecutiveInfo, executivesList } from "@/lib/consts";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -97,8 +30,7 @@ const itemVariants = {
 };
 
 export default function Executives() {
-  const [, setSelectedExecutive] =
-    useState<ExecutiveInfo | null>(null);
+  const [, setSelectedExecutive] = useState<ExecutiveInfo | null>(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
