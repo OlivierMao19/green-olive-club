@@ -20,9 +20,9 @@ export const executivesList: ExecutiveInfo[] = [
   },
   {
     id: 2,
-    name: "Tony Wu",
+    name: "Dongze Wu",
     role: "External Vice President",
-    email: "dongze.we@mail.mcgill.ca",
+    email: "dongze.wu@mail.mcgill.ca",
     phone: "Unavailable",
     imagePath: undefined,
     description: undefined,
