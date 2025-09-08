@@ -4,7 +4,7 @@ import { Mail, Phone } from "lucide-react";
 import { motion } from "framer-motion";
 import ExecutiveImage from "@/components/ExecutiveImage";
 import { useEffect, useState } from "react";
-import { ExecutiveInfo, executivesList } from "@/lib/consts";
+import { ExecutiveInfo, executivesList, helpersList } from "@/lib/consts";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -81,6 +81,37 @@ export default function Executives() {
                 <div className="flex flex-row">
                   <Phone className="mt-1 mr-2 size-4 text-gray-600" />
                   <div className="text-gray-600">{executive.phone}</div>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+          {helpersList.map((helper) => (
+            <motion.div
+              key={helper.id}
+              className="executive-card group [perspective:1000px] overflow-hidden"
+              variants={itemVariants}
+              whileHover={{ y: -5 }}
+              onClick={() => setSelectedExecutive(helper)}
+            >
+              <ExecutiveImage
+                execName={helper.name}
+                execRole={helper.role}
+                execMail={helper.email}
+                execPhotoPath={helper.imagePath}
+                execDescription={helper.description}
+              />
+              <div className="mt-5">
+                <h2 className="text-2xl font-bold">{helper.name}</h2>
+                <h3 className="text-1xl text-green-400 font-bold">
+                  {helper.role}
+                </h3>
+                <div className="flex flex-row">
+                  <Mail className="mt-1 mr-2 size-4 text-gray-600" />
+                  <div className="text-gray-600">{helper.email}</div>
+                </div>
+                <div className="flex flex-row">
+                  <Phone className="mt-1 mr-2 size-4 text-gray-600" />
+                  <div className="text-gray-600">{helper.phone}</div>
                 </div>
               </div>
             </motion.div>
