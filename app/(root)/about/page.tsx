@@ -31,17 +31,21 @@ export default function about() {
       <section className="space-y-8 px-8 md:px-12">
         <h2 className="mb-4 text-2xl font-bold text-green-700">Our Mission</h2>
         <p className="text-gray-600">
-          The Green Olive Chinese Christian Club exists to provide a welcoming
-          community where Chinese Christians and those interested in
-          Christianity can grow in their faith, build meaningful relationships,
-          and serve others together.
+          The Green Olive Chinese Christian Church (GOCCC) is dedicated to
+          fostering the holistic well-being of McGill students--physically,
+          mentally, and spiritually. Through cultural, social, and
+          faith-centered events, we celebrate Chinese traditions while grounding
+          our activities in the values of Christianity. Our mission is to create
+          a welcoming community where young adults can explore the essence of
+          Christian faith, develop meaningful friendships, and learn how to
+          integrate these values into their daily academic and personal lives.
         </p>
 
         <h2 className="mb-4 text-2xl font-bold text-green-700">Our Vision</h2>
         <p className="text-gray-600">
           We envision a community where members are equipped to live out their
-          faith in daily life, support one another through life&apos;s
-          challenges, and share God&apos;s love with the broader community.
+          faith in daily life, support one another through life's challenges,
+          and share God's love with the broader community.
         </p>
 
         <h2 className="mb-4 text-2xl font-bold text-green-700">Our Values</h2>

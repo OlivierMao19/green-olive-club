@@ -55,13 +55,26 @@ export const executivesList: ExecutiveInfo[] = [
     description:
       "Ewen manages our finances with precision and foresight. His strategic approach to budgeting has allowed us to expand our programs while maintaining financial stability.",
   },
-  //   {
-  //     id: 6,
-  //     name: "Olivier Mao",
-  //     role: "Senior Janitor",
-  //     email: "olivier.mao@mail.mcgill.ca",
-  //     phone: "514-298-0081",
-  //     imagePath: "logo.png",
-  //     description: undefined,
-  //   },
+];
+
+export const helpersList: ExecutiveInfo[] = [
+  {
+    id: 1,
+    name: "Jiayin Li",
+    role: "Event Assistant",
+    email: "jiayin.li@mail.mcgill.ca",
+    phone: "Unavailable",
+    imagePath: undefined,
+    description: undefined,
+  },
+  {
+    id: 2,
+    name: "Olivier Mao",
+    role: "Junior Developer",
+    email: "olivier.mao@mail.mcgill.ca",
+    phone: "514-298-0081",
+    imagePath: "logo.png",
+    description:
+      "Olivier assisted with the development of the GOCCC website alongside Ewen.",
+  },
 ];
