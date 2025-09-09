@@ -1,3 +1,5 @@
+import { Heart, Users, Zap } from "lucide-react";
+
 export type ExecutiveInfo = {
   id: number;
   name: string;
@@ -76,5 +78,29 @@ export const helpersList: ExecutiveInfo[] = [
     imagePath: "logo.png",
     description:
       "Olivier assisted with the development of the GOCCC website alongside Ewen.",
+  },
+];
+
+export const aboutValues = [
+  {
+    icon: Heart,
+    title: "Spiritual Health",
+    description:
+      "Strengthening our faith through Bible studies, worship, and meaningful discussions.",
+    color: "text-rose-600",
+  },
+  {
+    icon: Users,
+    title: "Mental Health",
+    description:
+      "Encouraging mindfulness, emotional well-being, and personal growth through workshops and support.",
+    color: "text-blue-600",
+  },
+  {
+    icon: Zap,
+    title: "Physical Health",
+    description:
+      "Promoting an active lifestyle with fun group activities and recreational events.",
+    color: "text-orange-600",
   },
 ];

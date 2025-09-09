@@ -1,14 +1,28 @@
-import { executivesList } from "@/lib/consts";
-import { Brain, ChevronRight, Dumbbell, Heart, Users } from "lucide-react";
+"use client";
+
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { aboutValues, executivesList } from "@/lib/consts";
+import {
+  Brain,
+  ChevronRight,
+  Dumbbell,
+  Eye,
+  Heart,
+  Target,
+  Users,
+} from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 
 export default function about() {
+  const [activeTab, setActiveTab] = useState("mission");
   return (
     <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-green-50">
       {/* Hero Section */}
       <section className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-emerald-100/60 to-green-100/40"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-emerald-100/60 to-emerald-50"></div>
         <div className="relative max-w-6xl mx-auto px-6 py-20">
           <div className="text-center space-y-8">
             <div className="space-y-4">
@@ -39,6 +53,164 @@ export default function about() {
         </div>
       </section>
 
+      {/* Mission and Vision Cards */}
+      <section className="container mx-auto px-6 pb-16">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+          <TabsList className="grid w-full grid-cols-3 max-w-md mx-auto mb-12 glass-effect">
+            <TabsTrigger value="mission" className="flex items-center gap-2">
+              <Target className="w-4 h-4" />
+              <span className="hidden sm:inline">Mission</span>
+            </TabsTrigger>
+            <TabsTrigger value="vision" className="flex items-center gap-2">
+              <Eye className="w-4 h-4" />
+              <span className="hidden sm:inline">Vision</span>
+            </TabsTrigger>
+            <TabsTrigger value="values" className="flex items-center gap-2">
+              <Heart className="w-4 h-4" />
+              <span className="hidden sm:inline">Values</span>
+            </TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="mission" className="animate-fade-in-up">
+            <Card className="max-w-4xl mx-auto shadow-soft card-hover">
+              <CardHeader className="text-center pb-6">
+                <CardTitle className="text-3xl text-primary flex items-center justify-center gap-3">
+                  <Target className="w-8 h-8" />
+                  Our Mission
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="prose prose-lg max-w-none">
+                <p className="text-muted-foreground leading-relaxed text-center">
+                  The Green Olive Chinese Christian Church (GOCCC) is dedicated
+                  to fostering the holistic well-being of McGill
+                  students--physically, mentally, and spiritually. Through
+                  cultural, social, and faith-centered events, we celebrate
+                  Chinese traditions while grounding our activities in the
+                  values of Christianity. Our mission is to create a welcoming
+                  community where young adults can explore the essence of
+                  Christian faith, develop meaningful friendships, and learn how
+                  to integrate these values into their daily academic and
+                  personal lives.
+                </p>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="vision" className="animate-fade-in-up">
+            <Card className="max-w-4xl mx-auto shadow-soft card-hover">
+              <CardHeader className="text-center pb-6">
+                <CardTitle className="text-3xl text-primary flex items-center justify-center gap-3">
+                  <Eye className="w-8 h-8" />
+                  Our Vision
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="prose prose-lg max-w-none">
+                <p className="text-muted-foreground leading-relaxed text-center">
+                  We envision a community where members are equipped to live out
+                  their faith in daily life, support one another through life's
+                  challenges, and share God's love with the broader community.
+                </p>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="values" className="animate-fade-in-up">
+            <div className="max-w-6xl mx-auto">
+              <div className="text-center mb-12">
+                <h2 className="text-3xl font-bold text-primary flex items-center justify-center gap-3">
+                  <Heart className="w-8 h-8" />
+                  Our Values
+                </h2>
+              </div>
+              <div className="grid md:grid-cols-3 gap-8">
+                {aboutValues.map((value, index) => (
+                  <Card
+                    key={index}
+                    className="shadow-soft card-hover bg-gradient-card border-0"
+                  >
+                    <CardHeader className="text-center">
+                      <div
+                        className={`w-16 h-16 mx-auto rounded-full bg-white/80 flex items-center justify-center mb-4 ${value.color}`}
+                      >
+                        <value.icon className="w-8 h-8" />
+                      </div>
+                      <CardTitle className="text-xl text-primary">
+                        {value.title}
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-muted-foreground text-center leading-relaxed">
+                        {value.description}
+                      </p>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </div>
+          </TabsContent>
+        </Tabs>
+      </section>
+
+      {/* Leadership Team - Masonry Grid */}
+      <section className="bg-gradient-accent py-16">
+        <div className="container mx-auto px-6">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-primary mb-4">
+              Leadership Team
+            </h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              Meet the dedicated individuals who guide our community with wisdom
+              and passion
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 max-w-5xl mx-auto">
+            {executivesList.map((executive, index) => (
+              <Card
+                key={executive.id}
+                className={`shadow-soft card-hover bg-white/90 backdrop-blur-sm border-0 ${
+                  index % 3 === 0 ? "md:col-span-1" : ""
+                } ${
+                  index === executivesList.length - 1
+                    ? "md:col-span-2 lg:col-span-1"
+                    : ""
+                }`}
+              >
+                <CardHeader className="text-center p-4">
+                  <div className="w-12 h-12 mx-auto rounded-full bg-gradient-to-br from-olive to-emerald flex items-center justify-center mb-3">
+                    <span className="text-white font-bold text-lg">
+                      {executive.name
+                        .split(" ")
+                        .map((n) => n[0])
+                        .join("")}
+                    </span>
+                  </div>
+                  <CardTitle className="text-sm text-primary">
+                    {executive.name}
+                  </CardTitle>
+                  <p className="text-xs text-muted-foreground">
+                    {executive.role}
+                  </p>
+                </CardHeader>
+              </Card>
+            ))}
+
+            <Card className="shadow-soft card-hover bg-gradient-to-br from-olive/10 to-emerald/10 border-2 border-dashed border-olive/30 col-span-2 md:col-span-1">
+              <CardHeader className="text-center p-4 h-full flex flex-col justify-center">
+                <div className="w-12 h-12 mx-auto rounded-full border-2 border-dashed border-olive/50 flex items-center justify-center mb-3">
+                  <Users className="w-6 h-6 text-olive" />
+                </div>
+                <CardTitle className="text-sm text-primary">
+                  See All Members
+                </CardTitle>
+                <p className="text-xs text-muted-foreground">
+                  Meet our full board team
+                </p>
+              </CardHeader>
+            </Card>
+          </div>
+        </div>
+      </section>
       {/* Mission and Vision Cards */}
       <section className="max-w-6xl mx-auto px-6 py-16">
         <div className="grid md:grid-cols-2 gap-8">
