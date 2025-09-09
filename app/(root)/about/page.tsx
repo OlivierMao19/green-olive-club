@@ -19,10 +19,10 @@ import { useState } from "react";
 export default function about() {
   const [activeTab, setActiveTab] = useState("mission");
   return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-green-50">
+    <div className="min-h-screen bg-gradient-to-br from-emerald-100 via-white to-green-50">
       {/* Hero Section */}
       <section className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-emerald-100/60 to-emerald-50"></div>
+        <div className="absolute inset-0"></div>
         <div className="relative max-w-6xl mx-auto px-6 py-20">
           <div className="text-center space-y-8">
             <div className="space-y-4">
