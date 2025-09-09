@@ -92,12 +92,18 @@
     animation: fade-in-up 0.4s ease-out forwards;
   }
 
-  .card-hover {
+  /* .card-hover {
     transition: var(--transition-smooth);
   }
 
   .card-hover:hover {
     transform: translateY(-4px);
     box-shadow: var(--shadow-elevated);
+  } */
+}
+
+@layer components {
+  .card-hover {
+    @apply shadow-lg hover:shadow-xl transition-all duration-300;
   }
 }

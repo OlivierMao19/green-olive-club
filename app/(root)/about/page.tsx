@@ -72,7 +72,7 @@ export default function about() {
           </TabsList>
 
           <TabsContent value="mission" className="animate-fade-in-up">
-            <Card className="max-w-4xl mx-auto shadow-soft card-hover">
+            <Card className="max-w-4xl mx-auto shadow-lg hover:shadow-xl transition-all duration-300">
               <CardHeader className="text-center pb-6">
                 <CardTitle className="text-3xl text-primary flex items-center justify-center gap-3">
                   <Target className="w-8 h-8" />
@@ -97,7 +97,7 @@ export default function about() {
           </TabsContent>
 
           <TabsContent value="vision" className="animate-fade-in-up">
-            <Card className="max-w-4xl mx-auto shadow-soft card-hover">
+            <Card className="max-w-4xl mx-auto shadow-lg hover:shadow-xl transition-all duration-300">
               <CardHeader className="text-center pb-6">
                 <CardTitle className="text-3xl text-primary flex items-center justify-center gap-3">
                   <Eye className="w-8 h-8" />
@@ -126,7 +126,7 @@ export default function about() {
                 {aboutValues.map((value, index) => (
                   <Card
                     key={index}
-                    className="shadow-soft card-hover bg-gradient-card border-0"
+                    className="shadow-lg hover:shadow-xl transition-all duration-300 bg-gradient-card border-0"
                   >
                     <CardHeader className="text-center">
                       <div
@@ -149,172 +149,6 @@ export default function about() {
             </div>
           </TabsContent>
         </Tabs>
-      </section>
-
-      {/* Leadership Team - Masonry Grid */}
-      <section className="bg-gradient-accent py-16">
-        <div className="container mx-auto px-6">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-primary mb-4">
-              Leadership Team
-            </h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              Meet the dedicated individuals who guide our community with wisdom
-              and passion
-            </p>
-          </div>
-
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 max-w-5xl mx-auto">
-            {executivesList.map((executive, index) => (
-              <Card
-                key={executive.id}
-                className={`shadow-soft card-hover bg-white/90 backdrop-blur-sm border-0 ${
-                  index % 3 === 0 ? "md:col-span-1" : ""
-                } ${
-                  index === executivesList.length - 1
-                    ? "md:col-span-2 lg:col-span-1"
-                    : ""
-                }`}
-              >
-                <CardHeader className="text-center p-4">
-                  <div className="w-12 h-12 mx-auto rounded-full bg-gradient-to-br from-olive to-emerald flex items-center justify-center mb-3">
-                    <span className="text-white font-bold text-lg">
-                      {executive.name
-                        .split(" ")
-                        .map((n) => n[0])
-                        .join("")}
-                    </span>
-                  </div>
-                  <CardTitle className="text-sm text-primary">
-                    {executive.name}
-                  </CardTitle>
-                  <p className="text-xs text-muted-foreground">
-                    {executive.role}
-                  </p>
-                </CardHeader>
-              </Card>
-            ))}
-
-            <Card className="shadow-soft card-hover bg-gradient-to-br from-olive/10 to-emerald/10 border-2 border-dashed border-olive/30 col-span-2 md:col-span-1">
-              <CardHeader className="text-center p-4 h-full flex flex-col justify-center">
-                <div className="w-12 h-12 mx-auto rounded-full border-2 border-dashed border-olive/50 flex items-center justify-center mb-3">
-                  <Users className="w-6 h-6 text-olive" />
-                </div>
-                <CardTitle className="text-sm text-primary">
-                  See All Members
-                </CardTitle>
-                <p className="text-xs text-muted-foreground">
-                  Meet our full board team
-                </p>
-              </CardHeader>
-            </Card>
-          </div>
-        </div>
-      </section>
-      {/* Mission and Vision Cards */}
-      <section className="max-w-6xl mx-auto px-6 py-16">
-        <div className="grid md:grid-cols-2 gap-8">
-          <div className="group">
-            <div className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-emerald-100 h-full">
-              <div className="flex items-center gap-4 mb-6">
-                <div className="w-12 h-12 bg-gradient-to-br from-emerald-500 to-green-600 rounded-2xl flex items-center justify-center">
-                  <Heart className="w-6 h-6 text-white" />
-                </div>
-                <h3 className="text-3xl font-bold text-emerald-800">
-                  Our Mission
-                </h3>
-              </div>
-              <p className="text-gray-700 leading-relaxed text-lg">
-                The Green Olive Chinese Christian Church (GOCCC) is dedicated to
-                fostering the holistic well-being of McGill
-                students--physically, mentally, and spiritually. Through
-                cultural, social, and faith-centered events, we celebrate
-                Chinese traditions while grounding our activities in the values
-                of Christianity. Our mission is to create a welcoming community
-                where young adults can explore the essence of Christian faith,
-                develop meaningful friendships, and learn how to integrate these
-                values into their daily academic and personal lives.
-              </p>
-            </div>
-          </div>
-
-          <div className="group">
-            <div className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-emerald-100 h-full">
-              <div className="flex items-center gap-4 mb-6">
-                <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl flex items-center justify-center">
-                  <Users className="w-6 h-6 text-white" />
-                </div>
-                <h3 className="text-3xl font-bold text-emerald-800">
-                  Our Vision
-                </h3>
-              </div>
-              <p className="text-gray-700 leading-relaxed text-lg">
-                We envision a community where members are equipped to live out
-                their faith in daily life, support one another through life's
-                challenges, and share God's love with the broader community.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Values Section */}
-      <section className="bg-gradient-to-r from-emerald-50 to-green-50 py-16">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="text-center mb-12">
-            <h3 className="text-4xl font-bold text-emerald-800 mb-4">
-              Our Values
-            </h3>
-            <div className="w-24 h-1 bg-gradient-to-r from-emerald-500 to-green-500 mx-auto rounded-full"></div>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="text-center group">
-              <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-emerald-100 hover:-translate-y-2">
-                <div className="w-16 h-16 bg-gradient-to-br from-emerald-500 to-green-600 rounded-full flex items-center justify-center mx-auto mb-6">
-                  <Heart className="w-8 h-8 text-white" />
-                </div>
-                <h4 className="text-2xl font-bold text-emerald-800 mb-4">
-                  Spiritual Health
-                </h4>
-                <p className="text-gray-700 leading-relaxed">
-                  Strengthening our faith through Bible studies, worship, and
-                  meaningful discussions.
-                </p>
-              </div>
-            </div>
-
-            <div className="text-center group">
-              <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-emerald-100 hover:-translate-y-2">
-                <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-600 rounded-full flex items-center justify-center mx-auto mb-6">
-                  <Brain className="w-8 h-8 text-white" />
-                </div>
-                <h4 className="text-2xl font-bold text-emerald-800 mb-4">
-                  Mental Health
-                </h4>
-                <p className="text-gray-700 leading-relaxed">
-                  Encouraging mindfulness, emotional well-being, and personal
-                  growth through workshops and support.
-                </p>
-              </div>
-            </div>
-
-            <div className="text-center group">
-              <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-emerald-100 hover:-translate-y-2">
-                <div className="w-16 h-16 bg-gradient-to-br from-emerald-600 to-green-500 rounded-full flex items-center justify-center mx-auto mb-6">
-                  <Dumbbell className="w-8 h-8 text-white" />
-                </div>
-                <h4 className="text-2xl font-bold text-emerald-800 mb-4">
-                  Physical Health
-                </h4>
-                <p className="text-gray-700 leading-relaxed">
-                  Promoting an active lifestyle with fun group activities and
-                  recreational events.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
       </section>
 
       {/* Leadership Team */}
