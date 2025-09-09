@@ -205,15 +205,6 @@ export default function about() {
           </div>
         </div>
       </section>
-
-      {/* Footer */}
-      <footer className="bg-gradient-to-r from-emerald-800 to-green-700 text-white py-8 mt-16">
-        <div className="max-w-6xl mx-auto px-6 text-center">
-          <p className="text-lg opacity-90">
-            Join us in our mission to build a stronger, more connected community
-          </p>
-        </div>
-      </footer>
     </div>
   );
 }
