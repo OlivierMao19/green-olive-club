@@ -166,34 +166,41 @@ export default function about() {
           {executivesList.map((executive) => (
             <div key={executive.id} className="group cursor-pointer">
               <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-emerald-100 hover:-translate-y-1">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="w-12 h-12 bg-gradient-to-br from-emerald-400 to-green-500 rounded-full flex items-center justify-center">
-                    <span className="text-white font-bold text-lg">
-                      {executive.name
-                        .split(" ")
-                        .map((n) => n[0])
-                        .join("")}
-                    </span>
+                <Link href={`/executives`}>
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="w-12 h-12 bg-gradient-to-br from-emerald-400 to-green-500 rounded-full flex items-center justify-center">
+                      <span className="text-white font-bold text-lg">
+                        {executive.name
+                          .split(" ")
+                          .map((n) => n[0])
+                          .join("")}
+                      </span>
+                    </div>
+                    <ChevronRight className="w-5 h-5 text-emerald-600 group-hover:translate-x-1 transition-transform duration-300" />
                   </div>
-                  <ChevronRight className="w-5 h-5 text-emerald-600 group-hover:translate-x-1 transition-transform duration-300" />
-                </div>
-                <h4 className="text-xl font-bold text-emerald-800 mb-2">
-                  {executive.name}
-                </h4>
-                <p className="text-gray-600 font-medium">{executive.role}</p>
+                  <h4 className="text-xl font-bold text-emerald-800 mb-2">
+                    {executive.name}
+                  </h4>
+                  <p className="text-gray-600 font-medium">{executive.role}</p>
+                </Link>
               </div>
             </div>
           ))}
 
           <div className="group cursor-pointer">
             <div className="bg-gradient-to-br from-emerald-100 to-green-100 rounded-2xl p-6 border-2 border-dashed border-emerald-300 hover:border-emerald-500 transition-all duration-300 h-full flex flex-col justify-center items-center text-center hover:-translate-y-1">
-              <div className="w-12 h-12 bg-emerald-500 rounded-full flex items-center justify-center mb-4">
-                <ChevronRight className="w-6 h-6 text-white group-hover:translate-x-1 transition-transform duration-300" />
-              </div>
-              <h4 className="text-xl font-bold text-emerald-800 mb-2">
-                See all →
-              </h4>
-              <p className="text-emerald-700 font-medium">Our board team</p>
+              <Link
+                href={`/executives`}
+                className="w-full flex flex-col justify-center items-center text-center"
+              >
+                <div className="w-12 h-12 bg-emerald-500 rounded-full flex items-center justify-center mb-4">
+                  <ChevronRight className="w-6 h-6 text-white group-hover:translate-x-1 transition-transform duration-300" />
+                </div>
+                <h4 className="text-xl font-bold text-emerald-800 mb-2">
+                  See all →
+                </h4>
+                <p className="text-emerald-700 font-medium">Our board team</p>
+              </Link>
             </div>
           </div>
         </div>
