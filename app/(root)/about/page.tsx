@@ -73,7 +73,7 @@ export default function about() {
 
           <TabsContent value="mission" className="animate-fade-in-up">
             <Card className="max-w-4xl mx-auto shadow-lg hover:shadow-xl transition-all duration-300">
-              <CardHeader className="text-center pb-6">
+              <CardHeader className="text-center">
                 <CardTitle className="text-3xl text-primary flex items-center justify-center gap-3">
                   <Target className="w-8 h-8" />
                   Our Mission
@@ -98,7 +98,7 @@ export default function about() {
 
           <TabsContent value="vision" className="animate-fade-in-up">
             <Card className="max-w-4xl mx-auto shadow-lg hover:shadow-xl transition-all duration-300">
-              <CardHeader className="text-center pb-6">
+              <CardHeader className="text-center">
                 <CardTitle className="text-3xl text-primary flex items-center justify-center gap-3">
                   <Eye className="w-8 h-8" />
                   Our Vision
@@ -116,7 +116,7 @@ export default function about() {
 
           <TabsContent value="values" className="animate-fade-in-up">
             <div className="max-w-6xl mx-auto">
-              <div className="text-center mb-12">
+              <div className="text-center mb-8">
                 <h2 className="text-3xl font-bold text-primary flex items-center justify-center gap-3">
                   <Heart className="w-8 h-8" />
                   Our Values
