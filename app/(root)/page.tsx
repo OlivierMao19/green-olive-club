@@ -1,4 +1,3 @@
-
 import Head from "next/head";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -181,7 +180,7 @@ export default async function Home() {
           <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl text-green-800 mb-10">
             Contact Us
           </h1>
-          <div className="grid grid-cols-2 md:grid-cols-4 px-6 md:px-10">
+          <div className="grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] px-6 md:px-10">
             <div className="flex flex-col text-center items-center">
               <div className="flex h-16 w-16 items-center justify-center rounded-full bg-green-50 ">
                 <Mail className="h-8 w-8 text-green-700" />
@@ -190,14 +189,14 @@ export default async function Home() {
                 goccc@gmail.com
               </div>
             </div>
-            <div className="flex flex-col text-center items-center">
+            {/* <div className="flex flex-col text-center items-center">
               <div className="flex h-16 w-16 items-center justify-center rounded-full bg-green-50 ">
                 <Phone className="h-8 w-8 text-green-700" />
               </div>
               <div className="text-md font-semibold pt-2.5 pb-7 px-2">
                 234-123-1234
               </div>
-            </div>
+            </div> */}
             <div className="flex flex-col text-center items-center">
               <div className="flex h-16 w-16 items-center justify-center rounded-full bg-green-50 ">
                 <MapPin className="h-8 w-8 text-green-700" />
