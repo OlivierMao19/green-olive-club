@@ -46,23 +46,27 @@ export default function EventsPage({ isAdmin = false }) {
     const fetchEvents = async () => {
       try {
         setIsLoading(true);
-        const response = await fetch("/api/calendar");
+        const response = await fetch("/api/events", {
+          method: "GET",
+        });
         const data = await response.json();
-        const activities = data.map((event: {
-          id: number;
-          title: string;
-          description: string;
-          location: string;
-          scheduledAt: string;
-        }) => ({
-          id: event.id,
-          title: event.title,
-          description: event.description,
-          location: event.location,
-          date: new Date(event.scheduledAt),
-          type: "service",
-          registered: false,
-        }));
+        const activities = data.map(
+          (event: {
+            id: number;
+            title: string;
+            description: string;
+            location: string;
+            scheduledAt: string;
+          }) => ({
+            id: event.id,
+            title: event.title,
+            description: event.description,
+            location: event.location,
+            date: new Date(event.scheduledAt),
+            type: "service",
+            registered: false,
+          })
+        );
         setEvents(activities);
         setfilteredEvents(activities);
       } catch (error) {
@@ -153,7 +157,10 @@ export default function EventsPage({ isAdmin = false }) {
         ) : (
           <div className="space-y-6">
             {filteredEvents.map((activity) => (
-              <Card key={activity.id} className="bg-green-50/30 border border-green-100/60 shadow-sm">
+              <Card
+                key={activity.id}
+                className="bg-green-50/30 border border-green-100/60 shadow-sm"
+              >
                 <CardHeader>
                   <div className="flex items-start justify-between">
                     <div>
