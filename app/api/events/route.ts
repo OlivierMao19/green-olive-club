@@ -53,3 +53,36 @@ export async function GET() {
     );
   }
 }
+
+export async function DELETE(req: Request) {
+  try {
+    const { id }: { id: string } = await req.json();
+
+    const event = await prisma.$transaction(async (tx) => {
+      await tx.userOnEvent.deleteMany({
+        where: {
+          eventId: id,
+        },
+      });
+
+      return tx.event.delete({
+        where: {
+          id: id,
+        },
+      });
+    });
+
+    return NextResponse.json(
+      { message: "Event deleted", event },
+      {
+        status: 200,
+      }
+    );
+  } catch (error) {
+    console.error("Error deleting event:", error);
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 }
+    );
+  }
+}
