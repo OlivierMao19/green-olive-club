@@ -1,9 +1,9 @@
 import { auth } from "@/auth";
-import EventsPage from "@/components/EventPage";
+import EventsCalendar from "@/components/EventsCalendar";
 
 export default async function events() {
   const session = await auth();
   const isAdmin = session?.user?.isAdmin || false;
 
-  return <EventsPage isAdmin={isAdmin} />;
+  return <EventsCalendar isAdmin={isAdmin} />;
 }

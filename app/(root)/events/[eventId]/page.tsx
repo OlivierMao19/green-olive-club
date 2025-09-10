@@ -1,15 +1,10 @@
-"use client";
-
-import { auth } from "@/auth";
-import { Card, CardContent } from "@/components/ui/card";
 import { prisma } from "@/lib/prisma";
-import { ArrowLeft, Clock, Info, MapPin } from "lucide-react";
-import Link from "next/link";
-import EventRegistrationButton from "@/components/EventRegistrationButton";
-import { Button } from "@/components/ui/button";
+import { auth } from "@/auth";
+import { EventPage } from "@/components/EventPage";
+import type { Event } from "@prisma/client";
 
 // Define a wrapper function that matches the expected PageProps constraint
-export default async function EventPage({
+export default async function Event({
   params: paramsPromise,
 }: {
   params: Promise<{ eventId: string }>;
@@ -17,17 +12,22 @@ export default async function EventPage({
   // Await the params
   const params = await paramsPromise;
   const { eventId } = params;
-  const event = await prisma.event.findUnique({
+
+  const event: Event | null = await prisma.event.findUnique({
     where: { id: eventId },
+    select: {
+      id: true,
+      title: true,
+      description: true,
+      location: true,
+      scheduledAt: true,
+    },
   });
+
   const session = await auth();
   const userId = session?.user?.id;
 
   const hasMcGillId = session?.user?.mcgillId;
-
-  if (!event) {
-    return <div className="container mx-auto px-4 py-6">Event not found</div>;
-  }
 
   // async function onRegister({ params }: { params: { action: string } }) {
   //   if (!userId || !session) {
@@ -46,69 +46,17 @@ export default async function EventPage({
   //     }
   //   }
   // }
-  let isRegistered = false;
-  if (userId) {
-    const registration = await prisma.userOnEvent.findUnique({
-      where: {
-        userId_eventId: {
-          userId: userId,
-          eventId: eventId,
-        },
-      },
-    });
-    isRegistered = !!registration;
-  }
+  const registration = userId
+    ? await prisma.userOnEvent.findFirst({ where: { userId, eventId } })
+    : null;
+  const isRegistered = !!registration;
 
   return (
-    <div className="container mx-auto px-2 py-6 md:px-4 md:w-9/10 sm:w-full mt-6">
-      <Card className="h-[70svh] bg-green-50/30 border border-green-100/60 shadow-sm">
-        <CardContent className="flex flex-col items-between justify-center py-5 space-y-10 text-gray-700">
-          <div className="flex items-justify-center items-center justify-between">
-            <Link className="" href="/events">
-              <div className="flex gap-2">
-                <ArrowLeft />
-                <span className="font-bold text-gray-1000 text-1xl">Back</span>
-              </div>
-            </Link>
-            <Button
-              className="px-8 bg-red-500/10 hover:bg-red-500/20 text-red-500 hover:text-red-600"
-              onClick={() => {}}
-            >
-              <span className="font-bold text-gray-1000 text-1xl">Delete</span>
-            </Button>
-          </div>
-          <h1 className="text-3xl font-bold">{event!.title}</h1>
-          <div className="flex items-center font-bold">
-            <Info className="mr-1 h-4 w-4" />
-            <p>
-              Description:{" "}
-              <span className="font-normal">{event!.description}</span>
-            </p>
-          </div>
-          <div className="flex items-center font-bold">
-            <MapPin className="mr-1 h-4 w-4" />
-            <p>
-              Location: <span className="font-normal">{event!.location}</span>
-            </p>
-          </div>
-          <div className="flex items-center font-bold">
-            <Clock className="mr-1 h-4 w-4" />
-            <p>
-              Scheduled At:{" "}
-              <span className="font-normal">
-                {new Date(event!.scheduledAt).toLocaleString()}
-              </span>
-            </p>
-          </div>
-
-          <EventRegistrationButton
-            userId={userId}
-            eventId={eventId}
-            initialRegistrationStatus={isRegistered}
-            hasMcGillId={!!hasMcGillId}
-          />
-        </CardContent>
-      </Card>
-    </div>
+    <EventPage
+      event={event}
+      userId={userId}
+      initialRegistrationStatus={isRegistered}
+      hasMcGillId={hasMcGillId}
+    />
   );
 }

@@ -89,3 +89,24 @@ export async function POST(req: Request) {
     );
   }
 }
+
+export async function GET(req: Request) {
+  try {
+    const { userId, eventId } = await req.json();
+    const registration = await prisma.userOnEvent.findUnique({
+      where: {
+        userId_eventId: {
+          userId: userId,
+          eventId: eventId,
+        },
+      },
+    });
+    return NextResponse.json(registration, { status: 200 });
+  } catch (error) {
+    console.error("Error fetching event registration:", error);
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 }
+    );
+  }
+}
