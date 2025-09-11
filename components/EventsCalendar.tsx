@@ -25,7 +25,7 @@ import AttendeeTable from "@/components/AttendeeTable";
 export default function EventsCalendar({ isAdmin = false }) {
   // Mock data for activities
   const [isLoading, setIsLoading] = useState(false);
-  const [date, setDate] = useState<Date | undefined>(undefined);
+  const [date, setDate] = useState<Date | undefined>(new Date());
   interface Activity {
     id: number;
     title: string;
@@ -46,9 +46,17 @@ export default function EventsCalendar({ isAdmin = false }) {
     const fetchEvents = async () => {
       try {
         setIsLoading(true);
-        const response = await fetch("/api/events", {
-          method: "GET",
+        const response = await fetch("/api/event_calendar", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ date: date?.toISOString() }),
         });
+
+        if (!response.ok) {
+          const err = await response.json().catch(() => null);
+          throw new Error(err?.error ?? "Failed to fetch events");
+        }
+
         const data = await response.json();
         const activities = data.map(
           (event: {

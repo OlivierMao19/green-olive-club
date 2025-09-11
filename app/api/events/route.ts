@@ -26,34 +26,6 @@ export async function POST(req: Request) {
   }
 }
 
-export async function GET() {
-  try {
-    const dateTime = new Date();
-    const events = await prisma.event.findMany({
-      select: {
-        id: true,
-        title: true,
-        description: true,
-        location: true,
-        scheduledAt: true,
-      },
-      where: {
-        scheduledAt: {
-          gte: dateTime,
-        },
-      },
-      orderBy: { scheduledAt: "asc" },
-    });
-    return NextResponse.json(events, { status: 200 });
-  } catch (error) {
-    console.error("Error fetching events:", error);
-    return NextResponse.json(
-      { error: "Interal Server Error" },
-      { status: 500 }
-    );
-  }
-}
-
 export async function DELETE(req: Request) {
   try {
     const { id }: { id: string } = await req.json();
