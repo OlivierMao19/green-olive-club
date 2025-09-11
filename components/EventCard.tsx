@@ -4,9 +4,10 @@ import React, { useState } from "react";
 import { MapPin, Calendar } from "lucide-react";
 import type { Event } from "@prisma/client";
 import { Image } from "@imagekit/next";
+import { Activity } from "@/lib/types";
 
 interface EventCardProps {
-  event: Event;
+  event: Activity;
   isPast?: boolean;
   className?: string;
 }
@@ -29,19 +30,16 @@ export function EventCard({
   };
 
   const getPlaceholder = () => (
-    <div className="w-full h-48 bg-gradient-to-br from-green-100 to-green-200 flex items-center justify-center">
-      <div className="text-center">
-        <div className="text-3xl font-bold text-green-600 mb-2">GOCCC</div>
-        <div className="text-sm text-green-500">
-          Green Olive Chinese Christian Club
-        </div>
+    <div className="w-full h-full bg-gradient-to-br from-green-100 to-green-200 flex items-center justify-center">
+      <div className="text-center h-full">
+        <img src="/logo.png" alt="GOCCC logo" className="h-full w-50" />
       </div>
     </div>
   );
 
   return (
     <article
-      className={`group relative bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden ${
+      className={`flex group relative bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden ${
         isPast ? "ring-2 ring-green-400 ring-opacity-50 shadow-green-100" : ""
       } ${className}`}
       role="article"
@@ -53,14 +51,14 @@ export function EventCard({
         </div>
       )}
 
-      <div className="relative overflow-hidden">
-        {event.image_url && !imageError && (
-          <div className="relative">
+      <div className="relative overflow-hidden shrink-0 h-full ">
+        {event.image_url && !imageError ? (
+          <div className="relative h-full">
             <Image
               urlEndpoint={process.env.NEXT_PUBLIC_IMAGEKIT_URL}
               src={event.image_url}
               alt={`${event.title} event photo`}
-              className={`w-full h-48 object-cover transition-all duration-700 group-hover:scale-105 ${
+              className={`w-full h-full object-cover transition-all duration-700 group-hover:scale-105 ${
                 imageLoaded ? "opacity-100" : "opacity-0"
               }`}
               onLoad={handleImageLoad}
@@ -72,6 +70,8 @@ export function EventCard({
             )}
             <div className="absolute inset-0 bg-black bg-opacity-20 group-hover:bg-opacity-10 transition-all duration-300"></div>
           </div>
+        ) : (
+          getPlaceholder()
         )}
       </div>
 
@@ -89,7 +89,7 @@ export function EventCard({
         <div className="space-y-2 mb-4">
           <div className="flex items-center text-sm text-slate-500">
             <Calendar className="w-4 h-4 mr-2 text-green-500" />
-            <span>{event.scheduledAt.toUTCString()}</span>
+            <span>{event.date.toUTCString()}</span>
           </div>
 
           {event.location && (

@@ -23,6 +23,7 @@ import {
 import AttendeeTable from "@/components/AttendeeTable";
 import { deconstructEvent, formatDate, formatTime } from "@/lib/utils";
 import { Activity } from "@/lib/types";
+import EventCard from "./EventCard";
 
 export default function EventsCalendar({ isAdmin = false }) {
   // Mock data for activities
@@ -91,7 +92,7 @@ export default function EventsCalendar({ isAdmin = false }) {
   //   : events;
 
   return (
-    <div className="container mx-auto px-2 py-6 md:px-4 md:w-9/10 sm:w-full">
+    <div className="container mx-auto px-2 py-6 md:px-4 md:w-9/10 max-w-4xl sm:w-full">
       <h1 className="mb-8 text-center text-3xl font-bold tracking-tighter text-green-800 sm:text-4xl">
         Club Activities
       </h1>
@@ -127,74 +128,75 @@ export default function EventsCalendar({ isAdmin = false }) {
         ) : (
           <div className="space-y-6">
             {filteredEvents.map((activity) => (
-              <Card
-                key={activity.id}
-                className={`${
-                  today.getTime() <= activity.date.getTime()
-                    ? "bg-green-50/30"
-                    : "bg-gray-200"
-                } border border-green-100/60 shadow-sm`}
-              >
-                <CardHeader>
-                  <div className="flex items-start justify-between">
-                    <div>
-                      <CardTitle className="text-xl text-green-800">
-                        {activity.title}
-                      </CardTitle>
-                      <CardDescription className="mt-1">
-                        {activity.description}
-                      </CardDescription>
-                    </div>
-                    <Badge className={getTypeColor(activity.type)}>
-                      {activity.type
-                        .replace("-", " ")
-                        .replace(/\b\w/g, (l) => l.toUpperCase())}
-                    </Badge>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-2">
-                    <div className="flex items-center text-gray-600">
-                      <CalendarIcon className="mr-2 h-4 w-4" />
-                      {formatDate(activity.date)}
-                    </div>
-                    <div className="flex items-center text-gray-600">
-                      <Clock className="mr-2 h-4 w-4" />
-                      {formatTime(activity.date)}
-                    </div>
-                    <div className="flex items-center text-gray-600">
-                      <MapPin className="mr-2 h-4 w-4" />
-                      {activity.location}
-                    </div>
-                  </div>
-                </CardContent>
-                <CardFooter className="flex justify-between gap-1">
-                  <Button variant="outline" asChild>
-                    <Link href={`/events/${activity.id}`}>
-                      Details <ChevronRight className="ml-1 h-4 w-4" />
-                    </Link>
-                  </Button>
-                  {isAdmin && (
-                    <Button
-                      onClick={() => {
-                        setAttendeesOpen(true);
-                        setCurrentEvent(activity);
-                      }}
-                    >
-                      View Attendees
-                    </Button>
-                  )}
+              <EventCard key={activity.id} event={activity} />
+              //     <Card
+              //       key={activity.id}
+              //       className={`${
+              //         today.getTime() <= activity.date.getTime()
+              //           ? "bg-green-50/30"
+              //           : "bg-gray-200"
+              //       } border border-green-100/60 shadow-sm`}
+              //     >
+              //       <CardHeader>
+              //         <div className="flex items-start justify-between">
+              //           <div>
+              //             <CardTitle className="text-xl text-green-800">
+              //               {activity.title}
+              //             </CardTitle>
+              //             <CardDescription className="mt-1">
+              //               {activity.description}
+              //             </CardDescription>
+              //           </div>
+              //           <Badge className={getTypeColor(activity.type)}>
+              //             {activity.type
+              //               .replace("-", " ")
+              //               .replace(/\b\w/g, (l) => l.toUpperCase())}
+              //           </Badge>
+              //         </div>
+              //       </CardHeader>
+              //       <CardContent>
+              //         <div className="space-y-2">
+              //           <div className="flex items-center text-gray-600">
+              //             <CalendarIcon className="mr-2 h-4 w-4" />
+              //             {formatDate(activity.date)}
+              //           </div>
+              //           <div className="flex items-center text-gray-600">
+              //             <Clock className="mr-2 h-4 w-4" />
+              //             {formatTime(activity.date)}
+              //           </div>
+              //           <div className="flex items-center text-gray-600">
+              //             <MapPin className="mr-2 h-4 w-4" />
+              //             {activity.location}
+              //           </div>
+              //         </div>
+              //       </CardContent>
+              //       <CardFooter className="flex justify-between gap-1">
+              //         <Button variant="outline" asChild>
+              //           <Link href={`/events/${activity.id}`}>
+              //             Details <ChevronRight className="ml-1 h-4 w-4" />
+              //           </Link>
+              //         </Button>
+              //         {isAdmin && (
+              //           <Button
+              //             onClick={() => {
+              //               setAttendeesOpen(true);
+              //               setCurrentEvent(activity);
+              //             }}
+              //           >
+              //             View Attendees
+              //           </Button>
+              //         )}
 
-                  <Link href={`/events/${activity.id}`}>
-                    <Button
-                      variant="default"
-                      className="bg-green-700 hover:bg-green-800"
-                    >
-                      Register
-                    </Button>
-                  </Link>
-                </CardFooter>
-              </Card>
+              //         <Link href={`/events/${activity.id}`}>
+              //           <Button
+              //             variant="default"
+              //             className="bg-green-700 hover:bg-green-800"
+              //           >
+              //             Register
+              //           </Button>
+              //         </Link>
+              //       </CardFooter>
+              //     </Card>
             ))}
             <Dialog open={attendeesOpen} onOpenChange={setAttendeesOpen}>
               <DialogContent className="md:max-w-[800px] p-2 overflow-hidden">
