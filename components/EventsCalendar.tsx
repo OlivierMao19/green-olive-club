@@ -21,22 +21,14 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import AttendeeTable from "@/components/AttendeeTable";
-import { formatDate, formatTime } from "@/lib/utils";
+import { deconstructEvent, formatDate, formatTime } from "@/lib/utils";
+import { Activity } from "@/lib/types";
 
 export default function EventsCalendar({ isAdmin = false }) {
   // Mock data for activities
   const today = new Date();
   const [isLoading, setIsLoading] = useState(false);
   const [date, setDate] = useState<Date>(new Date());
-  interface Activity {
-    id: number;
-    title: string;
-    description: string;
-    date: Date;
-    location: string;
-    type: string;
-    registered: boolean;
-  }
 
   const [, setEvents] = useState<Activity[]>([]);
   const [filteredEvents, setfilteredEvents] = useState<Activity[]>([]);
@@ -60,23 +52,7 @@ export default function EventsCalendar({ isAdmin = false }) {
         }
 
         const data = await response.json();
-        const activities = data.map(
-          (event: {
-            id: number;
-            title: string;
-            description: string;
-            location: string;
-            scheduledAt: string;
-          }) => ({
-            id: event.id,
-            title: event.title,
-            description: event.description,
-            location: event.location,
-            date: new Date(event.scheduledAt),
-            type: "service",
-            registered: false,
-          })
-        );
+        const activities = deconstructEvent(data);
         setEvents(activities);
         setfilteredEvents(activities);
       } catch (error) {

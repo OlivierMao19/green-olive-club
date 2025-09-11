@@ -1,17 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import { MapPin, Tag, Calendar } from "lucide-react";
+import { MapPin, Calendar } from "lucide-react";
 import type { Event } from "@prisma/client";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { formatEventDate } from "@/lib/utils";
 import { Image } from "@imagekit/next";
 
 interface EventCardProps {
@@ -98,7 +89,7 @@ export function EventCard({
         <div className="space-y-2 mb-4">
           <div className="flex items-center text-sm text-slate-500">
             <Calendar className="w-4 h-4 mr-2 text-green-500" />
-            <span>{formatEventDate(event.startDate, event.endDate)}</span>
+            <span>{event.scheduledAt.toUTCString()}</span>
           </div>
 
           {event.location && (
@@ -109,7 +100,7 @@ export function EventCard({
           )}
         </div>
 
-        {event.tags && event.tags.length > 0 && (
+        {/* {event.tags && event.tags.length > 0 && (
           <div className="flex flex-wrap gap-2">
             {event.tags.map((tag) => (
               <span
@@ -121,7 +112,7 @@ export function EventCard({
               </span>
             ))}
           </div>
-        )}
+        )} */}
       </div>
     </article>
   );
