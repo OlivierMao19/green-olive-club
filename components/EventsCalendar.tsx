@@ -26,7 +26,7 @@ export default function EventsCalendar({ isAdmin = false }) {
   // Mock data for activities
   const today = new Date();
   const [isLoading, setIsLoading] = useState(false);
-  const [date, setDate] = useState<Date>(new Date(2026, 2, 10, 2, 30));
+  const [date, setDate] = useState<Date>(new Date());
   interface Activity {
     id: number;
     title: string;
