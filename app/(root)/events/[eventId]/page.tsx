@@ -52,6 +52,7 @@ export default async function Event({
       userId={userId}
       initialRegistrationStatus={isRegistered}
       mcGillId={mcGillId}
+      isAdmin={session?.user?.isAdmin || false}
     />
   );
 }
