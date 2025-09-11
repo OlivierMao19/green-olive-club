@@ -24,8 +24,9 @@ import AttendeeTable from "@/components/AttendeeTable";
 
 export default function EventsCalendar({ isAdmin = false }) {
   // Mock data for activities
+  const today = new Date();
   const [isLoading, setIsLoading] = useState(false);
-  const [date, setDate] = useState<Date | undefined>(new Date());
+  const [date, setDate] = useState<Date>(new Date(2026, 2, 10, 2, 30));
   interface Activity {
     id: number;
     title: string;
@@ -84,7 +85,7 @@ export default function EventsCalendar({ isAdmin = false }) {
       }
     };
     fetchEvents();
-  }, []);
+  }, [date]);
 
   const formatDate = (date: Date) => {
     return date.toLocaleDateString("en-US", {
@@ -155,7 +156,7 @@ export default function EventsCalendar({ isAdmin = false }) {
               </p>
               <Button
                 variant="outline"
-                onClick={() => setDate(undefined)}
+                onClick={() => setDate(new Date(0))}
                 className="mt-4"
               >
                 View All Activities
@@ -167,7 +168,11 @@ export default function EventsCalendar({ isAdmin = false }) {
             {filteredEvents.map((activity) => (
               <Card
                 key={activity.id}
-                className="bg-green-50/30 border border-green-100/60 shadow-sm"
+                className={`${
+                  today.getTime() <= activity.date.getTime()
+                    ? "bg-green-50/30"
+                    : "bg-gray-200"
+                } border border-green-100/60 shadow-sm`}
               >
                 <CardHeader>
                   <div className="flex items-start justify-between">
