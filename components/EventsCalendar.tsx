@@ -21,6 +21,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import AttendeeTable from "@/components/AttendeeTable";
+import { formatDate, formatTime } from "@/lib/utils";
 
 export default function EventsCalendar({ isAdmin = false }) {
   // Mock data for activities
@@ -86,22 +87,6 @@ export default function EventsCalendar({ isAdmin = false }) {
     };
     fetchEvents();
   }, [date]);
-
-  const formatDate = (date: Date) => {
-    return date.toLocaleDateString("en-US", {
-      weekday: "long",
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
-  };
-
-  const formatTime = (date: Date) => {
-    return date.toLocaleTimeString("en-US", {
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-  };
 
   const getTypeColor = (type: string) => {
     switch (type) {

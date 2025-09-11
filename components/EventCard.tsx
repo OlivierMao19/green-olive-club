@@ -1,6 +1,8 @@
+"use client";
+
 import React, { useState } from "react";
 import { MapPin, Tag, Calendar } from "lucide-react";
-import { Event } from "../types/event";
+import type { Event } from "@prisma/client";
 import {
   Card,
   CardContent,
@@ -9,19 +11,20 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { formatEventDate } from "../utils/eventUtils";
+import { formatEventDate } from "@/lib/utils";
+import { Image } from "@imagekit/next";
 
 interface EventCardProps {
   event: Event;
-  isPresent?: boolean;
+  isPast?: boolean;
   className?: string;
 }
 
-const EventCard: React.FC<EventCardProps> = ({
+export function EventCard({
   event,
-  isPresent = false,
+  isPast = false,
   className = "",
-}) => {
+}: EventCardProps) {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [imageError, setImageError] = useState(false);
 
@@ -48,24 +51,23 @@ const EventCard: React.FC<EventCardProps> = ({
   return (
     <article
       className={`group relative bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden ${
-        isPresent
-          ? "ring-2 ring-green-400 ring-opacity-50 shadow-green-100"
-          : ""
+        isPast ? "ring-2 ring-green-400 ring-opacity-50 shadow-green-100" : ""
       } ${className}`}
       role="article"
       aria-label={`Event: ${event.title}`}
     >
-      {isPresent && (
+      {isPast && (
         <div className="absolute top-4 right-4 z-10 bg-green-500 text-white px-3 py-1 rounded-full text-xs font-semibold shadow-md">
           Happening Now
         </div>
       )}
 
       <div className="relative overflow-hidden">
-        {event.imageUrl && !imageError ? (
+        {event.image_url && !imageError && (
           <div className="relative">
-            <img
-              src={event.imageUrl}
+            <Image
+              urlEndpoint={process.env.NEXT_PUBLIC_IMAGEKIT_URL}
+              src={event.image_url}
               alt={`${event.title} event photo`}
               className={`w-full h-48 object-cover transition-all duration-700 group-hover:scale-105 ${
                 imageLoaded ? "opacity-100" : "opacity-0"
@@ -79,8 +81,6 @@ const EventCard: React.FC<EventCardProps> = ({
             )}
             <div className="absolute inset-0 bg-black bg-opacity-20 group-hover:bg-opacity-10 transition-all duration-300"></div>
           </div>
-        ) : (
-          getPlaceholder()
         )}
       </div>
 
@@ -125,6 +125,6 @@ const EventCard: React.FC<EventCardProps> = ({
       </div>
     </article>
   );
-};
+}
 
 export default EventCard;
