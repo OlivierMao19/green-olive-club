@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 import { MapPin, Calendar, ChevronRight } from "lucide-react";
 import type { Event } from "@prisma/client";
 import { Image } from "@imagekit/next";
@@ -12,12 +12,18 @@ interface EventCardProps {
   event: Activity;
   isPast?: boolean;
   className?: string;
+  isAdmin?: boolean;
+  setAttendeesOpen: Dispatch<SetStateAction<boolean>>;
+  setCurrentEvent: Dispatch<SetStateAction<Activity | null>>;
 }
 
 export function EventCard({
   event,
   isPast = false,
   className = "",
+  isAdmin = false,
+  setAttendeesOpen,
+  setCurrentEvent,
 }: EventCardProps) {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [imageError, setImageError] = useState(false);
@@ -120,6 +126,15 @@ export function EventCard({
             </div>
           )}
         </div>
+
+        <Button
+          onClick={() => {
+            setAttendeesOpen(true);
+            setCurrentEvent(event);
+          }}
+        >
+          View Attendees
+        </Button>
 
         {/* {event.tags && event.tags.length > 0 && (
           <div className="flex flex-wrap gap-2">

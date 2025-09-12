@@ -128,7 +128,13 @@ export default function EventsCalendar({ isAdmin = false }) {
         ) : (
           <div className="space-y-6">
             {filteredEvents.map((activity) => (
-              <EventCard key={activity.id} event={activity} />
+              <EventCard
+                key={activity.id}
+                event={activity}
+                isAdmin={isAdmin}
+                setAttendeesOpen={setAttendeesOpen}
+                setCurrentEvent={setCurrentEvent}
+              />
               //     <Card
               //       key={activity.id}
               //       className={`${
