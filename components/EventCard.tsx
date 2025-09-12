@@ -1,10 +1,12 @@
 "use client";
 
 import React, { useState } from "react";
-import { MapPin, Calendar } from "lucide-react";
+import { MapPin, Calendar, ChevronRight } from "lucide-react";
 import type { Event } from "@prisma/client";
 import { Image } from "@imagekit/next";
 import { Activity } from "@/lib/types";
+import { Button } from "./ui/button";
+import Link from "next/link";
 
 interface EventCardProps {
   event: Activity;
@@ -30,12 +32,14 @@ export function EventCard({
   };
 
   const getPlaceholder = () => (
-    <div className="w-full h-full bg-gradient-to-br from-green-100 to-green-200 flex items-center justify-center">
-      <img
-        src="/logo.png"
-        alt="GOCCC logo"
-        className="block h-full md:w-full w-50 md:object-contain"
-      />
+    <div className="relative overflow-hidden md:flex-none md:max-w-[40%] md:min-w-52 ">
+      <div className="w-full h-full bg-gradient-to-br from-green-100 to-green-200 flex items-center justify-center">
+        <img
+          src="/logo.png"
+          alt="GOCCC logo"
+          className="block h-full md:w-full w-50 md:object-contain"
+        />
+      </div>
     </div>
   );
 
@@ -53,8 +57,8 @@ export function EventCard({
         </div>
       )}
 
-      <div className="relative overflow-hidden md:flex-none md:max-w-[40%] md:min-w-52 ">
-        {event.image_url && !imageError ? (
+      {event.image_url && !imageError ? (
+        <div className="relative overflow-hidden md:flex-none md:max-w-[40%] md:min-w-52 ">
           <div className="relative h-full w-full">
             <Image
               urlEndpoint={process.env.NEXT_PUBLIC_IMAGEKIT_URL}
@@ -72,16 +76,31 @@ export function EventCard({
             )}
             <div className="absolute inset-0 bg-black bg-opacity-20 group-hover:bg-opacity-10 transition-all duration-300"></div>
           </div>
-        ) : (
-          getPlaceholder()
-        )}
-      </div>
+        </div>
+      ) : (
+        <>{getPlaceholder()}</>
+      )}
 
-      <div className="p-6">
-        <div className="flex items-start justify-between mb-3">
+      <div className="p-6 w-full">
+        <div className="flex items-center justify-between mb-3">
           <h3 className="text-xl font-bold text-slate-800 leading-tight group-hover:text-green-600 transition-colors duration-200">
             {event.title}
           </h3>
+          <Button variant="outline" asChild>
+            <Link href={`/events/${event.id}`}>
+              Details <ChevronRight className="ml-1 h-4 w-4" />
+            </Link>
+          </Button>
+          {/* {isAdmin && (
+            <Button
+              onClick={() => {
+                setAttendeesOpen(true);
+                setCurrentEvent(activity);
+              }}
+            >
+              View Attendees
+            </Button>
+          )} */}
         </div>
 
         <p className="text-slate-600 mb-4 leading-relaxed">
