@@ -53,7 +53,7 @@ export function EventCard({
         </div>
       )}
 
-      <div className="relative overflow-hidden md:w-56 flex-shrink-0 h-full ">
+      <div className="relative overflow-hidden md:flex-none md:max-w-[40%] md:min-w-52 ">
         {event.image_url && !imageError ? (
           <div className="relative h-full w-full">
             <Image
