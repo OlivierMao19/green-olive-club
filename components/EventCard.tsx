@@ -31,9 +31,11 @@ export function EventCard({
 
   const getPlaceholder = () => (
     <div className="w-full h-full bg-gradient-to-br from-green-100 to-green-200 flex items-center justify-center">
-      <div className="text-center h-full">
-        <img src="/logo.png" alt="GOCCC logo" className="h-full w-50" />
-      </div>
+      <img
+        src="/logo.png"
+        alt="GOCCC logo"
+        className="block h-full md:w-full w-50 md:object-contain"
+      />
     </div>
   );
 
@@ -41,7 +43,7 @@ export function EventCard({
     <article
       className={`group relative bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden ${
         isPast ? "ring-2 ring-green-400 ring-opacity-50 shadow-green-100" : ""
-      } ${className} md:flex`}
+      } ${className} md:flex md:items-stretch md:min-h-[160px]`}
       role="article"
       aria-label={`Event: ${event.title}`}
     >
@@ -51,14 +53,14 @@ export function EventCard({
         </div>
       )}
 
-      <div className="relative overflow-hidden shrink-0 h-full ">
+      <div className="relative overflow-hidden md:w-56 flex-shrink-0 h-full ">
         {event.image_url && !imageError ? (
-          <div className="relative h-full">
+          <div className="relative h-full w-full">
             <Image
               urlEndpoint={process.env.NEXT_PUBLIC_IMAGEKIT_URL}
               src={event.image_url}
               alt={`${event.title} event photo`}
-              className={`w-full h-full object-cover transition-all duration-700 group-hover:scale-105 ${
+              className={`block w-full h-full object-cover transition-all duration-700 group-hover:scale-105 ${
                 imageLoaded ? "opacity-100" : "opacity-0"
               }`}
               onLoad={handleImageLoad}
