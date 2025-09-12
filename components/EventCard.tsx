@@ -39,9 +39,9 @@ export function EventCard({
 
   return (
     <article
-      className={`flex group relative bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden ${
+      className={`group relative bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden ${
         isPast ? "ring-2 ring-green-400 ring-opacity-50 shadow-green-100" : ""
-      } ${className}`}
+      } ${className} md:flex`}
       role="article"
       aria-label={`Event: ${event.title}`}
     >
