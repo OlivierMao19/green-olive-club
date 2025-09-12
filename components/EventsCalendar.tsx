@@ -2,17 +2,8 @@
 
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { ChevronRight, CalendarIcon, Clock, MapPin } from "lucide-react";
-import Link from "next/link";
+import { Card, CardContent } from "@/components/ui/card";
+import { CalendarIcon } from "lucide-react";
 import { LoaderIcon } from "lucide-react";
 import {
   Dialog,
@@ -21,7 +12,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import AttendeeTable from "@/components/AttendeeTable";
-import { deconstructEvent, formatDate, formatTime } from "@/lib/utils";
+import { deconstructEvent, formatDate } from "@/lib/utils";
 import { Activity } from "@/lib/types";
 import EventCard from "./EventCard";
 
@@ -135,74 +126,6 @@ export default function EventsCalendar({ isAdmin = false }) {
                 setAttendeesOpen={setAttendeesOpen}
                 setCurrentEvent={setCurrentEvent}
               />
-              //     <Card
-              //       key={activity.id}
-              //       className={`${
-              //         today.getTime() <= activity.date.getTime()
-              //           ? "bg-green-50/30"
-              //           : "bg-gray-200"
-              //       } border border-green-100/60 shadow-sm`}
-              //     >
-              //       <CardHeader>
-              //         <div className="flex items-start justify-between">
-              //           <div>
-              //             <CardTitle className="text-xl text-green-800">
-              //               {activity.title}
-              //             </CardTitle>
-              //             <CardDescription className="mt-1">
-              //               {activity.description}
-              //             </CardDescription>
-              //           </div>
-              //           <Badge className={getTypeColor(activity.type)}>
-              //             {activity.type
-              //               .replace("-", " ")
-              //               .replace(/\b\w/g, (l) => l.toUpperCase())}
-              //           </Badge>
-              //         </div>
-              //       </CardHeader>
-              //       <CardContent>
-              //         <div className="space-y-2">
-              //           <div className="flex items-center text-gray-600">
-              //             <CalendarIcon className="mr-2 h-4 w-4" />
-              //             {formatDate(activity.date)}
-              //           </div>
-              //           <div className="flex items-center text-gray-600">
-              //             <Clock className="mr-2 h-4 w-4" />
-              //             {formatTime(activity.date)}
-              //           </div>
-              //           <div className="flex items-center text-gray-600">
-              //             <MapPin className="mr-2 h-4 w-4" />
-              //             {activity.location}
-              //           </div>
-              //         </div>
-              //       </CardContent>
-              //       <CardFooter className="flex justify-between gap-1">
-              //         <Button variant="outline" asChild>
-              //           <Link href={`/events/${activity.id}`}>
-              //             Details <ChevronRight className="ml-1 h-4 w-4" />
-              //           </Link>
-              //         </Button>
-              //         {isAdmin && (
-              //           <Button
-              //             onClick={() => {
-              //               setAttendeesOpen(true);
-              //               setCurrentEvent(activity);
-              //             }}
-              //           >
-              //             View Attendees
-              //           </Button>
-              //         )}
-
-              //         <Link href={`/events/${activity.id}`}>
-              //           <Button
-              //             variant="default"
-              //             className="bg-green-700 hover:bg-green-800"
-              //           >
-              //             Register
-              //           </Button>
-              //         </Link>
-              //       </CardFooter>
-              //     </Card>
             ))}
             <Dialog open={attendeesOpen} onOpenChange={setAttendeesOpen}>
               <DialogContent className="md:max-w-[800px] p-2 overflow-hidden">

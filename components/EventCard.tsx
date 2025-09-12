@@ -2,7 +2,6 @@
 
 import React, { Dispatch, SetStateAction, useState } from "react";
 import { MapPin, Calendar, ChevronRight } from "lucide-react";
-import type { Event } from "@prisma/client";
 import { Image } from "@imagekit/next";
 import { Activity } from "@/lib/types";
 import { Button } from "./ui/button";
