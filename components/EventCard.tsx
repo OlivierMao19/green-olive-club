@@ -97,16 +97,6 @@ export function EventCard({
               Details <ChevronRight className="ml-1 h-4 w-4" />
             </Link>
           </Button>
-          {/* {isAdmin && (
-            <Button
-              onClick={() => {
-                setAttendeesOpen(true);
-                setCurrentEvent(activity);
-              }}
-            >
-              View Attendees
-            </Button>
-          )} */}
         </div>
 
         <p className="text-slate-600 mb-4 leading-relaxed">
@@ -126,15 +116,18 @@ export function EventCard({
             </div>
           )}
         </div>
-
-        <Button
-          onClick={() => {
-            setAttendeesOpen(true);
-            setCurrentEvent(event);
-          }}
-        >
-          View Attendees
-        </Button>
+        {isAdmin && (
+          <div className="w-full flex flex-col items-center">
+            <Button
+              onClick={() => {
+                setAttendeesOpen(true);
+                setCurrentEvent(event);
+              }}
+            >
+              View Attendees
+            </Button>
+          </div>
+        )}
 
         {/* {event.tags && event.tags.length > 0 && (
           <div className="flex flex-wrap gap-2">
