@@ -6,6 +6,7 @@ import { Image } from "@imagekit/next";
 import { Activity } from "@/lib/types";
 import { Button } from "./ui/button";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 interface EventCardProps {
   event: Activity;
@@ -27,14 +28,20 @@ export function EventCard({
   const [imageLoaded, setImageLoaded] = useState(false);
   const [imageError, setImageError] = useState(false);
 
-  const handleImageLoad = () => {
-    setImageLoaded(true);
-  };
+  const router = useRouter();
 
-  const handleImageError = () => {
+  function handleActivate() {
+    router.push(`/events/${event.id}`);
+  }
+
+  function handleImageLoad() {
+    setImageLoaded(true);
+  }
+
+  function handleImageError() {
     setImageError(true);
     setImageLoaded(true);
-  };
+  }
 
   const getPlaceholder = () => (
     <div className="relative overflow-hidden md:flex-none md:max-w-[40%] md:min-w-52 ">
@@ -55,6 +62,7 @@ export function EventCard({
       } ${className} md:flex md:items-stretch md:min-h-[160px]`}
       role="article"
       aria-label={`Event: ${event.title}`}
+      onClick={handleActivate}
     >
       {isPast && (
         <div className="absolute top-4 right-4 z-10 bg-green-500 text-white px-3 py-1 rounded-full text-xs font-semibold shadow-md">
@@ -83,7 +91,7 @@ export function EventCard({
           </div>
         </div>
       ) : (
-        <>{getPlaceholder()}</>
+        <></>
       )}
 
       <div className="p-6 w-full">

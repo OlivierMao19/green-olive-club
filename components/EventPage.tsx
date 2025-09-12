@@ -36,6 +36,7 @@ export default function EventPage({
     console.log(`Delete event ${deletedEvent!.id}`);
     router.push("/events");
   }
+
   return (
     <div className="container mx-auto px-2 py-6 md:px-4 md:w-9/10 sm:w-full mt-6">
       <Card className="h-[70svh] bg-green-50/30 border border-green-100/60 shadow-sm">
@@ -47,14 +48,16 @@ export default function EventPage({
                 <span className="font-bold text-gray-1000 text-1xl">Back</span>
               </div>
             </Link>
-            {/* {isAdmin && ( */}
-            <Button
-              className="px-8 bg-red-500/10 hover:bg-red-500/20 text-red-500 hover:text-red-600"
-              onClick={onDeleteEvent}
-            >
-              <span className="font-bold text-gray-1000 text-1xl">Delete</span>
-            </Button>
-            {/* )} */}
+            {isAdmin && (
+              <Button
+                className="px-8 bg-red-500/10 hover:bg-red-500/20 text-red-500 hover:text-red-600"
+                onClick={onDeleteEvent}
+              >
+                <span className="font-bold text-gray-1000 text-1xl">
+                  Delete
+                </span>
+              </Button>
+            )}
           </div>
           <h1 className="text-3xl font-bold">{event!.title}</h1>
           <div className="flex items-center font-bold">
