@@ -155,44 +155,43 @@ export default function about() {
 
       {/* Events Section */}
       <section className="mb-20 mx-auto px-6 max-w-5xl">
-        <div className="bg-gradient-to-r from-emerald-300 to-green-400 rounded-3xl shadow-xl overflow-hidden">
+        <div className="bg-gradient-to-r from-emerald-200 to-green-200 rounded-3xl shadow-xl overflow-hidden">
           <div className="px-8 py-12 sm:px-12 sm:py-16">
             <div className="max-w-4xl mx-auto text-center">
-              <Calendar className="w-16 h-16 text-white mx-auto mb-6" />
-              <h2 className="text-3xl sm:text-4xl font-bold text-white mb-6">
+              <Calendar className="w-16 h-16 text-gray-800 mx-auto mb-6" />
+              <h2 className="text-3xl sm:text-4xl font-bold text-gray-800 mb-6">
                 Join Our Journey
               </h2>
-              <p className="text-xl text-green-100 mb-8 leading-relaxed">
-                From fellowship nights to community service, Bible studies to
-                cultural celebrations, we create meaningful experiences that
-                bring us together and help us grow.
+              <p className="text-xl text-gray-700 mb-8 leading-relaxed">
+                We organize regular events to connect with others, grow in
+                faith, and have fun!
               </p>
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
                 <div className="bg-white bg-opacity-20 rounded-xl p-6 backdrop-blur-sm">
-                  <Users className="w-8 h-8 text-white mx-auto mb-3" />
-                  <h3 className="text-lg font-semibold text-white mb-2">
+                  <Users className="w-8 h-8 text-gray-700 mx-auto mb-3" />
+                  <h3 className="text-lg font-semibold text-gray-700 mb-2">
                     Fellowship
                   </h3>
-                  <p className="text-green-100 text-sm">
+                  <p className="text-gray-600 text-sm">
                     Building lasting friendships through shared experiences
                   </p>
                 </div>
                 <div className="bg-white bg-opacity-20 rounded-xl p-6 backdrop-blur-sm">
-                  <Heart className="w-8 h-8 text-white mx-auto mb-3" />
-                  <h3 className="text-lg font-semibold text-white mb-2">
+                  <Heart className="w-8 h-8 text-gray-700 mx-auto mb-3" />
+                  <h3 className="text-lg font-semibold text-gray-700 mb-2">
                     Service
                   </h3>
-                  <p className="text-green-100 text-sm">
+                  <p className="text-gray-600 text-sm">
                     Serving our community with love and compassion
                   </p>
                 </div>
                 <div className="bg-white bg-opacity-20 rounded-xl p-6 backdrop-blur-sm">
-                  <Target className="w-8 h-8 text-white mx-auto mb-3" />
-                  <h3 className="text-lg font-semibold text-white mb-2">
+                  <Target className="w-8 h-8 text-gray-700 mx-auto mb-3" />
+                  <h3 className="text-lg font-semibold text-gray-700 mb-2">
                     Growth
                   </h3>
-                  <p className="text-green-100 text-sm">
+                  <p className="text-gray-600 text-sm">
                     Growing together in faith and understanding
                   </p>
                 </div>
