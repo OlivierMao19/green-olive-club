@@ -5,6 +5,7 @@ export async function POST(req: Request) {
   try {
     const body = (await req.json().catch(() => ({}))) || {};
     const raw = body.date;
+    const order = body.order ?? "asc";
 
     let dateTime: Date;
     if (raw == null || raw === "") {
@@ -33,7 +34,7 @@ export async function POST(req: Request) {
           gte: dateTime,
         },
       },
-      orderBy: { scheduledAt: "asc" },
+      orderBy: { scheduledAt: order },
     });
     return NextResponse.json(events, { status: 200 });
   } catch (error) {

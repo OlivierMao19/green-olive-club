@@ -8,27 +8,47 @@ import { Button } from "./ui/button";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-interface EventCardProps {
+type BaseProps = {
   event: Activity;
   isPast?: boolean;
   className?: string;
-  isAdmin?: boolean;
+};
+
+type AdminProps = BaseProps & {
+  isAdmin: true;
   setAttendeesOpen: Dispatch<SetStateAction<boolean>>;
   setCurrentEvent: Dispatch<SetStateAction<Activity | null>>;
+};
+
+type NonAdminProps = BaseProps & {
+  isAdmin?: false | undefined;
+};
+
+type EventCardProps = AdminProps | NonAdminProps;
+
+function isAdminProps(props: EventCardProps): props is AdminProps {
+  return props.isAdmin === true;
 }
 
-export function EventCard({
-  event,
-  isPast = false,
-  className = "",
-  isAdmin = false,
-  setAttendeesOpen,
-  setCurrentEvent,
-}: EventCardProps) {
+export function EventCard(props: EventCardProps) {
+  const { event, isPast = false, className = "" } = props;
+  const isAdmin = props.isAdmin ?? false;
+
   const [imageLoaded, setImageLoaded] = useState(false);
   const [imageError, setImageError] = useState(false);
 
   const router = useRouter();
+
+  let handleViewAttendees: (() => void) | undefined;
+
+  if (isAdminProps(props)) {
+    // Here TypeScript knows `props` is AdminProps
+    const { setAttendeesOpen, setCurrentEvent } = props;
+    handleViewAttendees = () => {
+      setAttendeesOpen(true);
+      setCurrentEvent(event);
+    };
+  }
 
   function handleActivate() {
     router.push(`/events/${event.id}`);
@@ -57,18 +77,18 @@ export function EventCard({
 
   return (
     <article
-      className={`group relative bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden ${
-        isPast ? "ring-2 ring-green-400 ring-opacity-50 shadow-green-100" : ""
+      className={`group relative  rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden ${
+        isPast ? "ring-2 ring-gray-400 ring-opacity-50 bg-gray-200" : "bg-white"
       } ${className} md:flex md:items-stretch md:min-h-[160px]`}
       role="article"
       aria-label={`Event: ${event.title}`}
       onClick={handleActivate}
     >
-      {isPast && (
+      {/* {isPast && (
         <div className="absolute top-4 right-4 z-10 bg-green-500 text-white px-3 py-1 rounded-full text-xs font-semibold shadow-md">
           Happening Now
         </div>
-      )}
+      )} */}
 
       {event.image_url && !imageError ? (
         <div className="relative overflow-hidden md:flex-none md:max-w-[40%] md:min-w-52 ">
@@ -123,12 +143,12 @@ export function EventCard({
             </div>
           )}
         </div>
-        {isAdmin && (
+        {isAdmin && handleViewAttendees && (
           <div className="w-full flex flex-col items-center">
             <Button
-              onClick={() => {
-                setAttendeesOpen(true);
-                setCurrentEvent(event);
+              onClick={(e: React.MouseEvent) => {
+                e.stopPropagation();
+                handleViewAttendees?.();
               }}
             >
               View Attendees
