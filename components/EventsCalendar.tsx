@@ -15,10 +15,13 @@ import AttendeeTable from "@/components/AttendeeTable";
 import { deconstructEvent, formatDate } from "@/lib/utils";
 import { Activity } from "@/lib/types";
 import EventCard from "./EventCard";
+import { useRouter } from "next/navigation";
 
 export default function EventsCalendar({ isAdmin = false }) {
   // Mock data for activities
   const today = new Date();
+  const router = useRouter();
+
   const [isLoading, setIsLoading] = useState(false);
   const [date, setDate] = useState<Date>(new Date());
 
@@ -95,6 +98,15 @@ export default function EventsCalendar({ isAdmin = false }) {
               ? `Activities for ${formatDate(date)}`
               : "All Upcoming Activities"}
           </h2>
+          <Button
+            variant="outline"
+            onClick={() => {
+              router.push("/events/timeline");
+            }}
+            className="mt-4"
+          >
+            {"View Event Timeline"}
+          </Button>
         </div>
         {isLoading ? (
           <div className="flex justify-center items-center w-full py-24">
@@ -112,7 +124,7 @@ export default function EventsCalendar({ isAdmin = false }) {
                 onClick={() => setDate(new Date(0))}
                 className="mt-4"
               >
-                View All Activities
+                {"View All Activities"}
               </Button>
             </CardContent>
           </Card>
