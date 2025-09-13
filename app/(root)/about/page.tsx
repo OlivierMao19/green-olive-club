@@ -154,8 +154,8 @@ export default function about() {
       </section>
 
       {/* Events Section */}
-      <section className="mb-20 mx-auto max-w-5xl hover:shadow-xl transition-all duration-300 rounded-3xl px-6">
-        <div className="bg-gradient-to-r from-emerald-200 to-green-200 rounded-3xl shadow-xl  overflow-hidden">
+      <section className="mb-20 mx-auto max-w-5xl  rounded-3xl px-6">
+        <div className="bg-gradient-to-r from-emerald-200 to-green-200 rounded-3xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden">
           <div className="px-8 py-12 sm:px-12 sm:py-16">
             <div className="max-w-4xl mx-auto text-center">
               <Calendar className="w-16 h-16 text-gray-800 mx-auto mb-6" />
