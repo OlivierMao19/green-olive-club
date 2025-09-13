@@ -2,17 +2,8 @@
 
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { ChevronRight, CalendarIcon, Clock, MapPin } from "lucide-react";
-import Link from "next/link";
+import { Card, CardContent } from "@/components/ui/card";
+import { CalendarIcon } from "lucide-react";
 import { LoaderIcon } from "lucide-react";
 import {
   Dialog,
@@ -21,21 +12,18 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import AttendeeTable from "@/components/AttendeeTable";
+import { deconstructEvent, formatDate } from "@/lib/utils";
+import { Activity } from "@/lib/types";
+import EventCard from "./EventCard";
+import { useRouter } from "next/navigation";
 
 export default function EventsCalendar({ isAdmin = false }) {
   // Mock data for activities
   const today = new Date();
+  const router = useRouter();
+
   const [isLoading, setIsLoading] = useState(false);
   const [date, setDate] = useState<Date>(new Date());
-  interface Activity {
-    id: number;
-    title: string;
-    description: string;
-    date: Date;
-    location: string;
-    type: string;
-    registered: boolean;
-  }
 
   const [, setEvents] = useState<Activity[]>([]);
   const [filteredEvents, setfilteredEvents] = useState<Activity[]>([]);
@@ -59,23 +47,7 @@ export default function EventsCalendar({ isAdmin = false }) {
         }
 
         const data = await response.json();
-        const activities = data.map(
-          (event: {
-            id: number;
-            title: string;
-            description: string;
-            location: string;
-            scheduledAt: string;
-          }) => ({
-            id: event.id,
-            title: event.title,
-            description: event.description,
-            location: event.location,
-            date: new Date(event.scheduledAt),
-            type: "service",
-            registered: false,
-          })
-        );
+        const activities = deconstructEvent(data);
         setEvents(activities);
         setfilteredEvents(activities);
       } catch (error) {
@@ -86,22 +58,6 @@ export default function EventsCalendar({ isAdmin = false }) {
     };
     fetchEvents();
   }, [date]);
-
-  const formatDate = (date: Date) => {
-    return date.toLocaleDateString("en-US", {
-      weekday: "long",
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
-  };
-
-  const formatTime = (date: Date) => {
-    return date.toLocaleTimeString("en-US", {
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-  };
 
   const getTypeColor = (type: string) => {
     switch (type) {
@@ -130,7 +86,7 @@ export default function EventsCalendar({ isAdmin = false }) {
   //   : events;
 
   return (
-    <div className="container mx-auto px-2 py-6 md:px-4 md:w-9/10 sm:w-full">
+    <div className="container mx-auto px-2 py-6 md:px-4 md:w-9/10 max-w-4xl sm:w-full">
       <h1 className="mb-8 text-center text-3xl font-bold tracking-tighter text-green-800 sm:text-4xl">
         Club Activities
       </h1>
@@ -142,6 +98,15 @@ export default function EventsCalendar({ isAdmin = false }) {
               ? `Activities for ${formatDate(date)}`
               : "All Upcoming Activities"}
           </h2>
+          <Button
+            variant="outline"
+            onClick={() => {
+              router.push("/events/timeline");
+            }}
+            className="mt-4"
+          >
+            {"View Event Timeline"}
+          </Button>
         </div>
         {isLoading ? (
           <div className="flex justify-center items-center w-full py-24">
@@ -159,81 +124,20 @@ export default function EventsCalendar({ isAdmin = false }) {
                 onClick={() => setDate(new Date(0))}
                 className="mt-4"
               >
-                View All Activities
+                {"View All Activities"}
               </Button>
             </CardContent>
           </Card>
         ) : (
           <div className="space-y-6">
             {filteredEvents.map((activity) => (
-              <Card
+              <EventCard
                 key={activity.id}
-                className={`${
-                  today.getTime() <= activity.date.getTime()
-                    ? "bg-green-50/30"
-                    : "bg-gray-200"
-                } border border-green-100/60 shadow-sm`}
-              >
-                <CardHeader>
-                  <div className="flex items-start justify-between">
-                    <div>
-                      <CardTitle className="text-xl text-green-800">
-                        {activity.title}
-                      </CardTitle>
-                      <CardDescription className="mt-1">
-                        {activity.description}
-                      </CardDescription>
-                    </div>
-                    <Badge className={getTypeColor(activity.type)}>
-                      {activity.type
-                        .replace("-", " ")
-                        .replace(/\b\w/g, (l) => l.toUpperCase())}
-                    </Badge>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-2">
-                    <div className="flex items-center text-gray-600">
-                      <CalendarIcon className="mr-2 h-4 w-4" />
-                      {formatDate(activity.date)}
-                    </div>
-                    <div className="flex items-center text-gray-600">
-                      <Clock className="mr-2 h-4 w-4" />
-                      {formatTime(activity.date)}
-                    </div>
-                    <div className="flex items-center text-gray-600">
-                      <MapPin className="mr-2 h-4 w-4" />
-                      {activity.location}
-                    </div>
-                  </div>
-                </CardContent>
-                <CardFooter className="flex justify-between gap-1">
-                  <Button variant="outline" asChild>
-                    <Link href={`/events/${activity.id}`}>
-                      Details <ChevronRight className="ml-1 h-4 w-4" />
-                    </Link>
-                  </Button>
-                  {isAdmin && (
-                    <Button
-                      onClick={() => {
-                        setAttendeesOpen(true);
-                        setCurrentEvent(activity);
-                      }}
-                    >
-                      View Attendees
-                    </Button>
-                  )}
-
-                  <Link href={`/events/${activity.id}`}>
-                    <Button
-                      variant="default"
-                      className="bg-green-700 hover:bg-green-800"
-                    >
-                      Register
-                    </Button>
-                  </Link>
-                </CardFooter>
-              </Card>
+                event={activity}
+                isAdmin={isAdmin}
+                setAttendeesOpen={setAttendeesOpen}
+                setCurrentEvent={setCurrentEvent}
+              />
             ))}
             <Dialog open={attendeesOpen} onOpenChange={setAttendeesOpen}>
               <DialogContent className="md:max-w-[800px] p-2 overflow-hidden">
