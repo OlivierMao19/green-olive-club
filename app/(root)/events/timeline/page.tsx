@@ -12,13 +12,15 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Activity } from "@/lib/types";
-import { deconstructEvent } from "@/lib/utils";
+import { deconstructEvent, formatPeriod } from "@/lib/utils";
 import EventCard from "@/components/EventCard";
+import { format } from "path";
 
 export default function Page() {
   const [isLoading, setIsLoading] = useState(false);
   const [events, setEvents] = useState<Activity[]>([]);
   const today = new Date();
+  let prevDate = new Date(0);
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -53,15 +55,21 @@ export default function Page() {
         Event Timeline
       </h1>
       {/* Timeline Spine - Hidden on mobile */}
-      <div className="hidden mt-36 md:block absolute left-1/6 transform -translate-x-px top-0 bottom-0 w-0.5 bg-gradient-to-b from-green-200 via-green-300 to-green-200"></div>
+      <div className="hidden mt-37 md:block absolute left-1/6 transform -translate-x-px top-0 bottom-0 w-0.5 bg-gradient-to-b from-green-200 via-green-300 to-green-200"></div>
 
       {/* Events */}
       <div className="space-y-12">
         {events.map((event, index) => {
           const isPast = event.date.getTime() < today.getTime();
+          let eventPeriod = formatPeriod(event.date);
+          if (eventPeriod === formatPeriod(prevDate)) {
+            eventPeriod = "";
+          } else {
+            prevDate = event.date;
+          }
 
           return (
-            <div key={event.id} className="relative">
+            <div key={event.id} className="relative flex">
               {/* Timeline Dot */}
               <div className="hidden md:block absolute left-1/6 transform -translate-x-1/2 -translate-y-2">
                 <div
@@ -74,6 +82,10 @@ export default function Page() {
               </div>
 
               {/* Event Card Container */}
+              <div className="relative md:w-1/6 md:mr-auto md:pr-8 text-right text-xl font-bold">
+                {eventPeriod}
+              </div>
+
               <div
                 className={`
                   relative md:w-5/6 md:ml-auto md:pl-8
