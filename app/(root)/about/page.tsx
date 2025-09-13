@@ -4,7 +4,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { aboutValues, executivesList } from "@/lib/consts";
 import {
+  ArrowRight,
   Brain,
+  Calendar,
   ChevronRight,
   Dumbbell,
   Eye,
@@ -149,6 +151,63 @@ export default function about() {
             </div>
           </TabsContent>
         </Tabs>
+      </section>
+
+      {/* Events Section */}
+      <section className="mb-20 mx-auto px-6 max-w-5xl">
+        <div className="bg-gradient-to-r from-emerald-300 to-green-400 rounded-3xl shadow-xl overflow-hidden">
+          <div className="px-8 py-12 sm:px-12 sm:py-16">
+            <div className="max-w-4xl mx-auto text-center">
+              <Calendar className="w-16 h-16 text-white mx-auto mb-6" />
+              <h2 className="text-3xl sm:text-4xl font-bold text-white mb-6">
+                Join Our Journey
+              </h2>
+              <p className="text-xl text-green-100 mb-8 leading-relaxed">
+                From fellowship nights to community service, Bible studies to
+                cultural celebrations, we create meaningful experiences that
+                bring us together and help us grow.
+              </p>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
+                <div className="bg-white bg-opacity-20 rounded-xl p-6 backdrop-blur-sm">
+                  <Users className="w-8 h-8 text-white mx-auto mb-3" />
+                  <h3 className="text-lg font-semibold text-white mb-2">
+                    Fellowship
+                  </h3>
+                  <p className="text-green-100 text-sm">
+                    Building lasting friendships through shared experiences
+                  </p>
+                </div>
+                <div className="bg-white bg-opacity-20 rounded-xl p-6 backdrop-blur-sm">
+                  <Heart className="w-8 h-8 text-white mx-auto mb-3" />
+                  <h3 className="text-lg font-semibold text-white mb-2">
+                    Service
+                  </h3>
+                  <p className="text-green-100 text-sm">
+                    Serving our community with love and compassion
+                  </p>
+                </div>
+                <div className="bg-white bg-opacity-20 rounded-xl p-6 backdrop-blur-sm">
+                  <Target className="w-8 h-8 text-white mx-auto mb-3" />
+                  <h3 className="text-lg font-semibold text-white mb-2">
+                    Growth
+                  </h3>
+                  <p className="text-green-100 text-sm">
+                    Growing together in faith and understanding
+                  </p>
+                </div>
+              </div>
+
+              <Link
+                href="/events/timeline"
+                className="inline-flex items-center px-8 py-4 bg-white text-green-600 font-bold rounded-xl hover:bg-green-50 transform hover:scale-105 transition-all duration-200 shadow-lg"
+              >
+                Explore Our Events
+                <ArrowRight className="w-5 h-5 ml-2" />
+              </Link>
+            </div>
+          </div>
+        </div>
       </section>
 
       {/* Leadership Team */}

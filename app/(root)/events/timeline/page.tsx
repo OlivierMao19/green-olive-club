@@ -50,7 +50,7 @@ export default function Page() {
   }, []);
 
   return (
-    <div className="relative max-w-6xl mx-auto py-18 flex flex-col px-2 overflow-hidden">
+    <div className="relative max-w-6xl mx-auto py-18 flex flex-col px-2">
       <h1 className="text-4xl font-bold w-full text-center pb-12 text-emerald-500">
         Event Timeline
       </h1>
