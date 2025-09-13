@@ -50,12 +50,12 @@ export default function Page() {
   }, []);
 
   return (
-    <div className="container relative max-w-6xl mx-auto py-18 flex flex-col">
+    <div className="relative max-w-6xl mx-auto py-18 flex flex-col px-2 overflow-hidden">
       <h1 className="text-4xl font-bold w-full text-center pb-12 text-emerald-500">
         Event Timeline
       </h1>
       {/* Timeline Spine - Hidden on mobile */}
-      <div className="hidden mt-37 md:block absolute left-1/6 transform -translate-x-px top-0 bottom-0 w-0.5 bg-gradient-to-b from-green-200 via-green-300 to-green-200"></div>
+      <div className="hidden mt-37 md:block absolute left-[calc(16.666667%+5px)] transform -translate-x-px top-0 bottom-0 w-0.5 bg-gradient-to-b from-green-200 via-green-300 to-green-200"></div>
 
       {/* Events */}
       <div className="space-y-12">
@@ -82,13 +82,13 @@ export default function Page() {
               </div>
 
               {/* Event Card Container */}
-              <div className="relative md:w-1/6 md:mr-auto md:pr-8 text-right text-xl font-bold">
+              <div className="hidden md:block relative md:w-1/6 md:mr-auto md:pr-8 text-right text-xl font-bold">
                 {eventPeriod}
               </div>
 
               <div
                 className={`
-                  relative md:w-5/6 md:ml-auto md:pl-8
+                  relative ml-10 w-full md:w-5/6 md:ml-auto md:pl-8
                 `}
               >
                 <div
