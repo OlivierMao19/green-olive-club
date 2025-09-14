@@ -14,7 +14,6 @@ import {
 import { Activity } from "@/lib/types";
 import { deconstructEvent, formatPeriod } from "@/lib/utils";
 import EventCard from "@/components/EventCard";
-import { format } from "path";
 
 export default function Page() {
   const [isLoading, setIsLoading] = useState(false);
