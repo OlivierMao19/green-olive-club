@@ -1,16 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { CalendarIcon } from "lucide-react";
-import { LoaderIcon } from "lucide-react";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
 import { Activity } from "@/lib/types";
 import { deconstructEvent, formatPeriod } from "@/lib/utils";
 import EventCard from "@/components/EventCard";
