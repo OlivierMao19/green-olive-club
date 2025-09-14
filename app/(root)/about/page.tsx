@@ -5,10 +5,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { aboutValues, executivesList } from "@/lib/consts";
 import {
   ArrowRight,
-  Brain,
   Calendar,
   ChevronRight,
-  Dumbbell,
   Eye,
   Heart,
   Target,
