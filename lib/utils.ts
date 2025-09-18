@@ -53,3 +53,8 @@ export function deconstructEvent(events: Event[]) {
 
   return data;
 }
+
+export function sanitizeString(str: string): string {
+  const withoutDiacritics = str.normalize("NFD").replace(/\p{M}/gu, "");
+  return withoutDiacritics.toLowerCase().replace(/[^a-z0-9]+/g, "");
+}
