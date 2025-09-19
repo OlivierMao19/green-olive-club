@@ -1,7 +1,5 @@
 import { Heart, Users, Zap } from "lucide-react";
 
-export const imageKitUrl = "https://ik.imagekit.io/goccc/";
-
 export type ExecutiveInfo = {
   id: number;
   name: string;

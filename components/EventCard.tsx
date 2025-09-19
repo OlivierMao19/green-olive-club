@@ -7,7 +7,6 @@ import { Activity } from "@/lib/types";
 import { Button } from "./ui/button";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { imageKitUrl } from "@/lib/consts";
 
 type BaseProps = {
   event: Activity;
@@ -95,7 +94,7 @@ export function EventCard(props: EventCardProps) {
         <div className="relative overflow-hidden md:flex-none md:max-w-[40%] md:min-w-52 ">
           <div className="relative h-full w-full">
             <Image
-              urlEndpoint={imageKitUrl}
+              urlEndpoint={process.env.IMAGEKIT_URL}
               src={event.image_url}
               alt={`${event.title} event photo`}
               className={`block w-full h-full object-cover transition-all duration-700 group-hover:scale-105 ${
