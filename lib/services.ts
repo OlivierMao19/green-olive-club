@@ -7,6 +7,8 @@ const IMAGEKIT_UPLOAD_URL =
   process.env.IMAGEKIT_UPLOAD_URL ||
   "https://upload.imagekit.io/api/v1/files/upload";
 
+const IMAGEKIT_BASE_URL = process.env.IMAGEKIT_URL;
+
 export async function postEventImage(
   eventId: string,
   image: File,
@@ -17,6 +19,7 @@ export async function postEventImage(
   if (!process.env.IMAGE_KIT_PRIVATE_KEY) {
     throw new Error("Missing IMAGEKIT_PRIVATE_KEY environment variable");
   }
+
   const sanitizedTitle = sanitizeString(title || image.name || "image");
   const uniqueName = `${sanitizedTitle}-${Date.now()}-${uuidv4()}`;
   const fullPath = `${IMAGEKIT_UPLOAD_URL}`;
@@ -54,7 +57,17 @@ export async function postEventImage(
 
   const uploadedUrl =
     data?.url ||
-    (data.filePath ? `${IMAGEKIT_UPLOAD_URL}/${data.filePath}` : undefined);
+    (data?.filePath && IMAGEKIT_BASE_URL
+      ? (() => {
+          // remove leading slash from filePath then safely append to base
+          const rawPath = data.filePath.startsWith("/")
+            ? data.filePath.slice(1)
+            : data.filePath;
+          const base = IMAGEKIT_BASE_URL.replace(/\/$/, ""); // remove trailing slash if any
+          return `${base}/${encodeURI(rawPath)}`;
+        })()
+      : undefined);
+
   if (!uploadedUrl) {
     throw new Error("Upload succeeded but response did not contain a URL");
   }
