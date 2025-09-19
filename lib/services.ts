@@ -16,22 +16,24 @@ export async function postEventImage(
 ) {
   if (!eventId) throw new Error("eventId is required");
   if (!image) throw new Error("image is required");
-  if (!process.env.IMAGE_KIT_PRIVATE_KEY) {
+
+  const privateKey = process.env.IMAGEKIT_PRIVATE_KEY;
+  if (!privateKey) {
     throw new Error("Missing IMAGEKIT_PRIVATE_KEY environment variable");
   }
 
   const sanitizedTitle = sanitizeString(title || image.name || "image");
   const uniqueName = `${sanitizedTitle}-${Date.now()}-${uuidv4()}`;
   const fullPath = `${IMAGEKIT_UPLOAD_URL}`;
+  const folder = "/events";
+  const normalizedFolder = folder.startsWith("/") ? folder : `/${folder}`;
 
   const formData = new FormData();
-  formData.append("image", image);
+  formData.append("file", image);
   formData.append("fileName", uniqueName);
-  formData.append("folder", "/events");
+  formData.append("folder", normalizedFolder);
 
-  const encodedKey = Buffer.from(
-    `${process.env.IMAGE_KIT_PRIVATE_KEY}:`
-  ).toString("base64");
+  const encodedKey = Buffer.from(`${privateKey}:`).toString("base64");
 
   const options = {
     method: "POST",
@@ -50,11 +52,11 @@ export async function postEventImage(
   });
 
   if (!response.ok) {
-    // include ImageKit error message if present
     const message = data?.message || JSON.stringify(data);
     throw new Error(`ImageKit upload failed: ${message}`);
   }
 
+  // get url or relative file path (pair with base url)
   const uploadedUrl =
     data?.url ||
     (data?.filePath && IMAGEKIT_BASE_URL
@@ -77,9 +79,13 @@ export async function postEventImage(
       where: { id: eventId },
       data: { image_url: fullPath },
     })
-    .catch(() => {
-      throw new Error("Could not update database");
+    .catch((err: Error) => {
+      throw new Error(`Could not update database: ${err.message}`);
     });
 
-  return uploadedUrl;
+  return {
+    url: uploadedUrl,
+    fileId: data?.fileId || data?.filePath,
+    rawResponse: data,
+  };
 }
