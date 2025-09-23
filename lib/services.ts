@@ -24,7 +24,6 @@ export async function postEventImage(
 
   const sanitizedTitle = sanitizeString(title || image.name || "image");
   const uniqueName = `${sanitizedTitle}-${Date.now()}-${uuidv4()}`;
-  const fullPath = `${IMAGEKIT_UPLOAD_URL}`;
   const folder = "/events";
   const normalizedFolder = folder.startsWith("/") ? folder : `/${folder}`;
 
@@ -77,7 +76,7 @@ export async function postEventImage(
   await prisma.event
     .update({
       where: { id: eventId },
-      data: { image_url: fullPath },
+      data: { image_url: uploadedUrl },
     })
     .catch((err: Error) => {
       throw new Error(`Could not update database: ${err.message}`);
