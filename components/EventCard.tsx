@@ -59,8 +59,21 @@ export function EventCard(props: EventCardProps) {
   }
 
   function handleImageError() {
+    console.log("error");
     setImageError(true);
     setImageLoaded(true);
+  }
+  console.log(event);
+  function getImageUrl() {
+    const url = event.image_url;
+    const baseUrl = process.env.IMAGEKIT_URL;
+    if (!baseUrl) return url;
+    const relativeUrl = url!.startsWith(baseUrl)
+      ? url!.slice(baseUrl.length)
+      : url;
+    console.log(relativeUrl);
+    console.log(url);
+    return relativeUrl;
   }
 
   const getPlaceholder = () => (
@@ -94,8 +107,8 @@ export function EventCard(props: EventCardProps) {
         <div className="relative overflow-hidden md:flex-none md:max-w-[40%] md:min-w-52 ">
           <div className="relative h-full w-full">
             <Image
-              urlEndpoint={process.env.IMAGEKIT_URL}
-              src={event.image_url}
+              urlEndpoint={`${process.env.IMAGEKIT_URL}`}
+              src={getImageUrl()!}
               alt={`${event.title} event photo`}
               className={`block w-full h-full object-cover transition-all duration-700 group-hover:scale-105 ${
                 imageLoaded ? "opacity-100" : "opacity-0"
@@ -111,7 +124,7 @@ export function EventCard(props: EventCardProps) {
           </div>
         </div>
       ) : (
-        <></>
+        <>636363</>
       )}
 
       <div className="p-6 w-full">
