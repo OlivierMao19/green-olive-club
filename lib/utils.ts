@@ -31,7 +31,6 @@ export const formatTime = (date: Date) => {
 };
 
 export function deconstructEvent(events: Event[]) {
-  console.log(events);
   const data: Activity[] = events.map(
     (event: {
       id: string;

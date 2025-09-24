@@ -63,7 +63,7 @@ export function EventCard(props: EventCardProps) {
     setImageError(true);
     setImageLoaded(true);
   }
-  console.log(event);
+
   function getImageUrl() {
     const url = event.image_url;
     const baseUrl = process.env.IMAGEKIT_URL;
