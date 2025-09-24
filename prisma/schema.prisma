@@ -29,7 +29,7 @@ model Event {
   description String?
   scheduledAt DateTime
   location    String?
-  image_url   String?
+  imageId     String?
   attendees   UserOnEvent[]
 }
 

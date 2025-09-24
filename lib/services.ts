@@ -86,8 +86,23 @@ export async function postEventImage(
   };
 }
 
-export async function deleteEventImage(fileId: string) {
-  if (!fileId) throw new Error("fileId is required");
+export async function getEventImageId(eventId: string) {
+  if (!eventId) throw new Error("eventId is required");
+
+  const url = `https://api.imagekit.io/v1/files?limit=1&tags=${eventId}`;
+  const options = {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      Authorization: `Basic ${encodedKey}`,
+    },
+  };
+}
+
+export async function deleteEventImage(eventId: string) {
+  if (!eventId || eventId.length === 0) throw new Error("eventId is required");
+
+  const fileId = await prisma.event;
   const url = "https://api.imagekit.io/v1/files/fileId";
   const options = {
     method: "DELETE",
