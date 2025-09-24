@@ -47,6 +47,7 @@ export default function EventsCalendar({ isAdmin = false }) {
         }
 
         const data = await response.json();
+        console.log(data);
         const activities = deconstructEvent(data);
         setEvents(activities);
         setfilteredEvents(activities);
