@@ -8,6 +8,10 @@ const IMAGEKIT_UPLOAD_URL =
 
 const IMAGEKIT_BASE_URL = process.env.IMAGEKIT_URL;
 
+const privateKey = process.env.IMAGEKIT_PRIVATE_KEY!;
+
+const encodedKey = Buffer.from(`${privateKey}:`).toString("base64");
+
 export async function postEventImage(
   eventId: string,
   image: File,
@@ -15,11 +19,6 @@ export async function postEventImage(
 ) {
   if (!eventId) throw new Error("eventId is required");
   if (!image) throw new Error("image is required");
-
-  const privateKey = process.env.IMAGEKIT_PRIVATE_KEY;
-  if (!privateKey) {
-    throw new Error("Missing IMAGEKIT_PRIVATE_KEY environment variable");
-  }
 
   const sanitizedTitle = sanitizeString(title || image.name || "image");
   const uniqueName = `${sanitizedTitle}-${eventId}`;
@@ -30,8 +29,7 @@ export async function postEventImage(
   formData.append("file", image);
   formData.append("fileName", uniqueName);
   formData.append("folder", normalizedFolder);
-
-  const encodedKey = Buffer.from(`${privateKey}:`).toString("base64");
+  formData.append("useUniqueFileName", "false");
 
   const options = {
     method: "POST",
@@ -40,7 +38,6 @@ export async function postEventImage(
       Authorization: `Basic ${encodedKey}`,
     },
     body: formData,
-    useUniqueFileName: false,
   };
 
   const response = await fetch(IMAGEKIT_UPLOAD_URL, options);
@@ -87,4 +84,39 @@ export async function postEventImage(
     fileId: data?.fileId || data?.filePath,
     rawResponse: data,
   };
+}
+
+export async function deleteEventImage(fileId: string) {
+  if (!fileId) throw new Error("fileId is required");
+  const url = "https://api.imagekit.io/v1/files/fileId";
+  const options = {
+    method: "DELETE",
+    headers: {
+      Accept: "application/json",
+      Authorization: `Basic ${encodedKey}`,
+    },
+  };
+
+  try {
+    const response = await fetch(url, options);
+    const data = await response.json();
+  } catch (error) {}
+}
+
+export async function getEventImage(fileId: string) {
+  if (!fileId) throw new Error("fileId is required");
+
+  const url = `https://api.imagekit.io/v1/files/${fileId}/details`;
+  const options = {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      Authorization: `Basic ${encodedKey}`,
+    },
+  };
+
+  try {
+    const response = await fetch(url, options);
+    const data = await response.json();
+  } catch (error) {}
 }

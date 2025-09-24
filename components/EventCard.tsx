@@ -7,6 +7,7 @@ import { Activity } from "@/lib/types";
 import { Button } from "./ui/button";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { get } from "http";
 
 type BaseProps = {
   event: Activity;
@@ -59,7 +60,6 @@ export function EventCard(props: EventCardProps) {
   }
 
   function handleImageError() {
-    console.log("error");
     setImageError(true);
     setImageLoaded(true);
   }
@@ -68,14 +68,16 @@ export function EventCard(props: EventCardProps) {
     const url = event.image_url;
     const baseUrl = process.env.IMAGEKIT_URL;
     if (!baseUrl) return url;
+
     const relativeUrl = url!.startsWith(baseUrl)
       ? url!.slice(baseUrl.length)
-      : url;
-    console.log(relativeUrl);
-    console.log(url);
-    return relativeUrl;
-  }
+      : url!;
 
+    const version = new Date().getTime();
+    const separator = relativeUrl.includes("?") ? "&" : "?";
+    console.log(`${relativeUrl}${separator}v=${version}`);
+    return `${relativeUrl}${separator}v=${version}`;
+  }
   const getPlaceholder = () => (
     <div className="relative overflow-hidden md:flex-none md:max-w-[40%] md:min-w-52 ">
       <div className="w-full h-full bg-gradient-to-br from-green-100 to-green-200 flex items-center justify-center">
@@ -87,6 +89,8 @@ export function EventCard(props: EventCardProps) {
       </div>
     </div>
   );
+
+  const url = getImageUrl();
 
   return (
     <article
@@ -108,7 +112,7 @@ export function EventCard(props: EventCardProps) {
           <div className="relative h-full w-full">
             <Image
               urlEndpoint={`${process.env.IMAGEKIT_URL}`}
-              src={getImageUrl()!}
+              src={url!}
               alt={`${event.title} event photo`}
               className={`object-cover transition-all duration-700 group-hover:scale-105 ${
                 imageLoaded ? "opacity-100" : "opacity-0"

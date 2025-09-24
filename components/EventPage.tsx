@@ -46,13 +46,14 @@ export default function EventPage({
   }
 
   async function handleFileInput(file?: File) {
-    if (!file || isLoading) return;
+    if (isLoading) return;
 
+    console.log("SENDING FILE");
     setIsLoading(true);
     if (imageSelected) {
       URL.revokeObjectURL(imageSelected);
     }
-    setImageSelected(URL.createObjectURL(file));
+    // setImageSelected(URL.createObjectURL(file));
 
     await postEventImage(event!.id, file, event!.title);
 
@@ -139,6 +140,10 @@ export default function EventPage({
               />
             )}
           </div>
+
+          <Button onClick={() => handleFileInput(undefined)}>
+            SEND EMPTY IMAGE
+          </Button>
         </CardContent>
       </Card>
     </div>
