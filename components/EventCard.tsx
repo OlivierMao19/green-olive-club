@@ -110,21 +110,23 @@ export function EventCard(props: EventCardProps) {
               urlEndpoint={`${process.env.IMAGEKIT_URL}`}
               src={getImageUrl()!}
               alt={`${event.title} event photo`}
-              className={`block w-full h-full object-cover transition-all duration-700 group-hover:scale-105 ${
+              className={`object-cover transition-all duration-700 group-hover:scale-105 ${
                 imageLoaded ? "opacity-100" : "opacity-0"
               }`}
               onLoad={handleImageLoad}
               onError={handleImageError}
               loading="lazy"
+              fill
+              sizes="(max-width: 50px) 100vw, 50px"
             />
             {!imageLoaded && (
               <div className="absolute inset-0 bg-gray-200 animate-pulse"></div>
             )}
-            <div className="absolute inset-0 bg-black bg-opacity-20 group-hover:bg-opacity-10 transition-all duration-300"></div>
+            {/* <div className="absolute inset-0 bg-black bg-opacity-20 group-hover:bg-opacity-10 transition-all duration-300"></div> */}
           </div>
         </div>
       ) : (
-        <>636363</>
+        <></>
       )}
 
       <div className="p-6 w-full">

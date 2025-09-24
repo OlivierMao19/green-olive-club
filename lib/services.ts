@@ -1,7 +1,6 @@
 "use server";
 import { prisma } from "./prisma";
 import { sanitizeString } from "./utils";
-import { v4 as uuidv4 } from "uuid";
 
 const IMAGEKIT_UPLOAD_URL =
   process.env.IMAGEKIT_UPLOAD_URL ||
@@ -23,7 +22,7 @@ export async function postEventImage(
   }
 
   const sanitizedTitle = sanitizeString(title || image.name || "image");
-  const uniqueName = `${sanitizedTitle}-${Date.now()}-${uuidv4()}`;
+  const uniqueName = `${sanitizedTitle}-${eventId}`;
   const folder = "/events";
   const normalizedFolder = folder.startsWith("/") ? folder : `/${folder}`;
 
@@ -41,6 +40,7 @@ export async function postEventImage(
       Authorization: `Basic ${encodedKey}`,
     },
     body: formData,
+    useUniqueFileName: false,
   };
 
   const response = await fetch(IMAGEKIT_UPLOAD_URL, options);
