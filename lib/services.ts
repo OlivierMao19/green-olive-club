@@ -89,6 +89,10 @@ export async function postEventImage(
 export async function getEventImageId(eventId: string) {
   if (!eventId) throw new Error("eventId is required");
 
+  const event: Event = await prisma.event.findUnique({
+    where: { id: eventId },
+  });
+
   const url = `https://api.imagekit.io/v1/files?limit=1&tags=${eventId}`;
   const options = {
     method: "GET",

@@ -38,7 +38,7 @@ export function deconstructEvent(events: Event[]) {
       description: string | null;
       scheduledAt: Date;
       location: string | null;
-      image_url: string | null;
+      imageId: string | null;
     }) => ({
       id: event.id,
       title: event.title,
@@ -47,7 +47,7 @@ export function deconstructEvent(events: Event[]) {
       location: event.location ?? "",
       type: "service",
       registered: false,
-      image_url: event.image_url,
+      imageId: event.imageId,
     })
   );
 

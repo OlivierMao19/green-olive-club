@@ -6,5 +6,5 @@ export type Activity = {
   location: string;
   type: string;
   registered: boolean;
-  image_url: string | null;
+  imageId: string | null;
 };
