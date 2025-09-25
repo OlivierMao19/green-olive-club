@@ -102,10 +102,10 @@ export async function deleteEventImage(imageId: string | null | undefined) {
   return data;
 }
 
-export async function getEventImage(fileId: string) {
-  if (!fileId) throw new Error("fileId is required");
+export async function getEventImage(imageId: string) {
+  if (!imageId) throw new Error("imageId is required");
 
-  const url = `https://api.imagekit.io/v1/files/${fileId}/details`;
+  const url = `https://api.imagekit.io/v1/files/${imageId}/details`;
   const options = {
     method: "GET",
     headers: {
@@ -114,8 +114,27 @@ export async function getEventImage(fileId: string) {
     },
   };
 
-  try {
-    const response = await fetch(url, options);
-    const data = await response.json();
-  } catch (error) {}
+  const response = await fetch(url, options);
+
+  if (!response.ok) {
+    throw new Error(
+      `ImageKit get failed and returned non-JSON response (status ${response.status})`
+    );
+  }
+  const data = await response.json();
+
+  const uploadedUrl =
+    data?.url ||
+    (data?.filePath && IMAGEKIT_BASE_URL
+      ? (() => {
+          // remove leading slash from filePath then safely append to base
+          const rawPath = data.filePath.startsWith("/")
+            ? data.filePath.slice(1)
+            : data.filePath;
+          const base = IMAGEKIT_BASE_URL.replace(/\/$/, ""); // remove trailing slash if any
+          return `${base}/${encodeURI(rawPath)}`;
+        })()
+      : undefined);
+
+  return uploadedUrl;
 }
