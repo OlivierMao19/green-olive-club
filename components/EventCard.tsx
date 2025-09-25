@@ -109,12 +109,12 @@ export function EventCard(props: EventCardProps) {
         </div>
       )} */}
 
-      {event.imageId && !imageError ? (
+      {event.imageId && !imageError && url ? (
         <div className="relative overflow-hidden md:flex-none md:max-w-[40%] md:min-w-52 ">
           <div className="relative h-full w-full">
             <Image
               urlEndpoint={`${process.env.IMAGEKIT_URL}`}
-              src={url!}
+              src={url}
               alt={`${event.title} event photo`}
               className={`object-cover transition-all duration-700 group-hover:scale-105 ${
                 imageLoaded ? "opacity-100" : "opacity-0"
