@@ -1,4 +1,5 @@
 "use server";
+import { Event } from "@prisma/client";
 import { prisma } from "./prisma";
 import { sanitizeString } from "./utils";
 
@@ -52,36 +53,19 @@ export async function postEventImage(
     throw new Error(`ImageKit upload failed: ${message}`);
   }
 
-  // get url or relative file path (pair with base url)
-  const uploadedUrl =
-    data?.url ||
-    (data?.filePath && IMAGEKIT_BASE_URL
-      ? (() => {
-          // remove leading slash from filePath then safely append to base
-          const rawPath = data.filePath.startsWith("/")
-            ? data.filePath.slice(1)
-            : data.filePath;
-          const base = IMAGEKIT_BASE_URL.replace(/\/$/, ""); // remove trailing slash if any
-          return `${base}/${encodeURI(rawPath)}`;
-        })()
-      : undefined);
-
-  if (!uploadedUrl) {
-    throw new Error("Upload succeeded but response did not contain a URL");
+  if (data.fileId) {
+    await prisma.event
+      .update({
+        where: { id: eventId },
+        data: { imageId: data.fileId },
+      })
+      .catch((err: Error) => {
+        throw new Error(`Could not update database: ${err.message}`);
+      });
   }
 
-  await prisma.event
-    .update({
-      where: { id: eventId },
-      data: { image_url: uploadedUrl },
-    })
-    .catch((err: Error) => {
-      throw new Error(`Could not update database: ${err.message}`);
-    });
-
   return {
-    url: uploadedUrl,
-    fileId: data?.fileId || data?.filePath,
+    fileId: data.fileId,
     rawResponse: data,
   };
 }
@@ -92,6 +76,8 @@ export async function getEventImageId(eventId: string) {
   const event: Event = await prisma.event.findUnique({
     where: { id: eventId },
   });
+
+  const imageId = event.imageId;
 
   const url = `https://api.imagekit.io/v1/files?limit=1&tags=${eventId}`;
   const options = {
