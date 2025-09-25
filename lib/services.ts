@@ -30,7 +30,7 @@ export async function postEventImage(
   formData.append("file", image);
   formData.append("fileName", uniqueName);
   formData.append("folder", normalizedFolder);
-  formData.append("useUniqueFileName", "false");
+  formData.append("useUniqueFileName", "true");
 
   const options = {
     method: "POST",

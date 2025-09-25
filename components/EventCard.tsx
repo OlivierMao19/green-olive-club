@@ -8,6 +8,7 @@ import { Button } from "./ui/button";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { get } from "http";
+import { getEventImage } from "@/lib/services";
 
 type BaseProps = {
   event: Activity;
@@ -64,20 +65,21 @@ export function EventCard(props: EventCardProps) {
     setImageLoaded(true);
   }
 
-  function getImageUrl() {
-    const url = event.image_url;
+  async function getImageUrl(): Promise<string | null> {
+    const imageId = event.imageId;
+    if (!imageId) return null;
+
+    const url = await getEventImage(imageId);
     const baseUrl = process.env.IMAGEKIT_URL;
-    if (!baseUrl) return url;
+    if (!baseUrl || !url) return url;
 
     const relativeUrl = url!.startsWith(baseUrl)
       ? url!.slice(baseUrl.length)
       : url!;
 
-    const version = new Date().getTime();
-    const separator = relativeUrl.includes("?") ? "&" : "?";
-    console.log(`${relativeUrl}${separator}v=${version}`);
-    return `${relativeUrl}${separator}v=${version}`;
+    return relativeUrl;
   }
+
   const getPlaceholder = () => (
     <div className="relative overflow-hidden md:flex-none md:max-w-[40%] md:min-w-52 ">
       <div className="w-full h-full bg-gradient-to-br from-green-100 to-green-200 flex items-center justify-center">
