@@ -65,7 +65,7 @@ export async function postEventImage(
   }
 
   return {
-    fileId: data.fileId,
+    imageId: data.fileId,
     rawResponse: data,
   };
 }
@@ -80,11 +80,10 @@ export async function getEventImageId(eventId: string) {
   return event?.imageId;
 }
 
-export async function deleteEventImage(eventId: string) {
-  if (!eventId || eventId.length === 0) throw new Error("eventId is required");
+export async function deleteEventImage(imageId: string | null | undefined) {
+  if (!imageId || imageId.length === 0) throw new Error("eventId is required");
 
-  const fileId = await prisma.event;
-  const url = "https://api.imagekit.io/v1/files/fileId";
+  const url = `https://api.imagekit.io/v1/files/${imageId}`;
   const options = {
     method: "DELETE",
     headers: {
@@ -93,10 +92,14 @@ export async function deleteEventImage(eventId: string) {
     },
   };
 
-  try {
-    const response = await fetch(url, options);
-    const data = await response.json();
-  } catch (error) {}
+  const response = await fetch(url, options);
+  if (!response.ok) {
+    throw new Error(
+      `ImageKit delete failed and returned non-JSON response (status ${response.status})`
+    );
+  }
+  const data = await response.json();
+  return data;
 }
 
 export async function getEventImage(fileId: string) {
