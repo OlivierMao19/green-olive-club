@@ -1,6 +1,6 @@
 "use client";
 
-import React, { Dispatch, SetStateAction, useState } from "react";
+import React, { Dispatch, SetStateAction, use, useState } from "react";
 import { MapPin, Calendar, ChevronRight } from "lucide-react";
 import { Image } from "@imagekit/next";
 import { Activity } from "@/lib/types";
@@ -80,6 +80,8 @@ export function EventCard(props: EventCardProps) {
     return relativeUrl;
   }
 
+  const url = use(getImageUrl());
+
   const getPlaceholder = () => (
     <div className="relative overflow-hidden md:flex-none md:max-w-[40%] md:min-w-52 ">
       <div className="w-full h-full bg-gradient-to-br from-green-100 to-green-200 flex items-center justify-center">
@@ -91,8 +93,6 @@ export function EventCard(props: EventCardProps) {
       </div>
     </div>
   );
-
-  const url = getImageUrl();
 
   return (
     <article
@@ -109,7 +109,7 @@ export function EventCard(props: EventCardProps) {
         </div>
       )} */}
 
-      {event.image_url && !imageError ? (
+      {event.imageId && !imageError ? (
         <div className="relative overflow-hidden md:flex-none md:max-w-[40%] md:min-w-52 ">
           <div className="relative h-full w-full">
             <Image
