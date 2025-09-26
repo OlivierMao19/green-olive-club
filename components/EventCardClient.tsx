@@ -7,11 +7,10 @@ import { Activity } from "@/lib/types";
 import { Button } from "./ui/button";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { get } from "http";
-import { getEventImage } from "@/lib/services";
 
 type BaseProps = {
   event: Activity;
+  imageURL: string | null;
   isPast?: boolean;
   className?: string;
 };
@@ -32,8 +31,8 @@ function isAdminProps(props: EventCardProps): props is AdminProps {
   return props.isAdmin === true;
 }
 
-export function EventCard(props: EventCardProps) {
-  const { event, isPast = false, className = "" } = props;
+export default function EventCardClient(props: EventCardProps) {
+  const { event, imageURL, isPast = false, className = "" } = props;
   const isAdmin = props.isAdmin ?? false;
 
   const [imageLoaded, setImageLoaded] = useState(false);
@@ -65,23 +64,6 @@ export function EventCard(props: EventCardProps) {
     setImageLoaded(true);
   }
 
-  async function getImageUrl(): Promise<string | null> {
-    const imageId = event.imageId;
-    if (!imageId) return null;
-
-    const url = await getEventImage(imageId);
-    const baseUrl = process.env.IMAGEKIT_URL;
-    if (!baseUrl || !url) return url;
-
-    const relativeUrl = url!.startsWith(baseUrl)
-      ? url!.slice(baseUrl.length)
-      : url!;
-
-    return relativeUrl;
-  }
-
-  const url = use(getImageUrl());
-
   const getPlaceholder = () => (
     <div className="relative overflow-hidden md:flex-none md:max-w-[40%] md:min-w-52 ">
       <div className="w-full h-full bg-gradient-to-br from-green-100 to-green-200 flex items-center justify-center">
@@ -109,12 +91,12 @@ export function EventCard(props: EventCardProps) {
         </div>
       )} */}
 
-      {event.imageId && !imageError && url ? (
+      {event.imageId && !imageError && imageURL ? (
         <div className="relative overflow-hidden md:flex-none md:max-w-[40%] md:min-w-52 ">
           <div className="relative h-full w-full">
             <Image
               urlEndpoint={`${process.env.IMAGEKIT_URL}`}
-              src={url}
+              src={imageURL}
               alt={`${event.title} event photo`}
               className={`object-cover transition-all duration-700 group-hover:scale-105 ${
                 imageLoaded ? "opacity-100" : "opacity-0"
@@ -128,7 +110,6 @@ export function EventCard(props: EventCardProps) {
             {!imageLoaded && (
               <div className="absolute inset-0 bg-gray-200 animate-pulse"></div>
             )}
-            {/* <div className="absolute inset-0 bg-black bg-opacity-20 group-hover:bg-opacity-10 transition-all duration-300"></div> */}
           </div>
         </div>
       ) : (
@@ -194,5 +175,3 @@ export function EventCard(props: EventCardProps) {
     </article>
   );
 }
-
-export default EventCard;

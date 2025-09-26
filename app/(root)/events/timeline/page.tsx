@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { Activity } from "@/lib/types";
 import { deconstructEvent, formatPeriod } from "@/lib/utils";
-import EventCard from "@/components/EventCard";
+import EventCard from "@/components/EventCardClient";
 
 export default function Page() {
   const [isLoading, setIsLoading] = useState(false);
