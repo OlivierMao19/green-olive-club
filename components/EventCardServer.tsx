@@ -28,13 +28,7 @@ export default async function EventCard(props: EventCardProps) {
     const imageId = event.imageId;
     if (!imageId) return null;
 
-    const url = await getEventImage(imageId);
-    const baseUrl = process.env.IMAGEKIT_URL;
-    if (!baseUrl || !url) return url;
-
-    const relativeUrl = url!.startsWith(baseUrl)
-      ? url!.slice(baseUrl.length)
-      : url!;
+    const { uploadedUrl, relativeUrl } = await getEventImage(imageId);
 
     return relativeUrl;
   }

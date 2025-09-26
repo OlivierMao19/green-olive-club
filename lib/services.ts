@@ -136,5 +136,11 @@ export async function getEventImage(imageId: string) {
         })()
       : undefined);
 
-  return uploadedUrl;
+  const relativeUrl =
+    data?.filePath ||
+    (data?.url && IMAGEKIT_BASE_URL && data.url.startsWith(IMAGEKIT_BASE_URL)
+      ? data.url.slice(IMAGEKIT_BASE_URL.length)
+      : undefined);
+
+  return { uploadedUrl, relativeUrl };
 }
