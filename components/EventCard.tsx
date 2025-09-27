@@ -54,6 +54,8 @@ export default function EventCard(props: EventCardProps) {
       } catch (error) {
         console.error("Error fetching event image:", error);
         if (mounted) setImageURL(null);
+      } finally {
+        console.log("Image URL:", imageURL);
       }
     }
 
