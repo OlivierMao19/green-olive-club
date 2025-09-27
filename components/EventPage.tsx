@@ -9,7 +9,7 @@ import type { Event } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Image from "next/image";
-import { postEventImage } from "@/lib/services";
+import { deleteEventImage, postEventImage } from "@/lib/services";
 
 type EventPagePayload = {
   event: Event | null;
@@ -55,14 +55,18 @@ export default function EventPage({
     }
     setImageSelected(URL.createObjectURL(file));
 
-    
-
-    await postEventImage(event!.id, file, event!.title);
+    const { prevImageId } = await postEventImage(event!.id, file, event!.title);
+    if (prevImageId) {
+      await deleteEventImage(prevImageId);
+    }
 
     setIsLoading(false);
   }
 
   function handleDeleteImage() {
+    if (imageSelected) {
+      URL.revokeObjectURL(imageSelected);
+    }
     setImageSelected(undefined);
   }
 
@@ -146,7 +150,9 @@ export default function EventPage({
               />
             )}
           </div>
-          <Button onClick={() => handleFileInput(undefined)}>DELETE CURRENT IMAGE</Button>
+          <Button onClick={() => handleFileInput(undefined)}>
+            DELETE CURRENT IMAGE
+          </Button>
         </CardContent>
       </Card>
     </div>
