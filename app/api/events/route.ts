@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma";
+import { deleteEventImage } from "@/lib/services";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
@@ -43,6 +44,10 @@ export async function DELETE(req: Request) {
         },
       });
     });
+
+    if (event?.imageId) {
+      await deleteEventImage(event.imageId);
+    }
 
     return NextResponse.json(
       { message: "Event deleted", event },
