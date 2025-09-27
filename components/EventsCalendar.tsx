@@ -14,7 +14,7 @@ import {
 import AttendeeTable from "@/components/AttendeeTable";
 import { deconstructEvent, formatDate } from "@/lib/utils";
 import { Activity } from "@/lib/types";
-import EventCard from "./EventCardServer";
+import EventCard from "./EventCard";
 import { useRouter } from "next/navigation";
 
 export default function EventsCalendar({ isAdmin = false }) {
