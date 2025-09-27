@@ -2,6 +2,7 @@
 import { Event } from "@prisma/client";
 import { prisma } from "./prisma";
 import { sanitizeString } from "./utils";
+import { raw } from "@prisma/client/runtime/library";
 
 const IMAGEKIT_UPLOAD_URL =
   process.env.IMAGEKIT_UPLOAD_URL ||
@@ -53,21 +54,56 @@ export async function postEventImage(
     throw new Error(`ImageKit upload failed: ${message}`);
   }
 
-  if (data.fileId) {
-    await prisma.event
-      .update({
-        where: { id: eventId },
-        data: { imageId: data.fileId },
-      })
-      .catch((err: Error) => {
-        throw new Error(`Could not update database: ${err.message}`);
-      });
-  }
+  const { imageId, prevImageId, rawResponse } = await updateEventImage(
+    eventId,
+    {
+      fileId: data.fileId,
+    }
+  );
 
+  if (imageId !== rawResponse.fileId) {
+    throw new Error("Image ID mismatch");
+  }
   return {
-    imageId: data.fileId,
+    imageId: imageId,
+    prevImageId: prevImageId,
     rawResponse: data,
   };
+}
+
+async function updateEventImage(eventId: string, data: { fileId?: string }) {
+  if (!data.fileId) {
+    return {
+      imageId: null,
+      prevImageId: null,
+      rawResponse: data,
+    };
+  }
+
+  try {
+    const [prev, updated] = await prisma.$transaction([
+      prisma.event.findUnique({
+        where: { id: eventId },
+        select: { imageId: true },
+      }),
+      prisma.event.update({
+        where: { id: eventId },
+        data: { imageId: data.fileId },
+        select: { imageId: true },
+      }),
+    ]);
+
+    const prevImageId = prev?.imageId ?? null;
+
+    return {
+      imageId: updated.imageId,
+      prevImageId,
+      rawResponse: data,
+    };
+  } catch (err: unknown) {
+    const msg = err instanceof Error ? err.message : String(err);
+    throw new Error(`Could not update event image: ${msg}`);
+  }
 }
 
 export async function getEventImageId(eventId: string) {

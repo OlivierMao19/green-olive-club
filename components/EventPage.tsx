@@ -33,6 +33,7 @@ export default function EventPage({
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const router = useRouter();
+
   async function onDeleteEvent() {
     const response = await fetch("/api/events", {
       method: "DELETE",
@@ -53,6 +54,8 @@ export default function EventPage({
       URL.revokeObjectURL(imageSelected);
     }
     setImageSelected(URL.createObjectURL(file));
+
+    
 
     await postEventImage(event!.id, file, event!.title);
 
