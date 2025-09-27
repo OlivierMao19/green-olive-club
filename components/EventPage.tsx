@@ -63,13 +63,6 @@ export default function EventPage({
     setIsLoading(false);
   }
 
-  function handleDeleteImage() {
-    if (imageSelected) {
-      URL.revokeObjectURL(imageSelected);
-    }
-    setImageSelected(undefined);
-  }
-
   return (
     <div className="container mx-auto px-2 py-6 md:px-4 md:w-9/10 sm:w-full mt-6">
       <Card className="h-[70svh] bg-green-50/30 border border-green-100/60 shadow-sm">
@@ -122,37 +115,38 @@ export default function EventPage({
             initialRegistrationStatus={initialRegistrationStatus}
             hasMcGillId={!!mcGillId}
           />
-          <label htmlFor="image-event" className="flex w-fit">
-            {isLoading ? (
-              <>Is loading plz wait</>
-            ) : (
-              <>
-                Insert Input
-                <input
-                  type="file"
-                  accept=".png, .jpg, .jpeg"
-                  className="hidden"
-                  id="image-event"
-                  onChange={(e) => {
-                    handleFileInput(e.target.files?.[0]);
-                  }}
-                ></input>
-              </>
-            )}
-          </label>
-          <div className="w-40 h-40 relative">
-            {imageSelected && (
-              <Image
-                src={imageSelected}
-                alt="image"
-                fill
-                className="object-cover"
-              />
-            )}
-          </div>
-          <Button onClick={() => handleFileInput(undefined)}>
-            DELETE CURRENT IMAGE
-          </Button>
+          {isAdmin && (
+            <>
+              <label htmlFor="image-event" className="flex w-fit">
+                {isLoading ? (
+                  <>Is loading plz wait</>
+                ) : (
+                  <>
+                    Insert Input
+                    <input
+                      type="file"
+                      accept=".png, .jpg, .jpeg"
+                      className="hidden"
+                      id="image-event"
+                      onChange={(e) => {
+                        handleFileInput(e.target.files?.[0]);
+                      }}
+                    ></input>
+                  </>
+                )}
+              </label>
+              <div className="w-40 h-40 relative">
+                {imageSelected && (
+                  <Image
+                    src={imageSelected}
+                    alt="image"
+                    fill
+                    className="object-cover"
+                  />
+                )}
+              </div>
+            </>
+          )}
         </CardContent>
       </Card>
     </div>
