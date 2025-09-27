@@ -8,7 +8,7 @@ const IMAGEKIT_UPLOAD_URL =
   process.env.IMAGEKIT_UPLOAD_URL ||
   "https://upload.imagekit.io/api/v1/files/upload";
 
-const IMAGEKIT_BASE_URL = process.env.IMAGEKIT_URL;
+const IMAGEKIT_BASE_URL = process.env.NEXT_PUBLIC_IMAGEKIT_URL;
 
 const privateKey = process.env.IMAGEKIT_PRIVATE_KEY!;
 
@@ -134,8 +134,6 @@ export async function deleteEventImage(imageId: string | null | undefined) {
       `ImageKit delete failed and returned non-JSON response (status ${response.status})`
     );
   }
-  const data = await response.json();
-  return data;
 }
 
 export async function getEventImage(imageId: string) {

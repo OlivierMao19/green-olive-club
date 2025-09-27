@@ -51,11 +51,11 @@ export default function EventCard(props: EventCardProps) {
         const { uploadedUrl, relativeUrl } = await getEventImage(imageId);
         if (!mounted) return;
         setImageURL(relativeUrl ?? uploadedUrl ?? null);
+        console.log("Image URL:", relativeUrl ?? uploadedUrl ?? null);
       } catch (error) {
         console.error("Error fetching event image:", error);
         if (mounted) setImageURL(null);
       } finally {
-        console.log("Image URL:", imageURL);
       }
     }
 
@@ -118,11 +118,14 @@ export default function EventCard(props: EventCardProps) {
         </div>
       )} */}
 
-      {event.imageId && !imageError && imageURL ? (
+      {event.imageId &&
+      !imageError &&
+      imageURL &&
+      process.env.NEXT_PUBLIC_IMAGEKIT_URL ? (
         <div className="relative overflow-hidden md:flex-none md:max-w-[40%] md:min-w-52 ">
           <div className="relative h-full w-full">
             <Image
-              urlEndpoint={`${process.env.IMAGEKIT_URL}`}
+              urlEndpoint={`${process.env.NEXT_PUBLIC_IMAGEKIT_URL}`}
               src={imageURL}
               alt={`${event.title} event photo`}
               className={`object-cover transition-all duration-700 group-hover:scale-105 ${
