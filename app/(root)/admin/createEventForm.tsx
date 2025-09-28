@@ -6,12 +6,15 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { useRouter } from "next/navigation";
 
 export default function CreateEventForm() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [dateTime, setDateTime] = useState("");
   const [location, setLocation] = useState("");
+
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -47,6 +50,8 @@ export default function CreateEventForm() {
       setDateTime("");
       setLocation("");
       alert(`Event created successfully scheduled at: ${dateTime}`);
+
+      router.push("/events");
     } catch (error) {
       console.error(error);
       alert("Error creating event.");
