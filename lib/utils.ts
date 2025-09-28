@@ -38,7 +38,7 @@ export function deconstructEvent(events: Event[]) {
       description: string | null;
       scheduledAt: Date;
       location: string | null;
-      image_url: string | null;
+      imageId: string | null;
     }) => ({
       id: event.id,
       title: event.title,
@@ -47,9 +47,14 @@ export function deconstructEvent(events: Event[]) {
       location: event.location ?? "",
       type: "service",
       registered: false,
-      image_url: event.image_url,
+      imageId: event.imageId,
     })
   );
 
   return data;
+}
+
+export function sanitizeString(str: string): string {
+  const withoutDiacritics = str.normalize("NFD").replace(/\p{M}/gu, "");
+  return withoutDiacritics.toLowerCase().replace(/[^a-z0-9]+/g, "");
 }

@@ -1,12 +1,13 @@
 "use client";
 
-import React, { Dispatch, SetStateAction, useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { MapPin, Calendar, ChevronRight } from "lucide-react";
 import { Image } from "@imagekit/next";
 import { Activity } from "@/lib/types";
 import { Button } from "./ui/button";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { getEventImage } from "@/lib/services";
 
 type BaseProps = {
   event: Activity;
@@ -30,12 +31,39 @@ function isAdminProps(props: EventCardProps): props is AdminProps {
   return props.isAdmin === true;
 }
 
-export function EventCard(props: EventCardProps) {
+export default function EventCard(props: EventCardProps) {
   const { event, isPast = false, className = "" } = props;
   const isAdmin = props.isAdmin ?? false;
 
   const [imageLoaded, setImageLoaded] = useState(false);
   const [imageError, setImageError] = useState(false);
+  const [imageURL, setImageURL] = useState<string | null>(null);
+
+  useEffect(() => {
+    let mounted = true;
+    async function getImageUrl() {
+      const imageId = event.imageId;
+      if (!imageId) {
+        setImageURL(null);
+        return;
+      }
+      try {
+        const { uploadedUrl, relativeUrl } = await getEventImage(imageId);
+        if (!mounted) return;
+        setImageURL(relativeUrl ?? uploadedUrl ?? null);
+        console.log("Image URL:", relativeUrl ?? uploadedUrl ?? null);
+      } catch (error) {
+        console.error("Error fetching event image:", error);
+        if (mounted) setImageURL(null);
+      } finally {
+      }
+    }
+
+    getImageUrl();
+    return () => {
+      mounted = false;
+    };
+  }, [event.imageId]);
 
   const router = useRouter();
 
@@ -90,24 +118,28 @@ export function EventCard(props: EventCardProps) {
         </div>
       )} */}
 
-      {event.image_url && !imageError ? (
+      {event.imageId &&
+      !imageError &&
+      imageURL &&
+      process.env.NEXT_PUBLIC_IMAGEKIT_URL ? (
         <div className="relative overflow-hidden md:flex-none md:max-w-[40%] md:min-w-52 ">
           <div className="relative h-full w-full">
             <Image
-              urlEndpoint={process.env.NEXT_PUBLIC_IMAGEKIT_URL}
-              src={event.image_url}
+              urlEndpoint={`${process.env.NEXT_PUBLIC_IMAGEKIT_URL}`}
+              src={imageURL}
               alt={`${event.title} event photo`}
-              className={`block w-full h-full object-cover transition-all duration-700 group-hover:scale-105 ${
+              className={`object-cover transition-all duration-700 group-hover:scale-105 ${
                 imageLoaded ? "opacity-100" : "opacity-0"
               }`}
               onLoad={handleImageLoad}
               onError={handleImageError}
               loading="lazy"
+              fill
+              sizes="(max-width: 50px) 100vw, 50px"
             />
             {!imageLoaded && (
               <div className="absolute inset-0 bg-gray-200 animate-pulse"></div>
             )}
-            <div className="absolute inset-0 bg-black bg-opacity-20 group-hover:bg-opacity-10 transition-all duration-300"></div>
           </div>
         </div>
       ) : (
@@ -173,5 +205,3 @@ export function EventCard(props: EventCardProps) {
     </article>
   );
 }
-
-export default EventCard;

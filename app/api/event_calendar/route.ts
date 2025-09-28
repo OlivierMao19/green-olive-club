@@ -22,13 +22,6 @@ export async function POST(req: Request) {
     }
 
     const events = await prisma.event.findMany({
-      select: {
-        id: true,
-        title: true,
-        description: true,
-        location: true,
-        scheduledAt: true,
-      },
       where: {
         scheduledAt: {
           gte: dateTime,
