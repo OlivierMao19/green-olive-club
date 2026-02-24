@@ -17,6 +17,16 @@ const AnimatedImageCarousel: React.FC<AnimatedImageCarouselProps> = ({
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
+  useEffect(() => {
+    if (images.length === 0) return;
+
+    const timer = setInterval(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
+    }, interval);
+
+    return () => clearInterval(timer);
+  }, [images.length, interval]);
+
   if (images.length === 0) {
     return null;
   }
@@ -25,14 +35,6 @@ const AnimatedImageCarousel: React.FC<AnimatedImageCarouselProps> = ({
   const imageSrc = currentImage?.src?.startsWith("/")
     ? currentImage.src
     : `/${currentImage?.src ?? ""}`;
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, interval);
-
-    return () => clearInterval(timer);
-  }, [images.length, interval]);
 
   return (
     <motion.div

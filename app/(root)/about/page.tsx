@@ -16,7 +16,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 
-export default function about() {
+export default function About() {
   const [activeTab, setActiveTab] = useState("mission");
   return (
     <div className="site-shell space-y-8 py-8 md:space-y-10 md:py-10">
@@ -107,8 +107,9 @@ export default function about() {
               <CardContent className="prose prose-lg max-w-none">
                 <p className="text-muted-foreground leading-relaxed text-center">
                   We envision a community where members are equipped to live out
-                  their faith in daily life, support one another through life's
-                  challenges, and share God's love with the broader community.
+                  their faith in daily life, support one another through
+                  life&apos;s challenges, and share God&apos;s love with the
+                  broader community.
                 </p>
               </CardContent>
             </Card>
