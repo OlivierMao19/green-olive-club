@@ -19,14 +19,14 @@ import { useState } from "react";
 export default function about() {
   const [activeTab, setActiveTab] = useState("mission");
   return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-100 via-white to-green-50">
+    <div className="site-shell space-y-8 py-8 md:space-y-10 md:py-10">
       {/* Hero Section */}
-      <section className="relative overflow-hidden">
+      <section className="section-shell relative overflow-hidden">
         <div className="absolute inset-0"></div>
-        <div className="relative max-w-6xl mx-auto px-6 py-20">
+        <div className="relative max-w-6xl mx-auto px-2 py-10 md:px-6 md:py-14">
           <div className="text-center space-y-8">
             <div className="space-y-4">
-              <h1 className="text-6xl md:text-7xl font-bold bg-gradient-to-r from-emerald-700 via-green-600 to-emerald-800 bg-clip-text text-transparent leading-tight">
+              <h1 className="about-heading text-6xl md:text-7xl font-semibold bg-gradient-to-r from-emerald-700 via-green-600 to-emerald-800 bg-clip-text text-transparent leading-tight">
                 About Us
               </h1>
               <h2 className="text-2xl md:text-3xl font-semibold text-emerald-800 tracking-wide">
@@ -54,7 +54,7 @@ export default function about() {
       </section>
 
       {/* Mission and Vision Cards */}
-      <section className="container mx-auto px-6 pb-16">
+      <section className="section-shell px-4 pb-8 md:px-6">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           <TabsList className="grid w-full grid-cols-3 max-w-md mx-auto mb-12 glass-effect">
             <TabsTrigger value="mission" className="flex items-center gap-2">
@@ -152,7 +152,7 @@ export default function about() {
       </section>
 
       {/* Events Section */}
-      <section className="mb-20 mx-auto max-w-5xl  rounded-3xl px-6">
+      <section className="section-shell mx-auto max-w-5xl px-3 md:px-6">
         <div className="bg-gradient-to-r from-emerald-200 to-green-200 rounded-3xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden">
           <div className="px-8 py-12 sm:px-12 sm:py-16">
             <div className="max-w-4xl mx-auto text-center">
@@ -208,7 +208,7 @@ export default function about() {
       </section>
 
       {/* Leadership Team */}
-      <section className="max-w-6xl mx-auto px-6 py-16">
+      <section className="section-shell px-4 py-8 md:px-6 md:py-12">
         <div className="text-center mb-12">
           <h3 className="text-4xl font-bold text-emerald-800 mb-4">
             Leadership Team
