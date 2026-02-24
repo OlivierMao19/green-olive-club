@@ -51,7 +51,6 @@ export default function EventCard(props: EventCardProps) {
         const { uploadedUrl, relativeUrl } = await getEventImage(imageId);
         if (!mounted) return;
         setImageURL(relativeUrl ?? uploadedUrl ?? null);
-        console.log("Image URL:", relativeUrl ?? uploadedUrl ?? null);
       } catch (error) {
         console.error("Error fetching event image:", error);
         if (mounted) setImageURL(null);
@@ -92,12 +91,12 @@ export default function EventCard(props: EventCardProps) {
   }
 
   const getPlaceholder = () => (
-    <div className="relative overflow-hidden md:flex-none md:max-w-[40%] md:min-w-52 ">
-      <div className="w-full h-full bg-gradient-to-br from-green-100 to-green-200 flex items-center justify-center">
+    <div className="relative overflow-hidden md:min-w-56 md:flex-none md:max-w-[38%]">
+      <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-emerald-100 to-lime-100">
         <img
           src="/logo.png"
           alt="GOCCC logo"
-          className="block h-full md:w-full w-50 md:object-contain"
+          className="block h-36 w-auto object-contain opacity-85 md:h-full md:w-full"
         />
       </div>
     </div>
@@ -105,9 +104,9 @@ export default function EventCard(props: EventCardProps) {
 
   return (
     <article
-      className={`group relative  rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden ${
-        isPast ? "ring-2 ring-gray-400 ring-opacity-50 bg-gray-200" : "bg-white"
-      } ${className} md:flex md:items-stretch md:min-h-[160px]`}
+      className={`group relative overflow-hidden rounded-2xl border border-emerald-100/80 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_24px_45px_-30px_rgba(18,72,52,0.8)] ${
+        isPast ? "bg-emerald-50/60 ring-1 ring-emerald-200/90" : "bg-white/90"
+      } ${className} md:flex md:min-h-[190px] md:items-stretch`}
       role="article"
       aria-label={`Event: ${event.title}`}
       onClick={handleActivate}
@@ -135,7 +134,7 @@ export default function EventCard(props: EventCardProps) {
               onError={handleImageError}
               loading="lazy"
               fill
-              sizes="(max-width: 50px) 100vw, 50px"
+              sizes="(max-width: 768px) 100vw, 38vw"
             />
             {!imageLoaded && (
               <div className="absolute inset-0 bg-gray-200 animate-pulse"></div>
@@ -143,34 +142,46 @@ export default function EventCard(props: EventCardProps) {
           </div>
         </div>
       ) : (
-        <></>
+        getPlaceholder()
       )}
 
       <div className="p-6 w-full">
         <div className="flex items-center justify-between mb-3">
-          <h3 className="text-xl font-bold text-slate-800 leading-tight group-hover:text-green-600 transition-colors duration-200">
+          <h3 className="text-xl font-bold text-emerald-950 leading-tight group-hover:text-emerald-700 transition-colors duration-200">
             {event.title}
           </h3>
-          <Button variant="outline" asChild>
-            <Link href={`/events/${event.id}`}>
+          <Button
+            variant="outline"
+            asChild
+            className="border-emerald-200 bg-white/80 text-emerald-900 hover:bg-emerald-50"
+          >
+            <Link href={`/events/${event.id}`} onClick={(e) => e.stopPropagation()}>
               Details <ChevronRight className="ml-1 h-4 w-4" />
             </Link>
           </Button>
         </div>
 
-        <p className="text-slate-600 mb-4 leading-relaxed">
+        <p className="mb-4 leading-relaxed text-emerald-900/72">
           {event.description}
         </p>
 
         <div className="space-y-2 mb-4">
-          <div className="flex items-center text-sm text-slate-500">
-            <Calendar className="w-4 h-4 mr-2 text-green-500" />
-            <span>{event.date.toUTCString()}</span>
+          <div className="flex items-center text-sm text-emerald-900/65">
+            <Calendar className="mr-2 h-4 w-4 text-emerald-500" />
+            <span>
+              {event.date.toLocaleString(undefined, {
+                weekday: "short",
+                month: "short",
+                day: "numeric",
+                hour: "numeric",
+                minute: "2-digit",
+              })}
+            </span>
           </div>
 
           {event.location && (
-            <div className="flex items-center text-sm text-slate-500">
-              <MapPin className="w-4 h-4 mr-2 text-green-500" />
+            <div className="flex items-center text-sm text-emerald-900/65">
+              <MapPin className="mr-2 h-4 w-4 text-emerald-500" />
               <span>{event.location}</span>
             </div>
           )}

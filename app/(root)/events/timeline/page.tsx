@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { Activity } from "@/lib/types";
 import { deconstructEvent, formatPeriod } from "@/lib/utils";
 import EventCard from "@/components/EventCard";
+import { LoaderIcon } from "lucide-react";
 
 export default function Page() {
   const [isLoading, setIsLoading] = useState(false);
@@ -39,67 +40,75 @@ export default function Page() {
   }, []);
 
   return (
-    <div className="relative max-w-6xl mx-auto py-18 flex flex-col px-2">
-      <h1 className="text-4xl font-bold w-full text-center pb-12 text-emerald-500">
-        Event Timeline
-      </h1>
-      {/* Timeline Spine - Hidden on mobile */}
-      <div className="hidden mt-37 md:block absolute left-[calc(16.666667%+5px)] transform -translate-x-px top-0 bottom-0 w-0.5 bg-gradient-to-b from-green-200 via-green-300 to-green-200"></div>
+    <div className="site-shell py-8 md:py-10">
+      <div className="section-shell relative flex flex-col px-2">
+        <h1 className="about-heading w-full pb-12 text-center text-4xl font-semibold text-emerald-800">
+          Event Timeline
+        </h1>
+        {/* Timeline Spine - Hidden on mobile */}
+        <div className="absolute top-0 bottom-0 left-[calc(16.666667%+5px)] hidden mt-36 w-0.5 -translate-x-px transform bg-gradient-to-b from-green-200 via-green-300 to-green-200 md:block"></div>
 
-      {/* Events */}
-      <div className="space-y-12">
-        {events.map((event, index) => {
-          const isPast = event.date.getTime() < today.getTime();
-          let eventPeriod = formatPeriod(event.date);
-          if (eventPeriod === formatPeriod(prevDate)) {
-            eventPeriod = "";
-          } else {
-            prevDate = event.date;
-          }
+        {/* Events */}
+        {isLoading ? (
+          <div className="flex w-full items-center justify-center py-24">
+            <LoaderIcon className="h-16 w-16 animate-spin text-emerald-700" />
+          </div>
+        ) : (
+          <div className="space-y-12">
+            {events.map((event) => {
+              const isPast = event.date.getTime() < today.getTime();
+              let eventPeriod = formatPeriod(event.date);
+              if (eventPeriod === formatPeriod(prevDate)) {
+                eventPeriod = "";
+              } else {
+                prevDate = event.date;
+              }
 
-          return (
-            <div key={event.id} className="relative flex">
-              {/* Timeline Dot */}
-              <div className="hidden md:block absolute left-1/6 transform -translate-x-1/2 -translate-y-2">
-                <div
-                  className={`w-4 h-4 rounded-full border-4 shadow-md ${
-                    isPast
-                      ? "bg-gray-400 border-gray-300"
-                      : "bg-green-500 ring-4 ring-green-200 ring-opacity-50 border-white"
-                  }`}
-                ></div>
-              </div>
+              return (
+                <div key={event.id} className="relative flex">
+                  {/* Timeline Dot */}
+                  <div className="absolute left-1/6 hidden -translate-x-1/2 -translate-y-2 transform md:block">
+                    <div
+                      className={`h-4 w-4 rounded-full border-4 shadow-md ${
+                        isPast
+                          ? "border-gray-300 bg-gray-400"
+                          : "border-white bg-green-500 ring-4 ring-green-200 ring-opacity-50"
+                      }`}
+                    ></div>
+                  </div>
 
-              {/* Event Card Container */}
-              <div className="hidden md:block relative md:w-1/6 md:mr-auto md:pr-8 text-right text-xl font-bold">
-                {eventPeriod}
-              </div>
+                  {/* Event Card Container */}
+                  <div className="relative hidden text-right text-xl font-bold md:mr-auto md:block md:w-1/6 md:pr-8">
+                    {eventPeriod}
+                  </div>
 
-              <div
-                className={`
+                  <div
+                    className={`
                   relative ml-10 w-full md:w-5/6 md:ml-auto md:pl-8
                 `}
-              >
-                <div
-                  className={`
+                  >
+                    <div
+                      className={`
                     transform transition-all duration-500 hover:scale-105 md:translate-x-0
                   `}
-                >
-                  <EventCard
-                    event={event}
-                    isPast={isPast}
-                    isAdmin={false}
-                    className="w-full"
-                  />
-                </div>
-              </div>
+                    >
+                      <EventCard
+                        event={event}
+                        isPast={isPast}
+                        isAdmin={false}
+                        className="w-full"
+                      />
+                    </div>
+                  </div>
 
-              {/* Mobile Timeline Connector */}
-              <div className="md:hidden absolute left-4 top-0 bottom-0 w-0.5 bg-green-200"></div>
-              <div className="md:hidden absolute left-2 top-6 w-4 h-4 bg-green-400 rounded-full border-4 border-white shadow-md"></div>
-            </div>
-          );
-        })}
+                  {/* Mobile Timeline Connector */}
+                  <div className="absolute top-0 bottom-0 left-4 w-0.5 bg-green-200 md:hidden"></div>
+                  <div className="absolute left-2 top-6 h-4 w-4 rounded-full border-4 border-white bg-green-400 shadow-md md:hidden"></div>
+                </div>
+              );
+            })}
+          </div>
+        )}
       </div>
     </div>
   );
