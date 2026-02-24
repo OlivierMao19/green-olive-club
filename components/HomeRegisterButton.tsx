@@ -11,21 +11,27 @@ export default function HomeRegisterButton({
 }: HomeRegisterButtonProps) {
   const handleRegisterClick = () => {
     if (isLoggedIn) {
-      toast("You're already logged in dummy!", { icon: "🤪" });
+      toast("You are already logged in. Head to Events to register.", {
+        icon: "OK",
+      });
     }
   };
 
   return isLoggedIn ? (
     <Button
       size="lg"
-      className="bg-green-700 hover:bg-green-800"
+      className="rounded-full bg-emerald-700 px-7 text-white hover:bg-emerald-800"
       onClick={handleRegisterClick}
     >
-      Register Now
+      Register for an Event
     </Button>
   ) : (
-    <Button asChild size="lg" className="bg-green-700 hover:bg-green-800">
-      <Link href="/login">Register Now</Link>
+    <Button
+      asChild
+      size="lg"
+      className="rounded-full bg-emerald-700 px-7 text-white hover:bg-emerald-800"
+    >
+      <Link href="/login">Create Account</Link>
     </Button>
   );
 }

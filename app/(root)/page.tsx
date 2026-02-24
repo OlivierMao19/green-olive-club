@@ -1,14 +1,14 @@
-import Head from "next/head";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import {
-  CalendarDays,
-  Users,
+  ArrowRight,
+  ArrowUpRight,
   BookOpen,
-  Phone,
-  Mail,
+  CalendarDays,
   ContactRound,
+  Mail,
   MapPin,
+  Users,
 } from "lucide-react";
 import { Toaster } from "react-hot-toast";
 import { auth } from "@/auth";
@@ -22,203 +22,251 @@ export default async function Home() {
 
   const carouselImages = [
     {
-      src: "IMG_1.jpg",
+      src: "/IMG_1.jpg",
       alt: "Club Image 1",
     },
     {
-      src: "IMG_2.jpg",
+      src: "/IMG_2.jpg",
       alt: "Club Image 2",
     },
     {
-      src: "IMG_3.jpg",
+      src: "/IMG_3.jpg",
       alt: "Club Image 3",
     },
     {
-      src: "IMG_4.jpg",
+      src: "/IMG_4.jpg",
       alt: "Club Image 4",
     },
     {
-      src: "IMG_5.jpg",
+      src: "/IMG_5.jpg",
       alt: "Club Image 5",
     },
   ];
 
+  const featureCards = [
+    {
+      title: "Bible Studies",
+      description:
+        "Weekly sessions in English and Chinese focused on practical faith and honest questions.",
+      icon: BookOpen,
+    },
+    {
+      title: "Fellowship",
+      description:
+        "Shared meals, conversations, and social events that make it easy to build real friendships.",
+      icon: Users,
+    },
+    {
+      title: "Events",
+      description:
+        "Retreats, workshops, and campus activities designed for spiritual and personal growth.",
+      icon: CalendarDays,
+    },
+  ];
+
   return (
-    <div className="min-h-screen bg-lime-100 text-gray-700">
-      <Head>
-        <title>Green Olive Chinese Christian Club</title>
-        <meta name="description" content="Green Olive Chinese Christian Club" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <div className="flex flex-col justify-between ">
-        {/* Main */}
-        <Toaster />
-        <section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-b from-green-100 to-white min-h-screen bg-lime-100">
-          <div className="container mx-auto px-4 py-2">
-            <main className="grid lg:grid-cols-2 gap-12 items-center mt-2 mb-24">
-              <div className="md:w-2/3 mb-8 md:mb-0">
-                <p className="text-gray-600 italic mb-2">Become a member!</p>
-                <h1 className="text-5xl md:text-6xl font-bold text-gray-800 mb-6">
-                  Welcome to Our
-                  <br />
-                  Wonderful Club
-                </h1>
-                <p className="text-gray-700 text-xl mb-8">
-                  Register and Join Us
-                  <br />
-                  on our Next Activity!!
-                </p>
+    <div className="space-y-16 py-8 md:space-y-20 md:py-12">
+      <Toaster />
+
+      <section className="site-shell">
+        <div className="section-shell bg-grid-soft relative overflow-hidden">
+          <div className="absolute -top-20 right-[-80px] h-56 w-56 rounded-full bg-emerald-200/45 blur-3xl" />
+          <div className="grid items-center gap-10 lg:grid-cols-[1.15fr_0.85fr]">
+            <div className="space-y-6">
+              <p className="inline-flex rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-semibold uppercase tracking-[0.14em] text-emerald-800">
+                McGill Student Community
+              </p>
+              <h1 className="about-heading text-balance text-5xl leading-[1.08] font-semibold text-emerald-950 md:text-6xl">
+                Grow in faith, friendship, and purpose.
+              </h1>
+              <p className="max-w-xl text-base text-emerald-900/75 md:text-lg">
+                Green Olive Chinese Christian Club is a welcoming space for
+                students and friends to explore Christianity, build meaningful
+                relationships, and serve together.
+              </p>
+
+              <div className="flex flex-wrap items-center gap-3">
+                <CustomHomeButton link="/events">
+                  Explore Upcoming Events
+                </CustomHomeButton>
+                <Button
+                  asChild
+                  variant="outline"
+                  className="rounded-full border-emerald-200 bg-white/75 text-emerald-900 hover:bg-emerald-50"
+                >
+                  <Link href="/about">About Us</Link>
+                </Button>
+              </div>
+
+              <div className="flex flex-wrap gap-x-8 gap-y-3 pt-2">
                 <div>
-                  <CustomHomeButton link="/events">
-                    Register to activities! →
-                  </CustomHomeButton>
+                  <p className="text-xs font-semibold uppercase tracking-[0.11em] text-emerald-900/60">
+                    Gatherings
+                  </p>
+                  <p className="text-lg font-semibold text-emerald-900">Biweekly</p>
+                </div>
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-[0.11em] text-emerald-900/60">
+                    Languages
+                  </p>
+                  <p className="text-lg font-semibold text-emerald-900">EN + 中文</p>
+                </div>
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-[0.11em] text-emerald-900/60">
+                    Open To
+                  </p>
+                  <p className="text-lg font-semibold text-emerald-900">Everyone</p>
                 </div>
               </div>
+            </div>
 
-              <AnimatedImageCarousel images={carouselImages} interval={8000} />
-            </main>
+            <AnimatedImageCarousel images={carouselImages} interval={8000} />
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* Features Section */}
-        <section className="w-full py-12 md:py-24 lg:py-32 bg-emerald-100">
-          {/*<div className="w-full flex flex-row container px-0 md:px-0 justify-center">*/}
-          <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3 px-4 md:px-6">
-            <div className="flex flex-col items-center space-y-4 text-center">
-              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-green-50">
-                <BookOpen className="h-8 w-8 text-green-700" />
+      <section className="site-shell">
+        <div className="grid items-start gap-10 lg:grid-cols-[0.9fr_1.1fr]">
+          <div className="space-y-4">
+            <h2 className="section-title">What You Can Expect</h2>
+            <p className="section-subtitle">
+              A simple rhythm of faith-centered activities, practical support,
+              and genuine community.
+            </p>
+            <Link
+              href="/events"
+              className="inline-flex items-center gap-2 pt-2 text-sm font-semibold text-emerald-800 hover:text-emerald-700"
+            >
+              See this month&apos;s events
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
+
+          <div className="grid gap-6 sm:grid-cols-2">
+            {featureCards.map((feature, index) => (
+              <article
+                key={feature.title}
+                className={`border-l-2 border-emerald-300/80 pl-4 ${
+                  index === 2 ? "sm:col-span-2 sm:max-w-[70%]" : ""
+                }`}
+              >
+                <div className="mb-2 inline-flex rounded-lg bg-emerald-100/80 p-2 text-emerald-700">
+                  <feature.icon className="h-4 w-4" />
+                </div>
+                <h3 className="mb-1 text-xl font-semibold text-emerald-900">
+                  {feature.title}
+                </h3>
+                <p className="text-sm text-emerald-900/72">{feature.description}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="relative left-1/2 right-1/2 w-screen -translate-x-1/2">
+        <div className="mx-auto max-w-[1400px] px-0 md:px-4">
+          <div
+            className="relative min-h-[280px] overflow-hidden bg-emerald-900/80 md:rounded-3xl"
+            style={{
+              backgroundImage:
+                "linear-gradient(110deg, rgba(8,40,29,0.86), rgba(8,40,29,0.46)), url('/quebec_city.jpg')",
+              backgroundPosition: "center",
+              backgroundSize: "cover",
+            }}
+          >
+            <div className="site-shell flex min-h-[280px] items-center py-10">
+              <div className="max-w-2xl space-y-4 text-white">
+                <p className="text-xs font-semibold uppercase tracking-[0.12em] text-emerald-100/85">
+                  Community Life
+                </p>
+                <h2 className="about-heading text-4xl font-semibold leading-tight md:text-5xl">
+                  A place to belong in Montreal.
+                </h2>
+                <p className="max-w-xl text-white/85">
+                  Whether you are new to faith, exploring questions, or looking
+                  for fellowship, Green Olive welcomes you.
+                </p>
               </div>
-              <h3 className="text-xl font-bold text-green-800">
-                Bible Studies
-              </h3>
-              <p className="text-gray-600">
-                Weekly Bible studies in both English and Chinese to deepen our
-                understanding of God&apos;s word.
-              </p>
-            </div>
-            <div className="flex flex-col items-center space-y-4 text-center">
-              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-green-50">
-                <Users className="h-8 w-8 text-green-700" />
-              </div>
-              <h3 className="text-xl font-bold text-green-800">Fellowship</h3>
-              <p className="text-gray-600">
-                Regular social events, meals, and activities to build meaningful
-                relationships.
-              </p>
-            </div>
-            <div className="flex flex-col items-center space-y-4 text-center">
-              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-green-50">
-                <CalendarDays className="h-8 w-8 text-green-700" />
-              </div>
-              <h3 className="text-xl font-bold text-green-800">Events</h3>
-              <p className="text-gray-600">
-                Special events throughout the year including retreats, holiday
-                celebrations, and service projects.
-              </p>
             </div>
           </div>
-          {/* </div> */}
-        </section>
+        </div>
+      </section>
 
-        {/* About Section */}
-        <section className="w-full py-12 md:py-24 lg:py-32 bg-green-50">
-          {/* <div className="container px-4 md:px-6"> */}
-          <div className="flex flex-col items-center space-y-4 text-center px-4 md:px-6">
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl text-green-800">
-              About Our Club
-            </h2>
-            <p className="max-w-[700px] text-gray-600 md:text-xl">
-              The Green Olive Chinese Christian Club was founded to provide a
-              spiritual home for Chinese Christians and those interested in
-              learning about Christianity. Our name symbolizes peace, growth,
-              and the nurturing of faith.
+      <section className="site-shell">
+        <div className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr]">
+          <article className="space-y-5">
+            <h2 className="section-title">About Our Club</h2>
+            <p className="section-subtitle">
+              We started Green Olive to provide a spiritual home for students
+              and friends interested in Christianity and Chinese community life.
             </p>
-            <p className="max-w-[700px] text-gray-600 md:text-xl">
-              We welcome people of all backgrounds to join our community as we
-              learn, worship, and serve together.
+            <p className="text-emerald-900/75">
+              Our name represents growth, peace, and steady faith. You are
+              welcome to join us whether you are curious, returning, or already
+              deeply rooted in your faith.
             </p>
-            <Button asChild variant="outline" className="mt-4">
-              <Link href="/about">Learn More About Us</Link>
+            <Button
+              asChild
+              variant="outline"
+              className="rounded-full border-emerald-200 bg-white/75 text-emerald-900 hover:bg-emerald-50"
+            >
+              <Link href="/about">
+                Learn More
+                <ArrowUpRight className="ml-1 h-4 w-4" />
+              </Link>
             </Button>
-          </div>
-          {/* </div> */}
-        </section>
-        {/* Upcoming event */}
-        <section className="w-full py-12 md:py-24 lg:py-32 bg-emerald-100">
-          {/* <div className="container px-4 md:px-6"> */}
-          <div className="flex flex-col items-center space-y-4 text-center px-4 md:px-6">
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl text-green-800">
-              Upcoming Event
-            </h2>
-            <p className="max-w-[700px] text-gray-600 md:text-xl">
-              Join us for our next event to connect with others, grow in faith,
-              and have fun!
-            </p>
-            <Button asChild variant="outline" className="mt-4">
-              <Link href="/events">View Event Calendar</Link>
-            </Button>
-          </div>
-          {/* </div> */}
-        </section>
-        {/* Join us Section */}
-        <section className="w-full py-12 md:py-24 lg:py-32 bg-green-50">
-          {/* <div className="container px-4 md:px-6"> */}
-          <div className="flex flex-col items-center space-y-4 text-center px-4 md:px-6">
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl text-green-800">
-              Join Our Community
-            </h2>
-            <p className="max-w-[700px] text-gray-600 md:text-xl">
-              Become a member to participate in activities, receive updates, and
-              connect with other members.
-            </p>
-            <HomeRegisterButton isLoggedIn={!!user} />
-          </div>
-          {/* </div> */}
-        </section>
-        {/* Contact Us */}
-        <section className="w-full py-12 md:pt-20 bg-emerald-100 text-center items-center">
-          <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl text-green-800 mb-10">
-            Contact Us
-          </h1>
-          <div className="grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] px-6 md:px-10">
-            <div className="flex flex-col text-center items-center">
-              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-green-50 ">
-                <Mail className="h-8 w-8 text-green-700" />
+          </article>
+
+          <article className="section-shell flex flex-col justify-between">
+            <div>
+              <h3 className="section-title mb-3 text-2xl">Join Our Community</h3>
+              <p className="text-sm text-emerald-900/75">
+                Create an account to register for events and stay updated.
+              </p>
+            </div>
+            <div className="mt-6">
+              <HomeRegisterButton isLoggedIn={!!user} />
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section className="site-shell pb-6">
+        <div className="border-t border-emerald-200/80 pt-10">
+          <h2 className="section-title mb-8 text-center">Contact Us</h2>
+          <div className="grid gap-6 md:grid-cols-3">
+            <article className="text-center">
+              <div className="mx-auto mb-3 inline-flex rounded-full bg-emerald-100 p-3 text-emerald-700">
+                <Mail className="h-5 w-5" />
               </div>
-              <div className="text-md font-semibold pt-2.5 pb-7 px-2 ">
+              <p className="text-sm font-semibold text-emerald-900">
                 goccc@gmail.com
+              </p>
+            </article>
+
+            <article className="text-center">
+              <div className="mx-auto mb-3 inline-flex rounded-full bg-emerald-100 p-3 text-emerald-700">
+                <MapPin className="h-5 w-5" />
               </div>
-            </div>
-            {/* <div className="flex flex-col text-center items-center">
-              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-green-50 ">
-                <Phone className="h-8 w-8 text-green-700" />
-              </div>
-              <div className="text-md font-semibold pt-2.5 pb-7 px-2">
-                234-123-1234
-              </div>
-            </div> */}
-            <div className="flex flex-col text-center items-center">
-              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-green-50 ">
-                <MapPin className="h-8 w-8 text-green-700" />
-              </div>
-              <div className="text-md font-semibold pt-2.5 pb-7 px-2">
+              <p className="text-sm font-semibold text-emerald-900">
                 845 Sherbrooke St W, Montreal, Quebec H3A 0G4
-              </div>
-            </div>
-            <div className="flex flex-col text-center items-center">
-              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-green-50 ">
-                <ContactRound className="h-8 w-8 text-green-700" />
+              </p>
+            </article>
+
+            <article className="text-center">
+              <div className="mx-auto mb-3 inline-flex rounded-full bg-emerald-100 p-3 text-emerald-700">
+                <ContactRound className="h-5 w-5" />
               </div>
               <Link
                 href="/executives"
-                className="text-md font-semibold pt-2.5 pb-7 px-2"
+                className="text-sm font-semibold text-emerald-900 hover:text-emerald-700"
               >
-                See our executives →
+                Meet Our Executives
               </Link>
-            </div>
+            </article>
           </div>
-        </section>
-      </div>
+        </div>
+      </section>
     </div>
   );
 }
