@@ -30,12 +30,11 @@ export default function MobileMenuToggle({ onToggle, isOpen }: MobileMenuToggleP
     return (
         <button
             onClick={handleToggle}
-            className="md:hidden p-2 rounded-md hover:bg-gray-100 transition-colors z-50"
+            className="md:hidden rounded-full border border-emerald-200/80 bg-white/80 p-2.5 text-emerald-900 shadow-sm backdrop-blur transition-all duration-200 hover:bg-white"
             aria-label={isOpen ? "Close menu" : "Open menu"}
             aria-expanded={isOpen}
         >
-            {isOpen ? <X className="h-6 w-6 text-gray-700" /> : <Menu className="h-6 w-6 text-gray-700" />}
+            {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
         </button>
     )
 }
-

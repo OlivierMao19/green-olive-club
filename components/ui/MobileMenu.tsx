@@ -5,7 +5,6 @@ import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import MobileMenuToggle from "@/components/ui/MobileMenuToggle";
-import NavLink from "@/components/NavLink";
 import { LogOut } from "lucide-react";
 import { Session } from "next-auth";
 
@@ -22,44 +21,55 @@ interface MobileMenuProps {
 
 export default function MobileMenu({ navLinks, session, signOutAction }: MobileMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
+
   const handleLogout = async () => {
-    setIsOpen(false)
-    await signOutAction()
-  }
+    setIsOpen(false);
+    await signOutAction();
+  };
 
   return (
-    <div className="md:hidden">
+    <div className="md:hidden relative z-50">
       <MobileMenuToggle isOpen={isOpen} onToggle={setIsOpen} />
 
-      {/* Mobile Menu Dropdown */}
       <div
-        className={`absolute top-full left-0 right-0 bg-white shadow-md transform transition-all duration-300 ease-in-out z-50
-        ${isOpen ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4 invisible"}
-    `}
+        className={`absolute right-0 top-[calc(100%+0.7rem)] w-[min(22rem,calc(100vw-1.5rem))] overflow-hidden rounded-2xl border border-white/80 bg-white/95 shadow-[0_24px_55px_-30px_rgba(12,63,45,0.75)] backdrop-blur transition-all duration-300 ease-out ${
+          isOpen
+            ? "visible translate-y-0 opacity-100"
+            : "invisible -translate-y-2 opacity-0"
+        } z-50`}
       >
-        <div className="flex flex-col p-4 space-y-4 text-gray-800">
+        <div className="flex flex-col gap-2 p-3">
           {navLinks.map((link, index) => (
             <Link
               key={index}
               href={link.href}
-              onClick={() => setTimeout(() => setIsOpen(false), 200)}
+              className="rounded-xl px-3 py-2 text-sm font-medium text-emerald-900/80 hover:bg-emerald-50"
+              onClick={() => setTimeout(() => setIsOpen(false), 120)}
             >
               {link.text}
             </Link>
           ))}
 
-          <div className="border-t border-gray-200 pt-4 mt-2">
+          <div className="mt-1 border-t border-emerald-100 px-1 pt-3">
             {session && session?.user ? (
-              <div className="flex flex-col gap-3">
-                <Link href="/profile" onClick={() => setIsOpen(false)} className="flex items-center gap-3">
-                  <Avatar className="size-10">
+              <div className="flex flex-col gap-2">
+                <Link
+                  href="/profile"
+                  onClick={() => setIsOpen(false)}
+                  className="flex items-center gap-3 rounded-xl px-2 py-2 hover:bg-emerald-50"
+                >
+                  <Avatar className="size-9">
                     <AvatarImage src={session?.user?.image || ""} alt={session?.user?.name || ""} />
                     <AvatarFallback>AV</AvatarFallback>
                   </Avatar>
-                  <span className="font-medium">{session?.user?.name || "Profile"}</span>
+                  <span className="text-sm font-semibold text-emerald-950">{session?.user?.name || "Profile"}</span>
                 </Link>
-                <div className="text-red-600">
-                  <Button variant="outline" className="w-full justify-center mt-2 border-gray-200 bg-red-50/30" onClick={handleLogout}>
+                <div className="pt-1">
+                  <Button
+                    variant="outline"
+                    className="w-full justify-center border-rose-200 bg-rose-50 text-rose-700 hover:bg-rose-100 hover:text-rose-800"
+                    onClick={handleLogout}
+                  >
                     <LogOut className="mr-2 h-4 w-4" />
                     Logout
                   </Button>
@@ -67,17 +77,18 @@ export default function MobileMenu({ navLinks, session, signOutAction }: MobileM
               </div>
             ) : (
               <Link href="/login" className="w-full" onClick={() => setIsOpen(false)}>
-                <Button variant="outline" className="w-full justify-center border-gray-200 bg-green-600/90 text-gray-100">Login</Button>
+                <Button className="w-full justify-center bg-emerald-600 text-white hover:bg-emerald-700">
+                  Login
+                </Button>
               </Link>
             )}
           </div>
         </div>
       </div>
 
-      {/* Overlay when menu is open */}
       {isOpen && (
         <div
-          className="fixed inset-0 bg-opacity-25 z-10"
+          className="fixed inset-0 z-40 bg-emerald-950/15 backdrop-blur-[1px]"
           onClick={() => setIsOpen(false)}
         />
       )}
