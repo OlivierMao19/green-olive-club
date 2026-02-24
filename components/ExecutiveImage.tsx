@@ -1,5 +1,3 @@
-import { LoaderIcon } from "lucide-react";
-
 interface ExecutiveImageProps {
   execName: string;
   execRole: string;
@@ -9,22 +7,47 @@ interface ExecutiveImageProps {
 }
 
 export default function ExecutiveImage({
+  execName,
+  execRole,
   execPhotoPath,
   execDescription,
 }: ExecutiveImageProps) {
+  const photoSrc = execPhotoPath
+    ? execPhotoPath.startsWith("/")
+      ? execPhotoPath
+      : `/${execPhotoPath}`
+    : undefined;
+
+  const defaultDescription = `${execName} serves as ${execRole} and helps build a welcoming, faith-centered community through consistent support, collaboration, and care.`;
+
   return (
     <div className="h-[300px] text-justify group perspective-[1000px]">
       <div className="relative h-full w-full rounded-xl shadow-xl transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
         <div className="absolute inset-0 [backface-visibility:hidden]">
           <div className="flex rounded-lg bg-gray-100 mb-4 overflow-hidden h-full w-full items-center justify-center">
-            {execPhotoPath ? (
+            {photoSrc ? (
               <img
                 alt="photo"
-                src={execPhotoPath}
-                className={"executive-imag object-cover w-full"}
+                src={photoSrc}
+                className={"executive-image object-cover w-full h-full"}
               ></img>
             ) : (
-              <LoaderIcon className="animate-[spin_2s_linear_infinite] h-10 w-10 text-green-400" />
+              <div className="flex h-full w-full flex-col items-center justify-center bg-gradient-to-br from-emerald-100 to-emerald-50 text-emerald-600">
+                <svg
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                  className="h-20 w-20"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.8"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <circle cx="12" cy="8" r="4"></circle>
+                  <path d="M5 20c0-3.9 3.1-7 7-7s7 3.1 7 7"></path>
+                </svg>
+                <p className="mt-2 text-sm font-semibold tracking-wide">No photo yet</p>
+              </div>
             )}
           </div>
         </div>
@@ -33,7 +56,7 @@ export default function ExecutiveImage({
           <div className="flex h-full flex-col items-center text-white justify-center p-2">
             <h2 className="text-xl font-bold mb-2">Description</h2>
             <p className="text-base text-white text-center mb-4">
-              {execDescription ?? "Description to be written..."}
+              {execDescription ?? defaultDescription}
             </p>
           </div>
         </div>

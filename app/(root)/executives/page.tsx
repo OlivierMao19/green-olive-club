@@ -37,13 +37,13 @@ export default function Executives() {
   }, []);
 
   return (
-    <div className="bg-emerald-100 min-h-[100dvh] text-gray-800">
-      <div className="items-center p-2 flex flex-col px-5">
-        <div className="container mb-10 md:w-[700px] justify-items-center">
-          <div className="text-5xl py-6 font-bold text-center md:mt-5 ">
+    <div className="site-shell py-8 md:py-10">
+      <div className="section-shell flex flex-col items-center p-2 px-5">
+        <div className="container mb-10 justify-items-center md:w-[700px]">
+          <div className="about-heading py-6 text-center text-5xl font-semibold text-emerald-900 md:mt-5">
             Meet Our Executive Team
           </div>
-          <h1 className="text-center text-1xl text-gray-700">
+          <h1 className="text-center text-1xl text-emerald-900/72">
             Our experienced leadership team is committed to building our
             community and creating meaningful experiences for all our members.
           </h1>
@@ -71,7 +71,7 @@ export default function Executives() {
               />
               <div className="mt-5">
                 <h2 className="text-2xl font-bold">{executive.name}</h2>
-                <h3 className="text-1xl text-green-400 font-bold">
+                <h3 className="text-1xl text-emerald-600 font-bold">
                   {executive.role}
                 </h3>
                 <div className="flex flex-row">
@@ -102,7 +102,7 @@ export default function Executives() {
               />
               <div className="mt-5">
                 <h2 className="text-2xl font-bold">{helper.name}</h2>
-                <h3 className="text-1xl text-green-400 font-bold">
+                <h3 className="text-1xl text-emerald-600 font-bold">
                   {helper.role}
                 </h3>
                 <div className="flex flex-row">
