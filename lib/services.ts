@@ -2,7 +2,6 @@
 import { Event } from "@prisma/client";
 import { prisma } from "./prisma";
 import { sanitizeString } from "./utils";
-import { raw } from "@prisma/client/runtime/library";
 
 const IMAGEKIT_UPLOAD_URL =
   process.env.IMAGEKIT_UPLOAD_URL ||

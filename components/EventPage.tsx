@@ -25,24 +25,24 @@ export default function EventPage({
   mcGillId,
   isAdmin,
 }: EventPagePayload) {
-  if (!event) return <div>Event not found</div>;
-
   const [imageSelected, setImageSelected] = useState<string | undefined>(
     undefined
   );
   const [isLoading, setIsLoading] = useState<boolean>(false);
-
   const router = useRouter();
+
+  if (!event) return <div>Event not found</div>;
+  const currentEvent = event;
 
   async function onDeleteEvent() {
     const response = await fetch("/api/events", {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id: event!.id }),
+      body: JSON.stringify({ id: currentEvent.id }),
     });
     const deletedEvent = await response.json();
 
-    console.log(`Delete event ${deletedEvent!.id}`);
+    console.log(`Delete event ${deletedEvent.id}`);
     router.push("/events");
   }
 
@@ -55,7 +55,11 @@ export default function EventPage({
     }
     setImageSelected(URL.createObjectURL(file));
 
-    const { prevImageId } = await postEventImage(event!.id, file, event!.title);
+    const { prevImageId } = await postEventImage(
+      currentEvent.id,
+      file,
+      currentEvent.title
+    );
     if (prevImageId) {
       await deleteEventImage(prevImageId);
     }
@@ -85,18 +89,18 @@ export default function EventPage({
               </Button>
             )}
           </div>
-          <h1 className="text-3xl font-bold">{event!.title}</h1>
+          <h1 className="text-3xl font-bold">{currentEvent.title}</h1>
           <div className="flex items-center font-bold">
             <Info className="mr-1 h-4 w-4" />
             <p>
               Description:{" "}
-              <span className="font-normal">{event!.description}</span>
+              <span className="font-normal">{currentEvent.description}</span>
             </p>
           </div>
           <div className="flex items-center font-bold">
             <MapPin className="mr-1 h-4 w-4" />
             <p>
-              Location: <span className="font-normal">{event!.location}</span>
+              Location: <span className="font-normal">{currentEvent.location}</span>
             </p>
           </div>
           <div className="flex items-center font-bold">
@@ -104,14 +108,14 @@ export default function EventPage({
             <p>
               Scheduled At:{" "}
               <span className="font-normal">
-                {new Date(event!.scheduledAt).toLocaleString()}
+                {new Date(currentEvent.scheduledAt).toLocaleString()}
               </span>
             </p>
           </div>
 
           <EventRegistrationButton
             userId={userId}
-            eventId={event.id}
+            eventId={currentEvent.id}
             initialRegistrationStatus={initialRegistrationStatus}
             hasMcGillId={!!mcGillId}
           />
