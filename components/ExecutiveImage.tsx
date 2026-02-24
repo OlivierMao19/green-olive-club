@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 interface ExecutiveImageProps {
   execName: string;
   execRole: string;
@@ -26,11 +28,15 @@ export default function ExecutiveImage({
         <div className="absolute inset-0 [backface-visibility:hidden]">
           <div className="flex rounded-lg bg-gray-100 mb-4 overflow-hidden h-full w-full items-center justify-center">
             {photoSrc ? (
-              <img
-                alt="photo"
-                src={photoSrc}
-                className={"executive-image object-cover w-full h-full"}
-              ></img>
+              <div className="relative h-full w-full">
+                <Image
+                  alt="Executive photo"
+                  src={photoSrc}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 320px"
+                  className="executive-image object-cover"
+                />
+              </div>
             ) : (
               <div className="flex h-full w-full flex-col items-center justify-center bg-gradient-to-br from-emerald-100 to-emerald-50 text-emerald-600">
                 <svg

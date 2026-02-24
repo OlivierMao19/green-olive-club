@@ -2,12 +2,13 @@
 
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { MapPin, Calendar, ChevronRight } from "lucide-react";
-import { Image } from "@imagekit/next";
+import { Image as ImageKitImage } from "@imagekit/next";
 import { Activity } from "@/lib/types";
 import { Button } from "./ui/button";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { getEventImage } from "@/lib/services";
+import NextImage from "next/image";
 
 type BaseProps = {
   event: Activity;
@@ -93,11 +94,15 @@ export default function EventCard(props: EventCardProps) {
   const getPlaceholder = () => (
     <div className="relative overflow-hidden md:min-w-56 md:flex-none md:max-w-[38%]">
       <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-emerald-100 to-lime-100">
-        <img
-          src="/logo.png"
-          alt="GOCCC logo"
-          className="block h-36 w-auto object-contain opacity-85 md:h-full md:w-full"
-        />
+        <div className="relative h-full min-h-36 w-full">
+          <NextImage
+            src="/logo.png"
+            alt="GOCCC logo"
+            fill
+            sizes="(max-width: 768px) 240px, 36vw"
+            className="object-contain p-5 opacity-85"
+          />
+        </div>
       </div>
     </div>
   );
@@ -123,7 +128,7 @@ export default function EventCard(props: EventCardProps) {
       process.env.NEXT_PUBLIC_IMAGEKIT_URL ? (
         <div className="relative overflow-hidden md:flex-none md:max-w-[40%] md:min-w-52 ">
           <div className="relative h-full w-full">
-            <Image
+            <ImageKitImage
               urlEndpoint={`${process.env.NEXT_PUBLIC_IMAGEKIT_URL}`}
               src={imageURL}
               alt={`${event.title} event photo`}
