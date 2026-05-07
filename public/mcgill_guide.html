@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>McGill 新生指南 · 中国留学生</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;600;700&family=Playfair+Display:wght@400;700&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #c8102e;
+    --gold: #d4a843;
+    --cream: #faf7f2;
+    --dark: #1a1008;
+    --mid: #3d2b1f;
+    --light-brown: #8b6b4e;
+    --pale: #f3ede3;
+    --border: #e8ddd0;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { background: var(--cream); color: var(--dark); font-family: 'Noto Sans SC', sans-serif; font-weight: 300; line-height: 1.8; }
+
+  /* COVER */
+  .cover { background: var(--red); min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 60px 40px; position: relative; overflow: hidden; }
+  .cover::before { content: ''; position: absolute; top: -80px; left: -80px; width: 320px; height: 320px; border: 2px solid rgba(212,168,67,0.25); border-radius: 50%; }
+  .cover::after { content: ''; position: absolute; bottom: -60px; right: -60px; width: 240px; height: 240px; border: 2px solid rgba(212,168,67,0.2); border-radius: 50%; }
+  .cover-inner { position: relative; z-index: 2; max-width: 700px; }
+  .cover-year { font-family: 'Playfair Display', serif; color: var(--gold); font-size: 0.9rem; letter-spacing: 6px; text-transform: uppercase; margin-bottom: 28px; opacity: 0.9; }
+  .cover-title-en { font-family: 'Playfair Display', serif; color: white; font-size: clamp(2.2rem, 5vw, 3.5rem); font-weight: 700; line-height: 1.2; margin-bottom: 16px; }
+  .cover-title-cn { font-family: 'Noto Serif SC', serif; color: var(--gold); font-size: clamp(1.6rem, 3.5vw, 2.4rem); font-weight: 600; margin-bottom: 32px; letter-spacing: 4px; }
+  .cover-divider { width: 80px; height: 2px; background: var(--gold); margin: 0 auto 32px; opacity: 0.7; }
+  .cover-sub { color: rgba(255,255,255,0.75); font-size: 0.95rem; letter-spacing: 2px; font-weight: 300; }
+  .cover-badge { margin-top: 48px; display: inline-block; border: 1px solid rgba(212,168,67,0.5); padding: 10px 28px; color: var(--gold); font-size: 0.8rem; letter-spacing: 3px; }
+  .scroll-hint { position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%); z-index: 2; color: rgba(255,255,255,0.45); font-size: 0.75rem; letter-spacing: 2px; animation: bob 2s ease-in-out infinite; }
+  .scroll-hint::after { content: '↓'; display: block; text-align: center; font-size: 1.2rem; }
+  @keyframes bob { 0%,100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(6px); } }
+
+  /* TOC */
+  .toc { background: var(--dark); padding: 60px 40px; color: white; }
+  .toc-inner { max-width: 720px; margin: 0 auto; }
+  .toc-header { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--gold); margin-bottom: 6px; letter-spacing: 2px; }
+  .toc-header-cn { font-family: 'Noto Serif SC', serif; font-size: 0.85rem; color: rgba(255,255,255,0.4); letter-spacing: 3px; margin-bottom: 36px; }
+  .toc-list { list-style: none; }
+  .toc-list li { display: flex; align-items: baseline; gap: 12px; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.07); cursor: pointer; transition: color 0.2s; }
+  .toc-list li:hover { color: var(--gold); }
+  .toc-num { font-family: 'Playfair Display', serif; color: var(--gold); font-size: 0.85rem; min-width: 28px; opacity: 0.7; }
+  .toc-text { font-size: 0.95rem; font-weight: 300; letter-spacing: 1px; }
+  .toc-cn { font-size: 0.8rem; color: rgba(255,255,255,0.4); margin-left: auto; white-space: nowrap; }
+
+  /* SECTIONS */
+  .section { max-width: 800px; margin: 0 auto; padding: 70px 32px; scroll-margin-top: 20px; }
+  .section + .section { border-top: 1px solid var(--border); }
+  .sec-header { break-inside: avoid; break-after: avoid; page-break-inside: avoid; page-break-after: avoid; }
+  .sec-num { font-family: 'Playfair Display', serif; font-size: 0.75rem; color: var(--red); letter-spacing: 4px; text-transform: uppercase; margin-bottom: 8px; }
+  .sec-title { font-family: 'Playfair Display', serif; font-size: clamp(1.6rem, 3vw, 2.2rem); color: var(--light-brown); margin-bottom: 6px; line-height: 1.25; }
+  .sec-title-cn { font-family: 'Noto Serif SC', serif; font-size: 1rem; color: var(--light-brown); margin-bottom: 40px; letter-spacing: 2px; }
+
+  /* CARDS */
+  .card { background: #fff; border: 1px solid var(--border); border-radius: 2px; padding: 28px 32px; margin-bottom: 20px; position: relative; transition: box-shadow 0.2s; }
+  .card:hover { box-shadow: 0 4px 24px rgba(200,16,46,0.06); }
+  .card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--red); border-radius: 2px 0 0 2px; }
+  .card-title { font-family: 'Noto Serif SC', serif; font-size: 1.05rem; font-weight: 600; color: var(--mid); margin-bottom: 12px; }
+  .card p { font-size: 0.9rem; color: #4a3828; line-height: 1.9; }
+  .tag { display: inline-block; background: rgba(200,16,46,0.08); color: var(--red); font-size: 0.72rem; padding: 2px 10px; border-radius: 20px; margin-bottom: 10px; font-weight: 500; letter-spacing: 1px; }
+
+  .tip { background: #fffbf0; border: 1px solid #f0d98a; border-left: 3px solid var(--gold); padding: 18px 24px; margin: 20px 0; border-radius: 2px; font-size: 0.87rem; color: #5a4a1a; line-height: 1.85; }
+  .tip strong { color: #7a5c00; }
+  .alert { background: #fff5f5; border: 1px solid #f0b8b8; border-left: 3px solid var(--red); padding: 18px 24px; margin: 20px 0; border-radius: 2px; font-size: 0.87rem; color: #6a2020; line-height: 1.85; }
+
+  a { color: var(--red); text-decoration: none; border-bottom: 1px solid rgba(200,16,46,0.25); transition: border-color 0.2s; }
+  a:hover { border-color: var(--red); }
+
+  /* TABLES */
+  .ins-table, .data-table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 0.87rem; }
+  .ins-table th, .data-table th { background: var(--dark); color: var(--gold); padding: 12px 16px; text-align: left; font-family: 'Noto Serif SC', serif; font-weight: 400; letter-spacing: 1px; }
+  .ins-table td, .data-table td { padding: 11px 16px; border-bottom: 1px solid var(--border); color: #3d2b1f; vertical-align: top; line-height: 1.75; }
+  .ins-table tr:last-child td, .data-table tr:last-child td { border-bottom: none; }
+  .ins-table tr:nth-child(even) td, .data-table tr:nth-child(even) td { background: var(--pale); }
+
+  /* CHECKLIST */
+  .checklist { list-style: none; margin: 16px 0; }
+  .checklist li { padding: 8px 0 8px 30px; position: relative; font-size: 0.9rem; border-bottom: 1px dashed var(--border); color: #3d2b1f; }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before { content: '□'; position: absolute; left: 4px; color: var(--red); font-size: 1rem; top: 7px; }
+
+  /* PHARMACY GRID */
+  .two-col { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin: 16px 0; }
+  .mini-card { border: 1px solid var(--border); padding: 20px 22px; border-radius: 2px; background: white; }
+  .mini-card h4 { font-family: 'Noto Serif SC', serif; font-size: 0.95rem; color: var(--mid); margin-bottom: 8px; }
+  .mini-card p { font-size: 0.82rem; color: #7a6050; line-height: 1.7; }
+
+  /* FOOTER */
+  footer { background: var(--dark); color: rgba(255,255,255,0.4); text-align: center; padding: 48px 32px; font-size: 0.8rem; letter-spacing: 1.5px; }
+  footer p + p { margin-top: 8px; }
+  footer strong { color: var(--gold); }
+
+  @media (max-width: 600px) {
+    .section { padding: 48px 20px; }
+    .card { padding: 22px 20px; }
+    .ins-table, .data-table { font-size: 0.78rem; }
+    .ins-table th, .ins-table td, .data-table th, .data-table td { padding: 8px 10px; }
+  }
+
+  @media print {
+    body { background: white; font-size: 10pt; }
+    .cover { min-height: auto; padding: 80px 40px; page-break-after: always; }
+    .toc { page-break-after: always; }
+    .section { padding: 40px 32px; }
+    .sec-num { page-break-after: avoid; }
+    .sec-title { page-break-after: avoid; }
+    .sec-title-cn { page-break-after: avoid; }
+    .card { page-break-inside: avoid; box-shadow: none; }
+    .tip { page-break-inside: avoid; }
+    .alert { page-break-inside: avoid; }
+    .ins-table, .data-table { page-break-inside: avoid; }
+    .sec-num, .sec-title, .sec-title-cn, .card-title { page-break-after: avoid; }
+    .scroll-hint { display: none; }
+    .toc-list li { cursor: default; }
+    a { color: var(--red); border-bottom: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="cover-inner">
+    <div class="cover-year">McGill University · 2026–2027</div>
+    <div class="cover-title-en">New Student Guide</div>
+    <div class="cover-title-cn">麦吉尔大学新生指南</div>
+    <div class="cover-divider"></div>
+    <div class="cover-sub">专为中国国际学生编写 · For Chinese International Students</div>
+    <div class="cover-badge">MONTREAL · CANADA · 蒙特利尔</div>
+  </div>
+  <div class="scroll-hint">向下滚动</div>
+</div>
+
+<div class="toc">
+  <div class="toc-inner">
+    <div class="toc-header">Contents</div>
+    <div class="toc-header-cn">目　录</div>
+    <ul class="toc-list">
+      <li onclick="document.getElementById('s1').scrollIntoView({behavior:'smooth'})"><span class="toc-num">01</span><span class="toc-text">出发前必知 — 选课与学分</span><span class="toc-cn">Pre-Arrival</span></li>
+      <li onclick="document.getElementById('s2').scrollIntoView({behavior:'smooth'})"><span class="toc-num">02</span><span class="toc-text">宿舍与住宿安排</span><span class="toc-cn">Housing</span></li>
+      <li onclick="document.getElementById('s3').scrollIntoView({behavior:'smooth'})"><span class="toc-num">03</span><span class="toc-text">Advisor 与重要资源</span><span class="toc-cn">Advisor</span></li>
+      <li onclick="document.getElementById('s4').scrollIntoView({behavior:'smooth'})"><span class="toc-num">04</span><span class="toc-text">医疗保险全解析</span><span class="toc-cn">Health Insurance</span></li>
+      <li onclick="document.getElementById('s5').scrollIntoView({behavior:'smooth'})"><span class="toc-num">05</span><span class="toc-text">附近药房与医疗资源</span><span class="toc-cn">Pharmacy</span></li>
+      <li onclick="document.getElementById('s6').scrollIntoView({behavior:'smooth'})"><span class="toc-num">06</span><span class="toc-text">校园卡 OneCard</span><span class="toc-cn">OneCard</span></li>
+      <li onclick="document.getElementById('s7').scrollIntoView({behavior:'smooth'})"><span class="toc-num">07</span><span class="toc-text">交通出行</span><span class="toc-cn">Transit</span></li>
+      <li onclick="document.getElementById('s8').scrollIntoView({behavior:'smooth'})"><span class="toc-num">08</span><span class="toc-text">学生证领取</span><span class="toc-cn">Student ID</span></li>
+      <li onclick="document.getElementById('s9').scrollIntoView({behavior:'smooth'})"><span class="toc-num">09</span><span class="toc-text">必装神器 — McGill Enhanced &amp; 选课工具</span><span class="toc-cn">Tools</span></li>
+      <li onclick="document.getElementById('s10').scrollIntoView({behavior:'smooth'})"><span class="toc-num">10</span><span class="toc-text">手机卡选购</span><span class="toc-cn">Phone Plan</span></li>
+      <li onclick="document.getElementById('s11').scrollIntoView({behavior:'smooth'})"><span class="toc-num">11</span><span class="toc-text">银行开户</span><span class="toc-cn">Banking</span></li>
+      <li onclick="document.getElementById('s12').scrollIntoView({behavior:'smooth'})"><span class="toc-num">12</span><span class="toc-text">日常买菜与超市</span><span class="toc-cn">Groceries</span></li>
+      <li onclick="document.getElementById('s13').scrollIntoView({behavior:'smooth'})"><span class="toc-num">13</span><span class="toc-text">体育运动与健身</span><span class="toc-cn">Sports & Fitness</span></li>
+      <li onclick="document.getElementById('s14').scrollIntoView({behavior:'smooth'})"><span class="toc-num">14</span><span class="toc-text">到达前核对清单</span><span class="toc-cn">Checklist</span></li>
+    </ul>
+  </div>
+</div>
+
+<!-- S1 -->
+<div id="s1" class="section">
+  <div class="sec-header">
+  <div class="sec-num">Section 01</div>
+  <div class="sec-title">出发前必知</div>
+  <div class="sec-title-cn">Pre-Arrival Essentials · 来加拿大之前要搞定的事</div>
+  </div>
+  <div class="card">
+    <div class="tag">选课</div>
+    <div class="card-title">大一课程注册</div>
+    <p>登录 <strong>McGill 官网</strong>，搜索自己的专业（program），大一必修课信息会在 program 页面列出。选课操作在 <strong>Minerva</strong> 上完成（直接搜索 "McGill Minerva" 即可找到登录入口）。建议尽早登录 Minerva 熟悉操作界面，热门课程容量有限，要抢。</p>
+  </div>
+  <div class="card">
+    <div class="tag">AP / IB 换学分</div>
+    <div class="card-title">已有 AP 或 IB 成绩？主动去换学分</div>
+    <p>如果你有 AP 或 IB 成绩，McGill 支持将其转换为大学学分，<strong>但不会自动处理</strong>。你需要主动联系自己的 Academic Advisor，提供官方成绩单及相关文件提交申请。换到学分可能可以跳过某些基础必修课，节省时间和精力，强烈建议提前办理。</p>
+    <div class="tip"><strong>提示：</strong> 一般来说 AP 5分 / IB 6–7分 才有机会换学分，具体标准按院系而定。成绩单记得提前从 College Board 或 IBO 官方申请寄送。</div>
+  </div>
+  <div class="card">
+    <div class="tag">Pre-Arrival Orientation</div>
+    <div class="card-title">国际学生入学前 Webinar</div>
+    <p>McGill 专门为国际学生准备了 <strong>"Pre-Arrival Orientation Webinars"</strong> 系列网络讲座，涵盖：抵加后必要文件、SIN 申请、银行开户、健康保险激活等关键信息。强烈建议报名观看，基本解答所有"落地第一周要干什么"的问题。</p>
+    <p style="margin-top:10px;">→ 在 McGill 国际学生官网搜索 "pre-arrival orientation webinars" 即可找到报名入口。</p>
+  </div>
+</div>
+
+<!-- S2 -->
+<div id="s2" class="section">
+  <div class="sec-header">
+  <div class="sec-num">Section 02</div>
+  <div class="sec-title">宿舍与住宿</div>
+  <div class="sec-title-cn">Housing · 住在哪、怎么找到宿舍</div>
+  </div>
+  <div class="card">
+    <div class="card-title">如何确认你的宿舍分配</div>
+    <p>宿舍申请（Residence Registration）在 <strong>Minerva</strong> 上操作。完成申请并被分配宿舍后，登录 Minerva 即可查看具体楼栋名称。</p>
+    <p style="margin-top:10px;">拿到宿舍名称后，直接在 <strong>Google Maps</strong> 搜索楼名即可定位。例如搜索 "New Residence Hall McGill" 就能看到具体地址、路线及周边环境，建议提前熟悉一下去宿舍的路。</p>
+  </div>
+  <div class="tip"><strong>常见宿舍楼：</strong> New Residence Hall、Royal Victoria College (RVC)、Molson Hall、Solin Hall（离 downtown 稍远）等，每栋环境和配套设施不同，分配到哪里都提前在地图上看看周围。</div>
+</div>
+
+<!-- S3 -->
+<div id="s3" class="section">
+  <div class="sec-header">
+  <div class="sec-num">Section 03</div>
+  <div class="sec-title">Advisor 与重要联系人</div>
+  <div class="sec-title-cn">Your Academic Advisor · 遇到问题找谁</div>
+  </div>
+  <div class="card">
+    <div class="card-title">如何找到你的 Advisor</div>
+    <p>每位同学被分配的 Academic Advisor <strong>不同</strong>，不能用别人的联系方式。Advisor 信息可以在 <strong>Minerva</strong> 上查找，同时录取后发送至 <strong>McGill 邮箱</strong>的最早几封邮件中也会有说明。</p>
+    <p style="margin-top:10px;">Advisor 可以帮助你：选课调整、AP/IB 学分转换、学业规划、申请特殊情况请假等。有任何学术上的疑问都可以发邮件预约面谈，不要客气。</p>
+  </div>
+  <div class="alert"><strong>注意：</strong> 请务必使用 McGill 邮箱收发所有官方通讯，不要用 Gmail 或其他个人邮箱联系学校，很多重要通知只会发到 McGill 邮箱。</div>
+</div>
+
+<!-- S4 -->
+<div id="s4" class="section">
+  <div class="sec-header">
+  <div class="sec-num">Section 04</div>
+  <div class="sec-title">医疗保险全解析</div>
+  <div class="sec-title-cn">International Student Health Insurance · 生病了保什么？要自费什么？</div>
+  </div>
+  <p style="font-size:0.9rem; color:#5a4a3a; margin-bottom:24px; line-height:1.9;">作为 McGill 国际学生，你将自动参加由 <strong>Medavie Blue Cross</strong> 承保的 <strong>International Student Health Insurance Plan（IHI）</strong>，保险费用由学生自行承担（含在学费账单中）。保险年度为每年 <strong>9月1日至次年8月31日</strong>。</p>
+  <div class="card">
+    <div class="card-title">基础医疗保险（Basic Health Benefits）— 报销 100%</div>
+    <p>以下项目 100% 报销，终身上限 <strong>$500,000 CAD</strong>：</p>
+    <ul style="margin-top:12px; padding-left:20px; font-size:0.88rem; color:#3d2b1f; line-height:2;">
+      <li>住院费（Hospitalization）</li>
+      <li>医生诊费（Physicians' fees）</li>
+      <li>检验检查费（Diagnostic Tests，如验血、X光等）</li>
+      <li>处方药（Pharmacy Services）</li>
+      <li>生育/产科（Maternity）</li>
+      <li>意外事故牙科（Dental Care — accidental only，外伤导致的牙齿损伤）</li>
+      <li>医疗转运（Medical Evacuation）</li>
+      <li>视力检查（Vision Care）</li>
+    </ul>
+    <div class="alert" style="margin-top:16px;"><strong>重要：</strong> 住院或手术前须提交 <strong>Pre-authorization（预授权）</strong>，否则可能被拒绝理赔。急诊住院后也需立即通知保险公司。</div>
+  </div>
+  <div class="card">
+    <div class="card-title">补充医疗保险（Supplementary Health Benefits）— 报销 80%</div>
+    <p>每年最高报销 <strong>$15,000 CAD</strong>，自己承担 20%：</p>
+    <ul style="margin-top:12px; padding-left:20px; font-size:0.88rem; color:#3d2b1f; line-height:2;">
+      <li>处方药（大多数情况下报销 80%，自付 20%；极少数极基础、必须由医生开具且无法 OTC 购买的药物可报销 100%）</li>
+      <li>心理健康服务（Mental Health，住院最多 30 天/年）</li>
+      <li>物理治疗、脊椎治疗、针灸等辅助医疗</li>
+      <li>私人护士</li>
+      <li>医疗器械及辅具</li>
+    </ul>
+    <div class="tip" style="margin-top:16px;">
+      <strong>查询具体药物是否在保险范围内：</strong> 登录 Medavie Blue Cross 账户，在 "Coverage" 栏目下可查询，也可下载完整保险手册。<br><br>
+      <strong>免垫付技巧：</strong> 在 Blue Cross App 注册 <strong>Drug Card</strong> 后，去药房取药时直接出示，只需在柜台支付自己的自付部分（20%），无需先垫付全额再报销。
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">牙科说明（Dental Care）</div>
+    <p><strong>日常牙科（洗牙、补牙、正畸等）不在保险范围内，需自费。</strong>保险只涵盖因意外事故（如跌倒、碰撞）直接造成的牙齿损伤。</p>
+    <div class="tip"><strong>省钱建议：</strong> McGill 牙学院（Faculty of Dentistry）提供由牙科学生操作、指导教师监督的低价诊疗服务，价格远低于市场价，适合洗牙、基础修复等项目，可在 McGill 官网查询预约方式。</div>
+  </div>
+  <table class="ins-table">
+    <thead><tr><th>项目</th><th>是否覆盖</th><th>备注</th></tr></thead>
+    <tbody>
+      <tr><td>住院 / 手术</td><td>覆盖 100%</td><td>需提前预授权</td></tr>
+      <tr><td>急诊</td><td>基础覆盖</td><td>住院后立即通知保险公司</td></tr>
+      <tr><td>处方药</td><td>基础覆盖</td><td>需凭处方在药房购买</td></tr>
+      <tr><td>验血 / 影像</td><td>覆盖 100%</td><td>医生开单后进行</td></tr>
+      <tr><td>日常牙科</td><td>不覆盖</td><td>全部自费，考虑 McGill 牙学院</td></tr>
+      <tr><td>眼镜 / 隐形眼镜</td><td>部分覆盖</td><td>视力检查覆盖，镜框镜片一般不包</td></tr>
+      <tr><td>既往症（Pre-existing）</td><td>有上限</td><td>每种既往症终身上限 $20,000</td></tr>
+      <tr><td>海外旅行急诊</td><td>最多 4 周</td><td>超过 4 周需额外购买旅行险</td></tr>
+      <tr><td>回国急诊</td><td>有限额</td><td>仅住院急诊，上限 $2,000/天</td></tr>
+    </tbody>
+  </table>
+  <div class="tip"><strong>实用操作：</strong> 学年开始后在 <strong>Minerva</strong> 激活保险合同，下载 <strong>Medavie Blue Cross App</strong> 方便查询和提交理赔。保险卡务必随身携带。客服热线：<strong>1-888-588-1212</strong>。</div>
+</div>
+
+<!-- S5 -->
+<div id="s5" class="section">
+  <div class="sec-header">
+  <div class="sec-num">Section 05</div>
+  <div class="sec-title">附近药房与医疗资源</div>
+  <div class="sec-title-cn">Nearby Pharmacies & Medical Help · 不舒服了去哪儿</div>
+  </div>
+  <div class="two-col">
+    <div class="mini-card">
+      <h4>Pharmaprix</h4>
+      <p>390 Sainte-Catherine Ouest<br>Montreal, QC H3B 1A1<br><br>位于 downtown 核心区，营业时间较长，日常买药、感冒药、维生素等都方便。</p>
+    </div>
+    <div class="mini-card">
+      <h4>Jean Coutu（宿舍区最近）</h4>
+      <p>305 Sherbrooke Street West<br>Montreal, QC H2X 1Y1<br><br>距离 McGill Music Building 及大部分学生宿舍最近的药房，步行可达，是日常取药的首选。</p>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">校内急救：MSERT</div>
+    <p>
+      <strong>MSERT（McGill Student Emergency Response Team）</strong> 是由学生志愿者组成的校园急救团队，由 SSMU 支持运营，持有加拿大红十字会急救认证。在校园内遇到突发状况（如受伤、晕倒等），可以联系 MSERT 获得专业的现场急救处理，是前往医院前的重要第一道支援。
+    </p>
+    <p style="margin-top:10px;">
+      覆盖时间：<strong>平日 08:30–18:00</strong>（downtown 校区）；<strong>每晚 18:00–次日 06:00</strong>（学生宿舍区）。紧急调度电话：<strong>514-398-3000</strong>。
+    </p>
+    <p style="margin-top:10px;">
+      → 官网：<a href="https://msert.sus.mcgill.ca/" target="_blank">msert.sus.mcgill.ca</a>
+    </p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">校内医疗：Student Wellness Hub</div>
+    <p>
+      <strong>地址：</strong> 1070 Avenue Dr. Penfield, Suite 3400, Montreal, QC H3A 0G2
+    </p>
+    <p style="margin-top:10px;">
+      Wellness Hub 提供家庭医生门诊、血检及常见检查项目、心理健康咨询、营养咨询等综合服务，面向在校学生开放。<strong>注意：不处理紧急情况，急症请直接拨打 911。</strong>
+    </p>
+    <p style="margin-top:10px;">
+      预约电话：<strong>514-398-6017</strong>（接听时间：周一至周五 9:00–12:00 及 13:30–14:30）。由于电话预约时间有限，建议在身体健康时提前到诊所 walk-in 建立 patient file，之后就可以通过电话或线上预约，省去生病时再排队的麻烦。
+    </p>
+    <p style="margin-top:10px;">
+      血检及检查预约详情：<a href="https://www.mcgill.ca/wellness-hub/get-support/physical-health/lab" target="_blank">mcgill.ca/wellness-hub/…/lab</a>
+    </p>
+  </div>
+  <div class="card">
+    <div class="card-title">811 — 非紧急医疗与心理支持热线</div>
+    <p>
+      <strong>811（Info-Santé / Info-Social）</strong> 是魁北克省政府提供的免费健康咨询热线，24小时全天候服务。在 Student Wellness Hub 非运营时间遇到非紧急的身体不适或心理困扰时，可以拨打 811 获得护士或社工的建议，是很实用的应急资源。
+    </p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">急诊医院 — 紧急情况请直接前往</div>
+    <p>如遇紧急情况请拨打 <strong>911</strong>，或自行前往以下距 McGill 最近的两家医院急诊室：</p>
+    <div class="two-col" style="margin-top:16px;">
+      <div class="mini-card">
+        <h4>Royal Victoria Hospital</h4>
+        <p>1001 Décarie Blvd<br>Montreal, QC H4A 3J1<br><br>McGill 大学健康中心（MUHC）旗下医院，是距校园最近的大型综合医院之一。</p>
+      </div>
+      <div class="mini-card">
+        <h4>Montreal General Hospital</h4>
+        <p>1650 Cedar Ave<br>Montreal, QC H3G 1A4<br><br>同属 MUHC，位于 downtown 山坡上，步行或打车均可快速到达，设有 24 小时急诊。</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- S6 -->
+<div id="s6" class="section">
+  <div class="sec-header">
+  <div class="sec-num">Section 06</div>
+  <div class="sec-title">校园卡 OneCard</div>
+  <div class="sec-title-cn">McGill OneCard · 那 $500 押金能干嘛</div>
+  </div>
+  <div class="card">
+    <div class="card-title">什么是 OneCard？</div>
+    <p>OneCard 是内置在 McGill 学生证里的电子账户，可在校内无现金消费。住在宿舍参加 <strong>All You Care To Eat Meal Plan</strong> 的同学，账户里自动预存 <strong>$500 CAD（Flex 余额）</strong>；住在 Solin Hall / Shared Houses 的同学则自动获得 <strong>$600 CAD</strong>。</p>
+  </div>
+  <div class="card">
+    <div class="card-title">OneCard 可以在哪些地方使用？</div>
+    <p>以下是部分可用场所：</p>
+    <ul style="margin-top:12px; padding-left:20px; font-size:0.88rem; color:#3d2b1f; line-height:2.1;">
+      <li>校内 All You Care To Eat 餐厅（Dining Halls）</li>
+      <li>McGill 校内零售餐饮（Quesada、Dispatch、Vinh's 等）</li>
+      <li><strong>McGill Campus Store</strong>（买课本、文具、McGill 周边）</li>
+      <li>Mac Market（买新鲜果蔬）</li>
+      <li>校内自动贩卖机</li>
+    </ul>
+    <div class="alert" style="margin-top:16px;"><strong>不能用于：</strong>购买酒精、香烟、彩票、预付卡或提现。</div>
+  </div>
+  <div class="tip"><strong>充值方式：</strong> 登录 <a href="https://onecard.mcgill.ca" target="_blank">onecard.mcgill.ca</a>，最低充值 $50，支持 Visa 或 MasterCard。父母也可以用学生的 McGill 邮箱帮忙充值。余额 $50 以上可在毕业/离校时申请退款。</div>
+</div>
+
+<!-- S7 -->
+<div id="s7" class="section">
+  <div class="sec-header">
+  <div class="sec-num">Section 07</div>
+  <div class="sec-title">蒙特利尔交通出行</div>
+  <div class="sec-title-cn">Getting Around Montreal · 地铁、公交与学生交通卡</div>
+  </div>
+  <div class="card">
+    <div class="card-title">Opus 卡 — 蒙特利尔学生交通卡</div>
+    <p>蒙特利尔公共交通（地铁 + 公交）统一使用 <strong>Opus 卡</strong>。作为学生可申请享受折扣价的学生 Opus 卡。</p>
+    <p style="margin-top:10px;"><strong>如何申请：</strong></p>
+    <ol style="margin-top:8px; padding-left:20px; font-size:0.88rem; color:#3d2b1f; line-height:2.1;">
+      <li>登录 <strong>Minerva</strong>，在搜索栏直接输入 "opus"，申请页面会自动弹出</li>
+      <li>填写信息并提交申请</li>
+      <li>实体 Opus 卡通过<strong>邮寄</strong>寄送至填写的地址</li>
+      <li>下载 <strong>Chrono</strong> App 方便后续在线充值和查询余额</li>
+    </ol>
+    <div class="tip" style="margin-top:16px;"><strong>注意：</strong> Opus 学生卡每年需要重新在 Minerva 验证学生身份，否则下一年度将无法继续享受学生折扣。</div>
+  <div class="tip"><strong>出行提示：</strong> McGill 主校区位于 downtown，步行可达 Guy-Concordia 和 Peel 地铁站。蒙特利尔冬天极寒，建议提前规划好室内路线，很多建筑有地下通道相连（Underground City）。</div>
+</div>
+
+<!-- S8 -->
+<div id="s8" class="section">
+  <div class="sec-header">
+  <div class="sec-num">Section 08</div>
+  <div class="sec-title">学生证领取</div>
+  <div class="sec-title-cn">McGill Student ID Card · 你的第一张身份证明</div>
+  </div>
+  <div class="card">
+    <div class="card-title">如何领取学生证</div>
+    <p>开学后需前往学校指定地点领取实体学生证。学生证同时也是 OneCard（校内消费卡）的载体。</p>
+    <p style="margin-top:10px;">→ 详细流程请参考官网：<a href="https://www.mcgill.ca/student-records/personal-information/id" target="_blank">mcgill.ca/student-records/personal-information/id</a></p>
+  </div>
+  <div class="tip"><strong>建议：</strong> 学生证是在蒙特利尔最常用的身份证明文件之一（开银行账户、申请学生优惠等都可能用到），开学后尽快领取。补办需缴 $25 手续费，请妥善保管。</div>
+</div>
+
+<!-- S9 -->
+<div id="s9" class="section">
+  <div class="sec-header">
+  <div class="sec-num">Section 09</div>
+  <div class="sec-title">必装神器</div>
+  <div class="sec-title-cn">McGill Enhanced & Essential Tools · 让选课和学习效率翻倍</div>
+  </div>
+  <div class="card">
+    <div class="tag">浏览器插件</div>
+    <div class="card-title">McGill Enhanced — 强烈推荐安装</div>
+    <p><strong>McGill Enhanced</strong> 是一个免费的浏览器扩展插件（Chrome / Firefox 均可安装），由学长学姐开发，专门为 McGill 学生设计。安装后会直接在 Minerva 和相关页面叠加大量实用功能，是绝大多数 McGill 学生的标配工具。</p>
+    <p style="margin-top:12px;">→ 在 Chrome 应用商店或 Firefox 插件库搜索 <strong>"McGill Enhanced"</strong> 即可找到并一键安装。</p>
+  </div>
+  <div class="card">
+    <div class="card-title">VSB — Visual Schedule Builder（可视化课表生成器）</div>
+    <p>McGill Enhanced 内置入口直达 <strong>VSB（Visual Schedule Builder）</strong>，这是 McGill 官方的课表规划工具。你可以：</p>
+    <ul style="margin-top:12px; padding-left:20px; font-size:0.88rem; color:#3d2b1f; line-height:2.1;">
+      <li>拖拽选择想要的课程，自动生成不冲突的时间表</li>
+      <li>查看每门课的具体上课时间、教室、教授信息</li>
+      <li>对比多种课表组合，找到最适合自己的安排</li>
+      <li>正式在 Minerva 选课前先在这里规划好，避免时间冲突</li>
+    </ul>
+    <div class="tip"><strong>建议：</strong> 开放选课前就先用 VSB 把心仪的课表排好，选课窗口一开就可以快速操作，不容易手忙脚乱。</div>
+  </div>
+  <div class="card">
+    <div class="card-title">My Courses 一键直达</div>
+    <p>McGill Enhanced 在浏览器工具栏或 Minerva 页面添加 <strong>My Courses 快捷入口</strong>，一键跳转到当前学期所有课程的 myCourses 页面（McGill 的在线学习平台，类似 Canvas），省去每次手动登录寻找的麻烦。</p>
+  </div>
+  <div class="card">
+    <div class="tag">选课必备网站</div>
+    <div class="card-title">mcgill.courses — 查历年平均分</div>
+    <p><a href="https://mcgill.courses" target="_blank"><strong>mcgill.courses</strong></a> 是一个由学生维护的独立网站，收录了 McGill 几乎所有课程的<strong>历年成绩分布和平均分数据</strong>。在选课前查一查，可以了解：</p>
+    <ul style="margin-top:12px; padding-left:20px; font-size:0.88rem; color:#3d2b1f; line-height:2.1;">
+      <li>这门课历年的平均分（GPA 参考）</li>
+      <li>不同教授的评分风格差异</li>
+      <li>课程难度参考（结合 average 判断打分是否严格）</li>
+      <li>同一门课不同 section 之间的成绩差异</li>
+    </ul>
+    <div class="alert" style="margin-top:16px;">仅供参考，不代表你一定能拿到相同分数。选课还是要结合自己的兴趣和专业要求优先。</div>
+  </div>
+</div>
+
+<!-- S10: Phone -->
+<div id="s10" class="section">
+  <div class="sec-header">
+  <div class="sec-num">Section 10</div>
+  <div class="sec-title">手机卡选购</div>
+  <div class="sec-title-cn">Phone Plan · 加拿大手机套餐怎么选</div>
+  </div>
+  <p style="font-size:0.9rem; color:#5a4a3a; margin-bottom:24px; line-height:1.9;">加拿大手机套餐整体价格偏高，但<strong>学生套餐通常比普通套餐便宜很多</strong>，差价有时能达到每月 $10–$20 CAD。建议到达蒙特利尔后亲自去各运营商门店询问，不同年份、不同季节推出的学生优惠活动不同，当面咨询能拿到最新报价。</p>
+  <div class="card">
+    <div class="card-title">如何获取学生套餐</div>
+    <p>大部分运营商的学生套餐<strong>不在官网公开展示</strong>，需要到实体门店或在官网选购时主动表明学生身份，并提供 McGill 学生证或 .mcgill.ca 邮箱验证。开学季（8–9 月）往往是全年优惠力度最大的时间段，值得重点关注。</p>
+  </div>
+  <div class="card">
+    <div class="tag">常见运营商</div>
+    <div class="card-title">主流选择参考</div>
+    <table class="data-table">
+      <thead><tr><th>运营商</th><th>特点</th><th>适合人群</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Fido</strong></td><td>Rogers 旗下子品牌，网络覆盖好，经常有学生专属折扣，门店多</td><td>重视网络质量、需要良好客服支持</td></tr>
+        <tr><td><strong>Koodo</strong></td><td>Telus 旗下子品牌，价格较透明，有 Tab 分期购机，无合约</td><td>想灵活换套餐、不想签长期合约</td></tr>
+        <tr><td><strong>Public Mobile</strong></td><td>Telus 网络，完全线上操作，价格最实惠，无实体门店</td><td>预算有限、不需要频繁客服</td></tr>
+        <tr><td><strong>Fizz</strong></td><td>魁北克本地品牌，套餐灵活可自定义，有推荐返现</td><td>长居蒙特利尔、喜欢自定义套餐</td></tr>
+        <tr><td><strong>Bell / Rogers / Telus</strong></td><td>三大主流运营商，网络最稳定，但价格较高</td><td>对网络稳定性要求高，且开学季可能有可观学生折扣</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="tip"><strong>实用建议：</strong> 抵达蒙特利尔后先用国内手机卡或 eSIM 临时应急，不要急于在机场购卡（价格较贵）。到校安顿好之后再去 Ste-Catherine 街的各大运营商门店货比三家，当场询问是否有学生专属价格。</div>
+  <div class="tip"><strong>关于国内号码：</strong> 很多同学选择保留一张国内手机卡用于联系家人，出发前确认一下自己的手机是否支持双卡或 eSIM，方便同时使用两个号码。</div>
+</div>
+
+<!-- S11: Banking -->
+<div id="s11" class="section">
+  <div class="sec-header">
+  <div class="sec-num">Section 11</div>
+  <div class="sec-title">银行开户</div>
+  <div class="sec-title-cn">Opening a Bank Account · 落地后的财务基础</div>
+  </div>
+  <p style="font-size:0.9rem; color:#5a4a3a; margin-bottom:24px; line-height:1.9;">在加拿大生活几乎离不开本地银行账户，日常消费、缴纳房租、收取奖学金/打工工资都需要用到。建议<strong>到达后第一周内尽快开户</strong>，部分银行为学生提供免月费账户，值得优先申请。</p>
+  <div class="card">
+    <div class="card-title">开户所需文件</div>
+    <p>不同银行要求略有差异，但以下文件基本都需要准备齐全：</p>
+    <ul style="margin-top:14px; padding-left:20px; font-size:0.88rem; color:#3d2b1f; line-height:2.3;">
+      <li><strong>有效护照</strong>（主要身份证明文件）</li>
+      <li><strong>学习许可（Study Permit）</strong></li>
+      <li><strong>McGill 录取通知书</strong>（Offer of Admission）</li>
+      <li><strong>McGill 学生证</strong>（部分银行接受作为辅助证明）</li>
+      <li><strong>在加拿大的住址证明</strong>（宿舍分配信、房东信件或水电账单均可）</li>
+      <li><strong>SIN（社会保险号码）</strong>——如已申请可提供，未申请也可先开户，之后补充</li>
+    </ul>
+    <div class="tip" style="margin-top:16px;"><strong>提示：</strong> 建议携带上述所有文件的原件及复印件前往银行，省去来回补材料的麻烦。高峰期（开学季）建议提前在官网预约开户时间，避免排队等待过长。</div>
+  </div>
+  <div class="alert"><strong>关于汇款：</strong> 从国内向加拿大账户汇款，建议对比 Wise（TransferWise）、银行电汇等方式的汇率和手续费，差价有时较大。不建议长期依赖携带现金入境。</div>
+</div>
+
+<!-- S12: Groceries -->
+<div id="s12" class="section">
+  <div class="sec-header">
+  <div class="sec-num">Section 12</div>
+  <div class="sec-title">日常买菜与超市</div>
+  <div class="sec-title-cn">Groceries · 在蒙特利尔怎么买菜</div>
+  </div>
+
+  <p style="font-size:0.9rem; color:#5a4a3a; margin-bottom:24px; line-height:1.9;">
+    蒙特利尔的食材选择丰富，价格因超市而差异较大。以下是几个对学生比较友好的选择。
+  </p>
+
+  <div class="card">
+    <div class="card-title">Marché Newon — 蔬菜水果价格实惠</div>
+    <p>
+      蒙特利尔本地菜市场，蔬菜和水果的价格在市区内属于较低水平，适合日常买新鲜食材。对于自己做饭的同学来说是性价比最高的选择之一，建议每周或隔周去采购一次。
+    </p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">T&T 超市 — 亚洲食材首选</div>
+    <p>
+      北美最大的亚洲连锁超市，食材种类齐全，调味料、米面、豆腐、各类亚洲零食应有尽有，是中国留学生最常光顾的超市之一。T&T 支持<strong>网上选购配送</strong>，不想出门或者采购量较大时可以直接在官网或 App 下单。
+    </p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Costco — 量大价低，适合囤货</div>
+    <p>
+      Costco 的单价在所有超市中往往最低，适合购买日常消耗量大的食品（米、油、鸡蛋、冷冻食品等）以及生活用品（洗衣液、纸巾等）。同样支持<strong>网上选购配送</strong>，省去搬运的麻烦。
+    </p>
+    <div class="tip">
+      <strong>注意：</strong> Costco 需要购买会员才能入场，年费约 $65 CAD。量大包装不适合独居或储存空间有限的同学，更适合和室友或朋友<strong>拼单</strong>分摊，能大幅降低人均成本。
+    </div>
+  </div>
+
+  <div class="tip">
+    <strong>其他常见选择：</strong> IGA 和 Provigo 是蒙特利尔最普遍的连锁超市，价格适中，步行可达，适合临时采购。Metro 也在 downtown 有多个门店，营业时间较长。
+  </div>
+</div>
+
+<!-- S13: Sports -->
+<div id="s13" class="section">
+  <div class="sec-header">
+  <div class="sec-num">Section 13</div>
+  <div class="sec-title">体育运动与健身</div>
+  <div class="sec-title-cn">Sports & Fitness · 课余时间怎么动起来</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">McGill Athletics & Recreation — 学生体育课</div>
+    <p>
+      McGill 的 <strong>Athletics and Recreation Center</strong> 面向在校学生开放大量体育活动课程，涵盖游泳、瑜伽、武术、舞蹈、攀岩等各类项目，价格对学生非常友好。课程按学期开放注册，建议开学初登录 McGill Athletics 官网及时查看并报名，热门课程同样会很快额满。
+    </p>
+    <p style="margin-top:10px;">
+      → 在 McGill 官网搜索 "Athletics and Recreation" 查看课程列表和注册方式。
+    </p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">B2 Gym — 校内健身房</div>
+    <p>
+      <strong>B2 Gym</strong> 是对 McGill 学生开放的校内健身房，配备常规健身器械和器材。需要购买会员才能使用，学生会员费相对不贵，适合有规律健身习惯的同学。具体收费和开放时间以当学年官网公布为准。
+    </p>
+    <div class="tip">
+      <strong>建议：</strong> 如果既想上体育课又想自由健身，可以对比 Athletics Recreation 课程套餐和 B2 Gym 会员的组合方案，有时捆绑购买更划算。
+    </div>
+  </div>
+</div>
+
+<!-- S14: Checklist -->
+<div id="s14" class="section">
+  <div class="sec-header">
+  <div class="sec-num">Section 14</div>
+  <div class="sec-title">到达前核对清单</div>
+  <div class="sec-title-cn">Pre-Arrival Checklist · 出发前逐项确认</div>
+  </div>
+  <p style="font-size:0.88rem; color:#6a5a4a; margin-bottom:20px;">以下是综合本指南建议的行动清单，建议逐项打勾确认：</p>
+  <div class="card" style="padding-bottom:8px;">
+    <div class="card-title">出发前</div>
+    <ul class="checklist">
+      <li>登录 McGill 官网确认大一必修课信息，在 Minerva 完成选课</li>
+      <li>有 AP/IB 成绩的同学，联系 Academic Advisor 提交换学分申请（附官方成绩单）</li>
+      <li>在 Minerva 查看已分配宿舍楼名，Google Maps 提前看好位置</li>
+      <li>在 Minerva 或 McGill 邮箱早期邮件中找到 Academic Advisor 联系方式</li>
+      <li>报名并观看 McGill International Students Pre-Arrival Orientation Webinars</li>
+      <li>在 Minerva 申请 Opus 学生交通卡，下载 Chrono App</li>
+      <li>下载 Medavie Blue Cross App，开学后激活健康保险</li>
+      <li>准备好学业文件（成绩单、护照、学习许可、录取信等）原件及复印件</li>
+      <li>浏览器安装 McGill Enhanced 插件，用 VSB 提前规划课表</li>
+      <li>收藏 mcgill.courses 查各门课历年平均分，辅助选课决策</li>
+      <li>确认手机是否支持双卡或 eSIM，视需要提前购买临时 eSIM</li>
+    </ul>
+  </div>
+  <div class="card" style="padding-bottom:8px;">
+    <div class="card-title">到达后第一周</div>
+    <ul class="checklist">
+      <li>前往指定地点领取 McGill 学生证（ID Card）</li>
+      <li>在 Minerva 激活 Medavie Blue Cross 健康保险，拿到保险卡</li>
+      <li>领取或确认 Opus 卡，充值并激活</li>
+      <li>前往 Service Canada 申请 SIN（社会保险号码）——工作、报税必备。也可提前在线申请：<a href="https://www.canada.ca/en/employment-social-development/services/sin/apply.html" target="_blank">canada.ca/…/sin/apply</a></li>
+      <li>携带所需文件前往银行开户（TD / Desjardins / BMO 等）</li>
+      <li>去各运营商门店询问学生手机套餐，选购本地手机卡</li>
+      <li>熟悉校内 Student Wellness Hub 位置</li>
+      <li>记录附近药房地址（Pharmaprix / Jean Coutu）</li>
+      <li>参加学校国际学生迎新活动，认识新朋友</li>
+    </ul>
+  </div>
+</div>
+
+<footer>
+  <p><strong>McGill University · 麦吉尔大学新生指南</strong></p>
+  <p>本指南内容仅供参考，具体政策以 McGill 官方发布为准</p>
+  <p style="margin-top:16px; opacity:0.5; font-size:0.72rem;">For Chinese International Students · 2026–2027 Academic Year</p>
+</footer>
+
+</body>
+</html>
