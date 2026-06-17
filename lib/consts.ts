@@ -1,5 +1,10 @@
 import { Heart, Users, Zap } from "lucide-react";
 
+export const instagramUrl = "https://www.instagram.com/goccc.mcgill";
+export const email = "goccc@gmail.com";
+export const address =
+  "1625 Blvd. De Maisonneuve West 305, Montreal, QC H3G 1M9";
+
 export type ExecutiveInfo = {
   id: number;
   name: string;
@@ -50,12 +55,11 @@ export const executivesList: ExecutiveInfo[] = [
   {
     id: 5,
     name: "Ewen Gueguen",
-    role: "Treasurer",
+    role: "Treasurer & Lead Developer",
     email: "ewen.gueguen@mail.mcgill.ca",
     phone: "438-855-2381",
     imagePath: undefined,
-    description:
-      "Ewen manages our finances with precision and foresight. His strategic approach to budgeting has allowed us to expand our programs while maintaining financial stability.",
+    description: "Ewen has the money and is very cool. Trust his capabilties.",
   },
 ];
 

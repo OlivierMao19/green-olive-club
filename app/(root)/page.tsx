@@ -6,6 +6,7 @@ import {
   BookOpen,
   CalendarDays,
   ContactRound,
+  Instagram,
   Mail,
   MapPin,
   Users,
@@ -15,6 +16,7 @@ import { auth } from "@/auth";
 import HomeRegisterButton from "@/components/HomeRegisterButton";
 import CustomHomeButton from "@/components/CustomHomeButton";
 import AnimatedImageCarousel from "@/components/AnimatedImageCarousel";
+import { address, email, instagramHandle, instagramUrl } from "@/lib/consts";
 
 export default async function Home() {
   const session = await auth();
@@ -103,19 +105,25 @@ export default async function Home() {
                   <p className="text-xs font-semibold uppercase tracking-[0.11em] text-emerald-900/60">
                     Gatherings
                   </p>
-                  <p className="text-lg font-semibold text-emerald-900">Biweekly</p>
+                  <p className="text-lg font-semibold text-emerald-900">
+                    Biweekly
+                  </p>
                 </div>
                 <div>
                   <p className="text-xs font-semibold uppercase tracking-[0.11em] text-emerald-900/60">
                     Languages
                   </p>
-                  <p className="text-lg font-semibold text-emerald-900">EN + 中文</p>
+                  <p className="text-lg font-semibold text-emerald-900">
+                    EN + 中文
+                  </p>
                 </div>
                 <div>
                   <p className="text-xs font-semibold uppercase tracking-[0.11em] text-emerald-900/60">
                     Open To
                   </p>
-                  <p className="text-lg font-semibold text-emerald-900">Everyone</p>
+                  <p className="text-lg font-semibold text-emerald-900">
+                    Everyone
+                  </p>
                 </div>
               </div>
             </div>
@@ -156,7 +164,9 @@ export default async function Home() {
                 <h3 className="mb-1 text-xl font-semibold text-emerald-900">
                   {feature.title}
                 </h3>
-                <p className="text-sm text-emerald-900/72">{feature.description}</p>
+                <p className="text-sm text-emerald-900/72">
+                  {feature.description}
+                </p>
               </article>
             ))}
           </div>
@@ -219,7 +229,9 @@ export default async function Home() {
 
           <article className="section-shell flex flex-col justify-between">
             <div>
-              <h3 className="section-title mb-3 text-2xl">Join Our Community</h3>
+              <h3 className="section-title mb-3 text-2xl">
+                Join Our Community
+              </h3>
               <p className="text-sm text-emerald-900/75">
                 Create an account to register for events and stay updated.
               </p>
@@ -234,14 +246,12 @@ export default async function Home() {
       <section className="site-shell pb-6">
         <div className="border-t border-emerald-200/80 pt-10">
           <h2 className="section-title mb-8 text-center">Contact Us</h2>
-          <div className="grid gap-6 md:grid-cols-3">
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             <article className="flex flex-col items-center text-center">
               <div className="mb-3 inline-flex rounded-full bg-emerald-100 p-3 text-emerald-700">
                 <Mail className="h-5 w-5" />
               </div>
-              <p className="text-sm font-semibold text-emerald-900">
-                goccc@gmail.com
-              </p>
+              <p className="text-sm font-semibold text-emerald-900">{email}</p>
             </article>
 
             <article className="flex flex-col items-center text-center">
@@ -249,7 +259,7 @@ export default async function Home() {
                 <MapPin className="h-5 w-5" />
               </div>
               <p className="text-sm font-semibold text-emerald-900">
-                845 Sherbrooke St W, Montreal, Quebec H3A 0G4
+                {address}
               </p>
             </article>
 
@@ -258,11 +268,24 @@ export default async function Home() {
                 <ContactRound className="h-5 w-5" />
               </div>
               <p className="text-sm font-semibold text-emerald-900">
+                <Link href="/executives" className="hover:text-emerald-700">
+                  Meet Our Executives
+                </Link>
+              </p>
+            </article>
+
+            <article className="flex flex-col items-center text-center">
+              <div className="mb-3 inline-flex rounded-full bg-emerald-100 p-3 text-emerald-700">
+                <Instagram className="h-5 w-5" />
+              </div>
+              <p className="text-sm font-semibold text-emerald-900">
                 <Link
-                  href="/executives"
+                  href={instagramUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="hover:text-emerald-700"
                 >
-                  Meet Our Executives
+                  {instagramHandle}
                 </Link>
               </p>
             </article>
