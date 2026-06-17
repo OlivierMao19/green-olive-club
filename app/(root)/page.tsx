@@ -235,8 +235,8 @@ export default async function Home() {
         <div className="border-t border-emerald-200/80 pt-10">
           <h2 className="section-title mb-8 text-center">Contact Us</h2>
           <div className="grid gap-6 md:grid-cols-3">
-            <article className="text-center">
-              <div className="mx-auto mb-3 inline-flex rounded-full bg-emerald-100 p-3 text-emerald-700">
+            <article className="flex flex-col items-center text-center">
+              <div className="mb-3 inline-flex rounded-full bg-emerald-100 p-3 text-emerald-700">
                 <Mail className="h-5 w-5" />
               </div>
               <p className="text-sm font-semibold text-emerald-900">
@@ -244,8 +244,8 @@ export default async function Home() {
               </p>
             </article>
 
-            <article className="text-center">
-              <div className="mx-auto mb-3 inline-flex rounded-full bg-emerald-100 p-3 text-emerald-700">
+            <article className="flex flex-col items-center text-center">
+              <div className="mb-3 inline-flex rounded-full bg-emerald-100 p-3 text-emerald-700">
                 <MapPin className="h-5 w-5" />
               </div>
               <p className="text-sm font-semibold text-emerald-900">
@@ -253,16 +253,18 @@ export default async function Home() {
               </p>
             </article>
 
-            <article className="text-center">
-              <div className="mx-auto mb-3 inline-flex rounded-full bg-emerald-100 p-3 text-emerald-700">
+            <article className="flex flex-col items-center text-center">
+              <div className="mb-3 inline-flex rounded-full bg-emerald-100 p-3 text-emerald-700">
                 <ContactRound className="h-5 w-5" />
               </div>
-              <Link
-                href="/executives"
-                className="text-sm font-semibold text-emerald-900 hover:text-emerald-700"
-              >
-                Meet Our Executives
-              </Link>
+              <p className="text-sm font-semibold text-emerald-900">
+                <Link
+                  href="/executives"
+                  className="hover:text-emerald-700"
+                >
+                  Meet Our Executives
+                </Link>
+              </p>
             </article>
           </div>
         </div>
