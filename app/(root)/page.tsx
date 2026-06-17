@@ -6,7 +6,6 @@ import {
   BookOpen,
   CalendarDays,
   ContactRound,
-  Instagram,
   Mail,
   MapPin,
   Users,
@@ -276,7 +275,21 @@ export default async function Home() {
 
             <article className="flex flex-col items-center text-center">
               <div className="mb-3 inline-flex rounded-full bg-emerald-100 p-3 text-emerald-700">
-                <Instagram className="h-5 w-5" />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="h-5 w-5"
+                  aria-hidden="true"
+                >
+                  <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                  <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+                </svg>
               </div>
               <p className="text-sm font-semibold text-emerald-900">
                 <Link
