@@ -2,7 +2,7 @@ import { Heart, Users, Zap } from "lucide-react";
 
 export const instagramUrl = "https://www.instagram.com/goccc.mcgill";
 export const instagramHandle = "@goccc.mcgill";
-export const email = "goccc@gmail.com";
+export const email = "goccc@ssmu.ca";
 export const address =
   "1625 Blvd. De Maisonneuve West 305, Montreal, QC H3G 1M9";
 
