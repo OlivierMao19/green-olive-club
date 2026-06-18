@@ -138,9 +138,10 @@ export default function EventPage({
                   to delete.
                 </DialogDescription>
               </DialogHeader>
-              <DialogFooter className="gap-2 sm:gap-0">
+              <DialogFooter className="flex flex-col gap-2 sm:flex-col sm:space-x-0">
                 <Button
                   variant="outline"
+                  className="w-full"
                   onClick={() => setDeleteDialogOpen(false)}
                   disabled={isDeleting}
                 >
@@ -148,7 +149,7 @@ export default function EventPage({
                 </Button>
                 <Button
                   variant="outline"
-                  className="border-red-200 text-red-600 hover:bg-red-50"
+                  className="w-full border-red-200 text-red-600 hover:bg-red-50"
                   onClick={() => void deleteEvent("THIS")}
                   disabled={isDeleting}
                 >
@@ -156,6 +157,7 @@ export default function EventPage({
                 </Button>
                 <Button
                   variant="destructive"
+                  className="w-full"
                   onClick={() => void deleteEvent("THIS_AND_FUTURE")}
                   disabled={isDeleting}
                 >
