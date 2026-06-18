@@ -34,6 +34,7 @@ export default async function Event({
       initialRegistrationStatus={isRegistered}
       mcGillId={mcGillId}
       isAdmin={session?.user?.isAdmin || false}
+      isRecurring={event?.seriesId != null}
     />
   );
 }

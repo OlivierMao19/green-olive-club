@@ -5,6 +5,15 @@ import { ArrowLeft, Clock, Info, MapPin } from "lucide-react";
 import Link from "next/link";
 import EventRegistrationButton from "@/components/EventRegistrationButton";
 import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import type { DeleteEventScope } from "@/lib/eventSeries";
 import type { Event } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -17,6 +26,7 @@ type EventPagePayload = {
   initialRegistrationStatus: boolean;
   mcGillId: string | undefined;
   isAdmin: boolean;
+  isRecurring: boolean;
 };
 export default function EventPage({
   event,
@@ -24,26 +34,55 @@ export default function EventPage({
   initialRegistrationStatus,
   mcGillId,
   isAdmin,
+  isRecurring,
 }: EventPagePayload) {
   const [imageSelected, setImageSelected] = useState<string | undefined>(
     undefined
   );
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
   const router = useRouter();
 
   if (!event) return <div>Event not found</div>;
   const currentEvent = event;
 
-  async function onDeleteEvent() {
-    const response = await fetch("/api/events", {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id: currentEvent.id }),
-    });
-    const deletedEvent = await response.json();
+  async function deleteEvent(scope: DeleteEventScope) {
+    setIsDeleting(true);
 
-    console.log(`Delete event ${deletedEvent.id}`);
-    router.push("/events");
+    try {
+      const response = await fetch("/api/events", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: currentEvent.id, scope }),
+      });
+
+      if (!response.ok) {
+        const err = await response.json().catch(() => null);
+        throw new Error(err?.error ?? "Failed to delete event");
+      }
+
+      setDeleteDialogOpen(false);
+      router.push("/events");
+    } catch (error) {
+      console.error("Error deleting event:", error);
+      alert(
+        error instanceof Error ? error.message : "Failed to delete event."
+      );
+    } finally {
+      setIsDeleting(false);
+    }
+  }
+
+  function handleDeleteClick() {
+    if (isRecurring) {
+      setDeleteDialogOpen(true);
+      return;
+    }
+
+    if (window.confirm("Delete this event?")) {
+      void deleteEvent("THIS");
+    }
   }
 
   async function handleFileInput(file?: File) {
@@ -81,7 +120,8 @@ export default function EventPage({
             {isAdmin && (
               <Button
                 className="px-8 bg-red-500/10 hover:bg-red-500/20 text-red-500 hover:text-red-600"
-                onClick={onDeleteEvent}
+                onClick={handleDeleteClick}
+                disabled={isDeleting}
               >
                 <span className="font-bold text-gray-1000 text-1xl">
                   Delete
@@ -89,6 +129,41 @@ export default function EventPage({
               </Button>
             )}
           </div>
+          <Dialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Delete recurring event</DialogTitle>
+                <DialogDescription>
+                  This event is part of a recurring series. Choose what you want
+                  to delete.
+                </DialogDescription>
+              </DialogHeader>
+              <DialogFooter className="gap-2 sm:gap-0">
+                <Button
+                  variant="outline"
+                  onClick={() => setDeleteDialogOpen(false)}
+                  disabled={isDeleting}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  variant="outline"
+                  className="border-red-200 text-red-600 hover:bg-red-50"
+                  onClick={() => void deleteEvent("THIS")}
+                  disabled={isDeleting}
+                >
+                  Delete only this event
+                </Button>
+                <Button
+                  variant="destructive"
+                  onClick={() => void deleteEvent("THIS_AND_FUTURE")}
+                  disabled={isDeleting}
+                >
+                  Delete this and all future events
+                </Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
           <h1 className="text-3xl font-bold">{currentEvent.title}</h1>
           <div className="flex items-center font-bold">
             <Info className="mr-1 h-4 w-4" />

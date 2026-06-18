@@ -117,6 +117,101 @@ export async function topUpAllActiveSeries(): Promise<void> {
   await Promise.all(activeSeries.map((series) => ensureFutureInstances(series.id)));
 }
 
+export type DeleteEventScope = "THIS" | "THIS_AND_FUTURE";
+
+export async function deleteEventWithScope(
+  eventId: string,
+  scope: DeleteEventScope = "THIS"
+) {
+  const event = await prisma.event.findUnique({
+    where: { id: eventId },
+  });
+
+  if (!event) {
+    throw new Error("Event not found");
+  }
+
+  if (scope === "THIS_AND_FUTURE") {
+    if (!event.seriesId) {
+      throw new Error("Cannot delete future series events for a one-off event");
+    }
+
+    const eventsToDelete = await prisma.event.findMany({
+      where: {
+        seriesId: event.seriesId,
+        scheduledAt: { gte: event.scheduledAt },
+      },
+      select: { id: true, imageId: true },
+    });
+
+    const imageIds = [
+      ...new Set(
+        eventsToDelete
+          .map((e) => e.imageId)
+          .filter((id): id is string => id != null)
+      ),
+    ];
+
+    await prisma.$transaction(async (tx) => {
+      await tx.eventSeries.update({
+        where: { id: event.seriesId! },
+        data: { active: false },
+      });
+
+      await tx.userOnEvent.deleteMany({
+        where: {
+          event: {
+            seriesId: event.seriesId!,
+            scheduledAt: { gte: event.scheduledAt },
+          },
+        },
+      });
+
+      await tx.event.deleteMany({
+        where: {
+          seriesId: event.seriesId!,
+          scheduledAt: { gte: event.scheduledAt },
+        },
+      });
+    });
+
+    return { deletedCount: eventsToDelete.length, imageIds };
+  }
+
+  const imageId = event.imageId;
+
+  await prisma.$transaction(async (tx) => {
+    await tx.userOnEvent.deleteMany({
+      where: { eventId },
+    });
+
+    await tx.event.delete({
+      where: { id: eventId },
+    });
+  });
+
+  return { deletedCount: 1, imageIds: imageId ? [imageId] : [] };
+}
+
+export async function getUnusedEventImageIds(
+  imageIds: string[]
+): Promise<string[]> {
+  const unused: string[] = [];
+
+  for (const imageId of imageIds) {
+    const stillUsed = await prisma.event.findFirst({
+      where: { imageId },
+      select: { id: true },
+    });
+
+    if (!stillUsed) {
+      unused.push(imageId);
+    }
+  }
+
+  return unused;
+}
+
 export async function createRecurringEvent(
   fields: SeriesFields & { scheduledAt: Date; recurrence: RecurrenceRule }
 ) {
