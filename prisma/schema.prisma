@@ -29,16 +29,26 @@ enum RecurrenceRule {
 }
 
 model EventSeries {
-  id          String          @id @default(cuid())
+  id          String                 @id @default(cuid())
   title       String
   description String?
   location    String?
   imageId     String?
   recurrence  RecurrenceRule
   startAt     DateTime
-  active      Boolean         @default(true)
-  createdAt   DateTime        @default(now())
+  active      Boolean                @default(true)
+  createdAt   DateTime               @default(now())
   events      Event[]
+  exceptions  EventSeriesException[]
+}
+
+model EventSeriesException {
+  id          String      @id @default(cuid())
+  seriesId    String
+  scheduledAt DateTime
+  series      EventSeries @relation(fields: [seriesId], references: [id], onDelete: Cascade)
+
+  @@unique([seriesId, scheduledAt])
 }
 
 model Event {

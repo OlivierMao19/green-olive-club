@@ -42,14 +42,26 @@ export async function ensureFutureInstances(seriesId: string): Promise<void> {
   const now = new Date();
   const horizonEnd = getHorizonEnd(now);
 
-  const futureEvents = await prisma.event.findMany({
-    where: {
-      seriesId,
-      scheduledAt: { gt: now },
-    },
-    orderBy: { scheduledAt: "asc" },
-    select: { scheduledAt: true },
-  });
+  const [futureEvents, exceptions] = await Promise.all([
+    prisma.event.findMany({
+      where: {
+        seriesId,
+        scheduledAt: { gt: now },
+      },
+      orderBy: { scheduledAt: "asc" },
+      select: { scheduledAt: true },
+    }),
+    prisma.eventSeriesException.findMany({
+      where: { seriesId },
+      select: { scheduledAt: true },
+    }),
+  ]);
+
+  const blockedDates = new Set(
+    exceptions.map((e) => e.scheduledAt.getTime())
+  );
+
+  const isBlocked = (date: Date) => blockedDates.has(date.getTime());
 
   const existingFutureCount = futureEvents.length;
   if (existingFutureCount >= MAX_FUTURE_INSTANCES) {
@@ -88,7 +100,7 @@ export async function ensureFutureInstances(seriesId: string): Promise<void> {
   let plannedCount = existingFutureCount;
 
   while (plannedCount < MAX_FUTURE_INSTANCES && cursor <= horizonEnd) {
-    if (cursor > now) {
+    if (cursor > now && !isBlocked(cursor)) {
       const exists = await prisma.event.findFirst({
         where: { seriesId, scheduledAt: cursor },
         select: { id: true },
@@ -104,7 +116,7 @@ export async function ensureFutureInstances(seriesId: string): Promise<void> {
   }
 
   if (toCreate.length > 0) {
-    await prisma.event.createMany({ data: toCreate });
+    await prisma.event.createMany({ data: toCreate, skipDuplicates: true });
   }
 }
 
@@ -114,7 +126,13 @@ export async function topUpAllActiveSeries(): Promise<void> {
     select: { id: true },
   });
 
-  await Promise.all(activeSeries.map((series) => ensureFutureInstances(series.id)));
+  for (const series of activeSeries) {
+    try {
+      await ensureFutureInstances(series.id);
+    } catch (error) {
+      console.error(`Failed to top up series ${series.id}:`, error);
+    }
+  }
 }
 
 export type DeleteEventScope = "THIS" | "THIS_AND_FUTURE";
@@ -184,6 +202,22 @@ export async function deleteEventWithScope(
     await tx.userOnEvent.deleteMany({
       where: { eventId },
     });
+
+    if (event.seriesId) {
+      await tx.eventSeriesException.upsert({
+        where: {
+          seriesId_scheduledAt: {
+            seriesId: event.seriesId,
+            scheduledAt: event.scheduledAt,
+          },
+        },
+        create: {
+          seriesId: event.seriesId,
+          scheduledAt: event.scheduledAt,
+        },
+        update: {},
+      });
+    }
 
     await tx.event.delete({
       where: { id: eventId },
