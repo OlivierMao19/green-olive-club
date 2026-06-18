@@ -1,8 +1,11 @@
 import { prisma } from "@/lib/prisma";
+import { topUpAllActiveSeries } from "@/lib/eventSeries";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   try {
+    await topUpAllActiveSeries();
+
     const body = (await req.json().catch(() => ({}))) || {};
     const raw = body.date;
     const order = body.order ?? "asc";

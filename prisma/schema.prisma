@@ -23,6 +23,24 @@ model User {
   events        UserOnEvent[]
 }
 
+enum RecurrenceRule {
+  WEEKLY
+  BIWEEKLY
+}
+
+model EventSeries {
+  id          String          @id @default(cuid())
+  title       String
+  description String?
+  location    String?
+  imageId     String?
+  recurrence  RecurrenceRule
+  startAt     DateTime
+  active      Boolean         @default(true)
+  createdAt   DateTime        @default(now())
+  events      Event[]
+}
+
 model Event {
   id          String        @id @default(cuid())
   title       String
@@ -30,7 +48,11 @@ model Event {
   scheduledAt DateTime
   location    String?
   imageId     String?
+  seriesId    String?
+  series      EventSeries?  @relation(fields: [seriesId], references: [id], onDelete: SetNull)
   attendees   UserOnEvent[]
+
+  @@unique([seriesId, scheduledAt])
 }
 
 model UserOnEvent {

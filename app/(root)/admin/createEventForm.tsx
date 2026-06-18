@@ -13,6 +13,9 @@ export default function CreateEventForm() {
   const [description, setDescription] = useState("");
   const [dateTime, setDateTime] = useState("");
   const [location, setLocation] = useState("");
+  const [recurrence, setRecurrence] = useState<"NONE" | "WEEKLY" | "BIWEEKLY">(
+    "NONE"
+  );
 
   const router = useRouter();
 
@@ -40,7 +43,13 @@ export default function CreateEventForm() {
       const response = await fetch("api/events", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ title, description, location, scheduledAt }),
+        body: JSON.stringify({
+          title,
+          description,
+          location,
+          scheduledAt,
+          recurrence,
+        }),
       });
       if (!response.ok) {
         throw new Error("Failed to create event");
@@ -49,7 +58,12 @@ export default function CreateEventForm() {
       setDescription("");
       setDateTime("");
       setLocation("");
-      alert(`Event created successfully scheduled at: ${dateTime}`);
+      setRecurrence("NONE");
+      alert(
+        recurrence === "NONE"
+          ? `Event created successfully scheduled at: ${dateTime}`
+          : `Recurring event created (${recurrence.toLowerCase()}) starting: ${dateTime}`
+      );
 
       router.push("/events");
     } catch (error) {
@@ -104,6 +118,30 @@ export default function CreateEventForm() {
               required
               className="min-h-[150px] w-full"
             />
+          </div>
+
+          <div className="space-y-2 mt-3">
+            <Label htmlFor="recurrence" className="text-base">
+              Recurrence
+            </Label>
+            <select
+              id="recurrence"
+              value={recurrence}
+              onChange={(e) =>
+                setRecurrence(
+                  e.target.value as "NONE" | "WEEKLY" | "BIWEEKLY"
+                )
+              }
+              className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+            >
+              <option value="NONE">One-time event</option>
+              <option value="WEEKLY">Weekly</option>
+              <option value="BIWEEKLY">Biweekly</option>
+            </select>
+            <p className="text-sm text-muted-foreground">
+              Recurring events generate up to 5 upcoming instances within the
+              next month. More are created automatically when you visit Events.
+            </p>
           </div>
 
           <div className="space-y-2 mt-3">
