@@ -18,6 +18,10 @@ declare module "next-auth" {
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter: PrismaAdapter(prisma),
+  pages: {
+    signIn: "/login",
+    verifyRequest: "/login/verify-request",
+  },
   providers: [
     GitHub,
     GoogleProvider({
