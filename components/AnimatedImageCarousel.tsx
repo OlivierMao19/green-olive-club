@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface AnimatedImageCarouselProps {
@@ -16,6 +17,9 @@ const AnimatedImageCarousel: React.FC<AnimatedImageCarouselProps> = ({
   interval = 10000,
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [loadedIndices, setLoadedIndices] = useState<Set<number>>(
+    () => new Set()
+  );
 
   useEffect(() => {
     if (images.length === 0) return;
@@ -35,6 +39,15 @@ const AnimatedImageCarousel: React.FC<AnimatedImageCarouselProps> = ({
   const imageSrc = currentImage?.src?.startsWith("/")
     ? currentImage.src
     : `/${currentImage?.src ?? ""}`;
+  const nextIndex = (currentIndex + 1) % images.length;
+  const nextImageSrc = images[nextIndex]?.src?.startsWith("/")
+    ? images[nextIndex].src
+    : `/${images[nextIndex]?.src ?? ""}`;
+  const isCurrentLoaded = loadedIndices.has(currentIndex);
+
+  function handleImageLoad(index: number) {
+    setLoadedIndices((prev) => new Set(prev).add(index));
+  }
 
   return (
     <motion.div
@@ -78,21 +91,49 @@ const AnimatedImageCarousel: React.FC<AnimatedImageCarouselProps> = ({
             className="absolute inset-0 overflow-hidden rounded-[1.8rem] border border-white/70 bg-white p-2 shadow-[0_32px_60px_-32px_rgba(17,78,58,0.9)]"
             style={{ transformOrigin: "center center" }}
           >
-            <motion.img
-              src={imageSrc}
-              alt={currentImage?.alt ?? "Club image"}
-              className="h-full w-full rounded-[1.35rem] object-cover"
-              animate={{
-                scale: [1, 1.02, 1],
-              }}
-              transition={{
-                duration: 8,
-                repeat: Infinity,
-                repeatType: "reverse",
-              }}
-            />
+            <div className="relative h-full w-full overflow-hidden rounded-[1.35rem]">
+              {!isCurrentLoaded && (
+                <div className="absolute inset-0 animate-pulse bg-gradient-to-br from-emerald-100 via-emerald-50 to-lime-100" />
+              )}
+
+              <motion.div
+                className="relative h-full w-full"
+                animate={{ scale: [1, 1.02, 1] }}
+                transition={{
+                  duration: 8,
+                  repeat: Infinity,
+                  repeatType: "reverse",
+                }}
+              >
+                <Image
+                  src={imageSrc}
+                  alt={currentImage?.alt ?? "Club image"}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 512px"
+                  priority={currentIndex === 0}
+                  className={`object-cover transition-opacity duration-500 ${
+                    isCurrentLoaded ? "opacity-100" : "opacity-0"
+                  }`}
+                  onLoad={() => handleImageLoad(currentIndex)}
+                />
+              </motion.div>
+            </div>
           </motion.div>
         </AnimatePresence>
+
+        {/* Preload the next slide through Next.js image optimization */}
+        {images.length > 1 && (
+          <div className="pointer-events-none absolute h-0 w-0 overflow-hidden opacity-0">
+            <Image
+              src={nextImageSrc}
+              alt=""
+              width={512}
+              height={640}
+              aria-hidden
+              onLoad={() => handleImageLoad(nextIndex)}
+            />
+          </div>
+        )}
       </div>
 
       <div className="mt-5 flex justify-center gap-2">
