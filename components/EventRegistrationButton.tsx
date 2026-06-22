@@ -64,10 +64,11 @@ export default function EventRegistrationButton({
       <Toaster />
       <Button
         variant="default"
-        className={`cursor-pointer text-lg ${isRegistered
-          ? "bg-red-700/90 hover:bg-red-800"
-          : "bg-green-700 hover:bg-green-800"
-          }`}
+        className={`cursor-pointer rounded-full px-6 text-sm font-semibold shadow-[0_16px_30px_-20px_rgba(12,84,58,0.85)] ${
+          isRegistered
+            ? "bg-red-600/90 hover:bg-red-700"
+            : "bg-emerald-700 hover:bg-emerald-800"
+        }`}
         onClick={handleRegistration}
         disabled={isLoading}
       >

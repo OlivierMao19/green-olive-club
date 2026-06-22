@@ -1,7 +1,6 @@
 "use client";
 
-import { Card, CardContent } from "@/components/ui/card";
-import { ArrowLeft, Clock, Info, MapPin } from "lucide-react";
+import { ArrowLeft, Calendar, MapPin, Trash2, Upload } from "lucide-react";
 import Link from "next/link";
 import EventRegistrationButton from "@/components/EventRegistrationButton";
 import { Button } from "@/components/ui/button";
@@ -16,9 +15,10 @@ import {
 import type { DeleteEventScope } from "@/lib/eventSeries";
 import type { Event } from "@prisma/client";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
-import Image from "next/image";
-import { deleteEventImage, postEventImage } from "@/lib/services";
+import { useEffect, useState } from "react";
+import NextImage from "next/image";
+import { Image as ImageKitImage } from "@imagekit/next";
+import { deleteEventImage, getEventImage, postEventImage } from "@/lib/services";
 
 type EventPagePayload = {
   event: Event | null;
@@ -28,6 +28,7 @@ type EventPagePayload = {
   isAdmin: boolean;
   isRecurring: boolean;
 };
+
 export default function EventPage({
   event,
   userId,
@@ -39,13 +40,60 @@ export default function EventPage({
   const [imageSelected, setImageSelected] = useState<string | undefined>(
     undefined
   );
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [imageURL, setImageURL] = useState<string | null>(null);
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const [imageError, setImageError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const router = useRouter();
 
-  if (!event) return <div>Event not found</div>;
+  useEffect(() => {
+    if (!event?.imageId) {
+      setImageURL(null);
+      return;
+    }
+
+    let mounted = true;
+
+    async function fetchImage() {
+      try {
+        const { uploadedUrl, relativeUrl } = await getEventImage(event!.imageId!);
+        if (!mounted) return;
+        setImageURL(relativeUrl ?? uploadedUrl ?? null);
+      } catch (error) {
+        console.error("Error fetching event image:", error);
+        if (mounted) setImageURL(null);
+      }
+    }
+
+    void fetchImage();
+
+    return () => {
+      mounted = false;
+    };
+  }, [event?.imageId]);
+
+  if (!event) {
+    return (
+      <div className="site-shell py-8 md:py-10">
+        <div className="section-shell flex flex-col items-center justify-center py-16 text-center">
+          <p className="text-lg text-emerald-900/70">Event not found</p>
+          <Button
+            asChild
+            variant="outline"
+            className="mt-4 rounded-full border-emerald-200 bg-white/80 text-emerald-900 hover:bg-emerald-50"
+          >
+            <Link href="/events">Back to Activities</Link>
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
   const currentEvent = event;
+  const displayImage = imageSelected ?? imageURL;
+  const scheduledAt = new Date(currentEvent.scheduledAt);
 
   async function deleteEvent(scope: DeleteEventScope) {
     setIsDeleting(true);
@@ -106,130 +154,190 @@ export default function EventPage({
     setIsLoading(false);
   }
 
+  const imageSection =
+    displayImage && !imageError && process.env.NEXT_PUBLIC_IMAGEKIT_URL ? (
+      <div className="relative min-h-[220px] w-full md:min-h-0 md:max-w-[42%] md:flex-none">
+        <div className="relative h-full min-h-[220px] w-full md:min-h-[320px]">
+          {imageSelected ? (
+            <NextImage
+              src={imageSelected}
+              alt={`${currentEvent.title} event photo`}
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, 42vw"
+            />
+          ) : (
+            <ImageKitImage
+              urlEndpoint={`${process.env.NEXT_PUBLIC_IMAGEKIT_URL}`}
+              src={imageURL!}
+              alt={`${currentEvent.title} event photo`}
+              className={`object-cover transition-opacity duration-700 ${
+                imageLoaded ? "opacity-100" : "opacity-0"
+              }`}
+              onLoad={() => setImageLoaded(true)}
+              onError={() => {
+                setImageError(true);
+                setImageLoaded(true);
+              }}
+              fill
+              sizes="(max-width: 768px) 100vw, 42vw"
+              priority
+            />
+          )}
+          {!imageLoaded && !imageSelected && (
+            <div className="absolute inset-0 animate-pulse bg-emerald-100" />
+          )}
+        </div>
+      </div>
+    ) : (
+      <div className="relative min-h-[220px] w-full md:min-h-0 md:max-w-[42%] md:flex-none">
+        <div className="flex h-full min-h-[220px] w-full items-center justify-center bg-gradient-to-br from-emerald-100 to-lime-100 md:min-h-[320px]">
+          <div className="relative h-full w-full">
+            <NextImage
+              src="/logo.png"
+              alt="GOCCC logo"
+              fill
+              sizes="(max-width: 768px) 100vw, 42vw"
+              className="object-contain p-8 opacity-85"
+            />
+          </div>
+        </div>
+      </div>
+    );
+
   return (
-    <div className="container mx-auto px-2 py-6 md:px-4 md:w-9/10 sm:w-full mt-6">
-      <Card className="h-[70svh] bg-green-50/30 border border-green-100/60 shadow-sm">
-        <CardContent className="flex flex-col items-between justify-center py-5 space-y-10 text-gray-700 relative">
-          <div className="flex items-justify-center items-center justify-between">
-            <Link className="" href="/events">
-              <div className="flex gap-2">
-                <ArrowLeft />
-                <span className="font-bold text-gray-1000 text-1xl">Back</span>
-              </div>
-            </Link>
-            {isAdmin && (
-              <Button
-                className="px-8 bg-red-500/10 hover:bg-red-500/20 text-red-500 hover:text-red-600"
-                onClick={handleDeleteClick}
-                disabled={isDeleting}
-              >
-                <span className="font-bold text-gray-1000 text-1xl">
-                  Delete
+    <div className="site-shell py-8 md:py-10">
+      <div className="mb-6">
+        <Link
+          href="/events"
+          className="inline-flex items-center gap-2 text-sm font-semibold text-emerald-800 transition-colors hover:text-emerald-700"
+        >
+          <ArrowLeft className="h-4 w-4" />
+          Back to Activities
+        </Link>
+      </div>
+
+      <article className="overflow-hidden rounded-2xl border border-emerald-100/80 bg-white/90 shadow-[0_24px_45px_-30px_rgba(18,72,52,0.8)]">
+        <div className="md:flex md:items-stretch">
+          {imageSection}
+
+          <div className="flex w-full flex-col p-6 md:p-8">
+            <h1 className="about-heading mb-4 text-3xl font-semibold leading-tight text-emerald-950 md:text-4xl">
+              {currentEvent.title}
+            </h1>
+
+            <p className="mb-6 text-base leading-relaxed text-emerald-900/72 md:text-lg">
+              {currentEvent.description}
+            </p>
+
+            <div className="mb-8 space-y-3">
+              <div className="flex items-center text-sm text-emerald-900/65 md:text-base">
+                <Calendar className="mr-2 h-4 w-4 shrink-0 text-emerald-500" />
+                <span>
+                  {scheduledAt.toLocaleString(undefined, {
+                    weekday: "long",
+                    month: "long",
+                    day: "numeric",
+                    year: "numeric",
+                    hour: "numeric",
+                    minute: "2-digit",
+                  })}
                 </span>
-              </Button>
+              </div>
+
+              {currentEvent.location && (
+                <div className="flex items-center text-sm text-emerald-900/65 md:text-base">
+                  <MapPin className="mr-2 h-4 w-4 shrink-0 text-emerald-500" />
+                  <span>{currentEvent.location}</span>
+                </div>
+              )}
+            </div>
+
+            <div className="mt-auto flex flex-wrap items-center gap-3 border-t border-emerald-100/80 pt-6">
+              <EventRegistrationButton
+                userId={userId}
+                eventId={currentEvent.id}
+                initialRegistrationStatus={initialRegistrationStatus}
+                hasMcGillId={!!mcGillId}
+              />
+
+              {isAdmin && (
+                <Button
+                  variant="outline"
+                  className="rounded-full border-red-200 bg-white/80 text-red-600 hover:bg-red-50 hover:text-red-700"
+                  onClick={handleDeleteClick}
+                  disabled={isDeleting}
+                >
+                  <Trash2 className="mr-2 h-4 w-4" />
+                  Delete Event
+                </Button>
+              )}
+            </div>
+
+            {isAdmin && (
+              <div className="mt-6 rounded-xl border border-dashed border-emerald-200 bg-emerald-50/50 p-4">
+                <p className="mb-3 text-sm font-semibold text-emerald-900">
+                  Event Image
+                </p>
+                <label
+                  htmlFor="image-event"
+                  className="inline-flex cursor-pointer items-center gap-2 rounded-full border border-emerald-200 bg-white px-4 py-2 text-sm font-medium text-emerald-800 transition-colors hover:bg-emerald-50"
+                >
+                  <Upload className="h-4 w-4" />
+                  {isLoading ? "Uploading..." : "Upload Image"}
+                  <input
+                    type="file"
+                    accept=".png,.jpg,.jpeg"
+                    className="hidden"
+                    id="image-event"
+                    onChange={(e) => {
+                      void handleFileInput(e.target.files?.[0]);
+                    }}
+                  />
+                </label>
+              </div>
             )}
           </div>
-          <Dialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle>Delete recurring event</DialogTitle>
-                <DialogDescription>
-                  This event is part of a recurring series. Choose what you want
-                  to delete.
-                </DialogDescription>
-              </DialogHeader>
-              <DialogFooter className="flex flex-col gap-2 sm:flex-col sm:space-x-0">
-                <Button
-                  variant="outline"
-                  className="w-full"
-                  onClick={() => setDeleteDialogOpen(false)}
-                  disabled={isDeleting}
-                >
-                  Cancel
-                </Button>
-                <Button
-                  variant="outline"
-                  className="w-full border-red-200 text-red-600 hover:bg-red-50"
-                  onClick={() => void deleteEvent("THIS")}
-                  disabled={isDeleting}
-                >
-                  Delete only this event
-                </Button>
-                <Button
-                  variant="destructive"
-                  className="w-full"
-                  onClick={() => void deleteEvent("THIS_AND_FUTURE")}
-                  disabled={isDeleting}
-                >
-                  Delete this and all future events
-                </Button>
-              </DialogFooter>
-            </DialogContent>
-          </Dialog>
-          <h1 className="text-3xl font-bold">{currentEvent.title}</h1>
-          <div className="flex items-center font-bold">
-            <Info className="mr-1 h-4 w-4" />
-            <p>
-              Description:{" "}
-              <span className="font-normal">{currentEvent.description}</span>
-            </p>
-          </div>
-          <div className="flex items-center font-bold">
-            <MapPin className="mr-1 h-4 w-4" />
-            <p>
-              Location: <span className="font-normal">{currentEvent.location}</span>
-            </p>
-          </div>
-          <div className="flex items-center font-bold">
-            <Clock className="mr-1 h-4 w-4" />
-            <p>
-              Scheduled At:{" "}
-              <span className="font-normal">
-                {new Date(currentEvent.scheduledAt).toLocaleString()}
-              </span>
-            </p>
-          </div>
+        </div>
+      </article>
 
-          <EventRegistrationButton
-            userId={userId}
-            eventId={currentEvent.id}
-            initialRegistrationStatus={initialRegistrationStatus}
-            hasMcGillId={!!mcGillId}
-          />
-          {isAdmin && (
-            <>
-              <label htmlFor="image-event" className="flex w-fit">
-                {isLoading ? (
-                  <>Is loading plz wait</>
-                ) : (
-                  <>
-                    Insert Input
-                    <input
-                      type="file"
-                      accept=".png, .jpg, .jpeg"
-                      className="hidden"
-                      id="image-event"
-                      onChange={(e) => {
-                        handleFileInput(e.target.files?.[0]);
-                      }}
-                    ></input>
-                  </>
-                )}
-              </label>
-              <div className="w-40 h-40 relative">
-                {imageSelected && (
-                  <Image
-                    src={imageSelected}
-                    alt="image"
-                    fill
-                    className="object-cover"
-                  />
-                )}
-              </div>
-            </>
-          )}
-        </CardContent>
-      </Card>
+      <Dialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Delete recurring event</DialogTitle>
+            <DialogDescription>
+              This event is part of a recurring series. Choose what you want to
+              delete.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter className="flex flex-col gap-2 sm:flex-col sm:space-x-0">
+            <Button
+              variant="outline"
+              className="w-full rounded-full border-emerald-200"
+              onClick={() => setDeleteDialogOpen(false)}
+              disabled={isDeleting}
+            >
+              Cancel
+            </Button>
+            <Button
+              variant="outline"
+              className="w-full rounded-full border-red-200 text-red-600 hover:bg-red-50"
+              onClick={() => void deleteEvent("THIS")}
+              disabled={isDeleting}
+            >
+              Delete only this event
+            </Button>
+            <Button
+              variant="destructive"
+              className="w-full rounded-full"
+              onClick={() => void deleteEvent("THIS_AND_FUTURE")}
+              disabled={isDeleting}
+            >
+              Delete this and all future events
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
