@@ -1,7 +1,6 @@
 "use client";
 
 import { ArrowLeft, Calendar, MapPin, Trash2, Upload } from "lucide-react";
-import Link from "next/link";
 import EventRegistrationButton from "@/components/EventRegistrationButton";
 import { Button } from "@/components/ui/button";
 import {
@@ -48,6 +47,14 @@ export default function EventPage({
   const [isDeleting, setIsDeleting] = useState(false);
   const router = useRouter();
 
+  function handleBack() {
+    if (typeof window !== "undefined" && window.history.length > 1) {
+      router.back();
+    } else {
+      router.push("/events");
+    }
+  }
+
   useEffect(() => {
     if (!event?.imageId) {
       setImageURL(null);
@@ -80,11 +87,11 @@ export default function EventPage({
         <div className="section-shell flex flex-col items-center justify-center py-16 text-center">
           <p className="text-lg text-emerald-900/70">Event not found</p>
           <Button
-            asChild
             variant="outline"
             className="mt-4 rounded-full border-emerald-200 bg-white/80 text-emerald-900 hover:bg-emerald-50"
+            onClick={handleBack}
           >
-            <Link href="/events">Back to Activities</Link>
+            Back
           </Button>
         </div>
       </div>
@@ -208,13 +215,14 @@ export default function EventPage({
   return (
     <div className="site-shell py-8 md:py-10">
       <div className="mb-6">
-        <Link
-          href="/events"
+        <button
+          type="button"
+          onClick={handleBack}
           className="inline-flex items-center gap-2 text-sm font-semibold text-emerald-800 transition-colors hover:text-emerald-700"
         >
           <ArrowLeft className="h-4 w-4" />
-          Back to Activities
-        </Link>
+          Back
+        </button>
       </div>
 
       <article className="overflow-hidden rounded-2xl border border-emerald-100/80 bg-white/90 shadow-[0_24px_45px_-30px_rgba(18,72,52,0.8)]">
