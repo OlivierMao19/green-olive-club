@@ -105,8 +105,8 @@ export default function EventCard(props: EventCardProps) {
 
   return (
     <article
-      className={`group relative overflow-hidden rounded-2xl border border-emerald-100/80 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_24px_45px_-30px_rgba(18,72,52,0.8)] ${
-        isPast ? "bg-emerald-50/60 ring-1 ring-emerald-200/90" : "bg-white/90"
+      className={`group relative overflow-hidden rounded-2xl border border-emerald-300/80 bg-white shadow-lg transition-all duration-300 hover:-translate-y-0.5 hover:border-emerald-400 hover:shadow-xl ${
+        isPast ? "bg-emerald-50/60 " : "bg-white"
       } ${className} md:flex md:min-h-[190px] md:items-stretch`}
       role="article"
       aria-label={`Event: ${event.title}`}
@@ -153,7 +153,10 @@ export default function EventCard(props: EventCardProps) {
             asChild
             className="border-emerald-200 bg-white/80 text-emerald-900 hover:bg-emerald-50"
           >
-            <Link href={`/events/${event.id}`} onClick={(e) => e.stopPropagation()}>
+            <Link
+              href={`/events/${event.id}`}
+              onClick={(e) => e.stopPropagation()}
+            >
               Details <ChevronRight className="ml-1 h-4 w-4" />
             </Link>
           </Button>
