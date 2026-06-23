@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowLeft, Calendar, MapPin, Trash2, Upload } from "lucide-react";
+import { ArrowLeft, Calendar, MapPin, Pencil, Trash2, Upload } from "lucide-react";
 import EventRegistrationButton from "@/components/EventRegistrationButton";
 import { Button } from "@/components/ui/button";
 import {
@@ -11,10 +11,13 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import type { DeleteEventScope } from "@/lib/eventSeries";
 import type { Event } from "@prisma/client";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import NextImage from "next/image";
 import { Image as ImageKitImage } from "@imagekit/next";
 import { deleteEventImage, getEventImage, postEventImage } from "@/lib/services";
@@ -27,6 +30,12 @@ type EventPagePayload = {
   isAdmin: boolean;
   isRecurring: boolean;
 };
+
+function toDatetimeLocalValue(date: Date): string {
+  const pad = (value: number) => value.toString().padStart(2, "0");
+
+  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
+}
 
 export default function EventPage({
   event,
@@ -45,6 +54,12 @@ export default function EventPage({
   const [isLoading, setIsLoading] = useState(false);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [editDialogOpen, setEditDialogOpen] = useState(false);
+  const [editTitle, setEditTitle] = useState("");
+  const [editDescription, setEditDescription] = useState("");
+  const [editLocation, setEditLocation] = useState("");
+  const [editDateTime, setEditDateTime] = useState("");
+  const [isSaving, setIsSaving] = useState(false);
   const router = useRouter();
 
   function handleBack() {
@@ -204,6 +219,54 @@ export default function EventPage({
     }
   }
 
+  function openEditDialog() {
+    setEditTitle(currentEvent.title);
+    setEditDescription(currentEvent.description ?? "");
+    setEditLocation(currentEvent.location ?? "");
+    setEditDateTime(toDatetimeLocalValue(new Date(currentEvent.scheduledAt)));
+    setEditDialogOpen(true);
+  }
+
+  async function handleEditSubmit(e: FormEvent) {
+    e.preventDefault();
+
+    if (!editDateTime) {
+      alert("Please select a valid date and time");
+      return;
+    }
+
+    setIsSaving(true);
+
+    try {
+      const response = await fetch("/api/events", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          id: currentEvent.id,
+          title: editTitle,
+          description: editDescription,
+          location: editLocation,
+          scheduledAt: new Date(editDateTime).toISOString(),
+        }),
+      });
+
+      if (!response.ok) {
+        const err = await response.json().catch(() => null);
+        throw new Error(err?.error ?? "Failed to update event");
+      }
+
+      setEditDialogOpen(false);
+      router.refresh();
+    } catch (error) {
+      console.error("Error updating event:", error);
+      alert(
+        error instanceof Error ? error.message : "Failed to update event."
+      );
+    } finally {
+      setIsSaving(false);
+    }
+  }
+
   async function handleFileInput(file?: File) {
     if (!file || isLoading) return;
 
@@ -285,15 +348,26 @@ export default function EventPage({
               />
 
               {isAdmin && (
-                <Button
-                  variant="outline"
-                  className="rounded-full border-red-200 bg-white/80 text-red-600 hover:bg-red-50 hover:text-red-700"
-                  onClick={handleDeleteClick}
-                  disabled={isDeleting}
-                >
-                  <Trash2 className="mr-2 h-4 w-4" />
-                  Delete Event
-                </Button>
+                <>
+                  <Button
+                    variant="outline"
+                    className="rounded-full border-emerald-200 bg-white/80 text-emerald-800 hover:bg-emerald-50"
+                    onClick={openEditDialog}
+                    disabled={isSaving}
+                  >
+                    <Pencil className="mr-2 h-4 w-4" />
+                    Edit Event
+                  </Button>
+                  <Button
+                    variant="outline"
+                    className="rounded-full border-red-200 bg-white/80 text-red-600 hover:bg-red-50 hover:text-red-700"
+                    onClick={handleDeleteClick}
+                    disabled={isDeleting}
+                  >
+                    <Trash2 className="mr-2 h-4 w-4" />
+                    Delete Event
+                  </Button>
+                </>
               )}
             </div>
 
@@ -323,6 +397,72 @@ export default function EventPage({
           </div>
         </div>
       </article>
+
+      <Dialog open={editDialogOpen} onOpenChange={setEditDialogOpen}>
+        <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-lg">
+          <DialogHeader>
+            <DialogTitle>Edit event</DialogTitle>
+            <DialogDescription>
+              Update the details for this event.
+              {isRecurring && " Changes apply to this occurrence only."}
+            </DialogDescription>
+          </DialogHeader>
+          <form onSubmit={(e) => void handleEditSubmit(e)} className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="edit-title">Title</Label>
+              <Input
+                id="edit-title"
+                value={editTitle}
+                onChange={(e) => setEditTitle(e.target.value)}
+                required
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="edit-location">Location</Label>
+              <Input
+                id="edit-location"
+                value={editLocation}
+                onChange={(e) => setEditLocation(e.target.value)}
+                required
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="edit-description">Description</Label>
+              <Textarea
+                id="edit-description"
+                value={editDescription}
+                onChange={(e) => setEditDescription(e.target.value)}
+                required
+                className="min-h-[120px]"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="edit-datetime">Scheduled at</Label>
+              <Input
+                id="edit-datetime"
+                type="datetime-local"
+                value={editDateTime}
+                onChange={(e) => setEditDateTime(e.target.value)}
+                required
+              />
+            </div>
+            <DialogFooter className="gap-2 sm:gap-0">
+              <Button
+                type="button"
+                variant="outline"
+                className="rounded-full border-emerald-200"
+                onClick={() => setEditDialogOpen(false)}
+                disabled={isSaving}
+              >
+                Cancel
+              </Button>
+              <Button type="submit" className="rounded-full" disabled={isSaving}>
+                {isSaving ? "Saving..." : "Save changes"}
+              </Button>
+            </DialogFooter>
+          </form>
+        </DialogContent>
+      </Dialog>
 
       <Dialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
         <DialogContent>

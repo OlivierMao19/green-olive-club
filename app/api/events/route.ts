@@ -1,3 +1,4 @@
+import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import { deleteEventImage } from "@/lib/services";
 import {
@@ -62,6 +63,78 @@ export async function POST(req: Request) {
     );
   } catch (error) {
     console.error("Error creating event:", error);
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 }
+    );
+  }
+}
+
+export async function PATCH(req: Request) {
+  try {
+    const session = await auth();
+    if (!session?.user?.isAdmin) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
+    }
+
+    const { id, title, description, location, scheduledAt } = await req.json();
+
+    if (!id) {
+      return NextResponse.json(
+        { error: "Event ID is required" },
+        { status: 400 }
+      );
+    }
+
+    const existing = await prisma.event.findUnique({ where: { id } });
+    if (!existing) {
+      return NextResponse.json({ error: "Event not found" }, { status: 404 });
+    }
+
+    let parsedDate: Date | undefined;
+    if (scheduledAt !== undefined) {
+      parsedDate = new Date(scheduledAt);
+      if (Number.isNaN(parsedDate.getTime())) {
+        return NextResponse.json(
+          { error: "Invalid scheduled date" },
+          { status: 400 }
+        );
+      }
+
+      if (existing.seriesId) {
+        const conflict = await prisma.event.findFirst({
+          where: {
+            seriesId: existing.seriesId,
+            scheduledAt: parsedDate,
+            NOT: { id },
+          },
+        });
+
+        if (conflict) {
+          return NextResponse.json(
+            {
+              error:
+                "Another event in this series already exists at that time",
+            },
+            { status: 409 }
+          );
+        }
+      }
+    }
+
+    const event = await prisma.event.update({
+      where: { id },
+      data: {
+        ...(title !== undefined && { title }),
+        ...(description !== undefined && { description }),
+        ...(location !== undefined && { location }),
+        ...(parsedDate !== undefined && { scheduledAt: parsedDate }),
+      },
+    });
+
+    return NextResponse.json({ message: "Event updated", event });
+  } catch (error) {
+    console.error("Error updating event:", error);
     return NextResponse.json(
       { error: "Internal Server Error" },
       { status: 500 }
