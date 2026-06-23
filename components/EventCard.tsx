@@ -8,6 +8,7 @@ import { Button } from "./ui/button";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { getEventImage } from "@/lib/services";
+import NextImage from "next/image";
 
 type BaseProps = {
   event: Activity;
@@ -123,6 +124,22 @@ export default function EventCard(props: EventCardProps) {
     ? "border-slate-200 bg-slate-100/80 text-slate-600 hover:bg-slate-100"
     : "border-emerald-200 bg-white/80 text-emerald-900 hover:bg-emerald-50";
 
+  const defaultImageSection = (
+    <div className={imageContainerClass}>
+      <div className="flex h-full min-h-36 w-full items-center justify-center bg-gradient-to-br from-emerald-100 to-lime-100">
+        <div className="relative h-full w-full">
+          <NextImage
+            src="/bigLogo.png"
+            alt="GOCCC logo"
+            fill
+            sizes="(max-width: 768px) 100vw, 38vw"
+            className={`object-contain p-4 ${isPast ? "opacity-70 grayscale-[40%]" : "opacity-90"}`}
+          />
+        </div>
+      </div>
+    </div>
+  );
+
   return (
     <article
       className={`group relative overflow-hidden rounded-2xl border transition-all duration-300 ${cardClassName} ${className} md:flex md:min-h-[190px] md:items-stretch`}
@@ -130,7 +147,7 @@ export default function EventCard(props: EventCardProps) {
       aria-label={`Event: ${event.title}${isPast ? " (past)" : ""}`}
       onClick={handleActivate}
     >
-      {event.imageId && (
+      {event.imageId ? (
         <div className={imageContainerClass}>
           <div className="relative h-full min-h-36 w-full">
             {showImage ? (
@@ -153,6 +170,8 @@ export default function EventCard(props: EventCardProps) {
             )}
           </div>
         </div>
+      ) : (
+        defaultImageSection
       )}
 
       <div className="p-6 w-full">

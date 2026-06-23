@@ -109,8 +109,27 @@ export default function EventPage({
     !imageError &&
     process.env.NEXT_PUBLIC_IMAGEKIT_URL;
 
+  const imageContainerClass =
+    "relative min-h-[220px] w-full md:min-h-0 md:max-w-[42%] md:flex-none";
+
+  const defaultImageSection = (
+    <div className={imageContainerClass}>
+      <div className="flex h-full min-h-[220px] w-full items-center justify-center bg-gradient-to-br from-emerald-100 to-lime-100 md:min-h-[320px]">
+        <div className="relative h-full w-full">
+          <NextImage
+            src="/bigLogo.png"
+            alt="GOCCC logo"
+            fill
+            sizes="(max-width: 768px) 100vw, 42vw"
+            className="object-contain p-6 opacity-90"
+          />
+        </div>
+      </div>
+    </div>
+  );
+
   const imageSection = hasImage ? (
-    <div className="relative min-h-[220px] w-full md:min-h-0 md:max-w-[42%] md:flex-none">
+    <div className={imageContainerClass}>
       <div className="relative h-full min-h-[220px] w-full md:min-h-[320px]">
         {imageSelected ? (
           <NextImage
@@ -143,7 +162,9 @@ export default function EventPage({
         )}
       </div>
     </div>
-  ) : null;
+  ) : (
+    defaultImageSection
+  );
 
   async function deleteEvent(scope: DeleteEventScope) {
     setIsDeleting(true);
