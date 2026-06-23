@@ -56,8 +56,11 @@ export default function EventPage({
   }
 
   useEffect(() => {
+    setImageLoaded(false);
+    setImageError(false);
+    setImageURL(null);
+
     if (!event?.imageId) {
-      setImageURL(null);
       return;
     }
 
@@ -99,8 +102,48 @@ export default function EventPage({
   }
 
   const currentEvent = event;
-  const displayImage = imageSelected ?? imageURL;
-  const scheduledAt = new Date(currentEvent.scheduledAt);
+  const hasImage = Boolean(currentEvent.imageId || imageSelected);
+  const showImageKitImage =
+    !imageSelected &&
+    imageURL &&
+    !imageError &&
+    process.env.NEXT_PUBLIC_IMAGEKIT_URL;
+
+  const imageSection = hasImage ? (
+    <div className="relative min-h-[220px] w-full md:min-h-0 md:max-w-[42%] md:flex-none">
+      <div className="relative h-full min-h-[220px] w-full md:min-h-[320px]">
+        {imageSelected ? (
+          <NextImage
+            src={imageSelected}
+            alt={`${currentEvent.title} event photo`}
+            fill
+            className="object-cover"
+            sizes="(max-width: 768px) 100vw, 42vw"
+          />
+        ) : showImageKitImage ? (
+          <ImageKitImage
+            urlEndpoint={`${process.env.NEXT_PUBLIC_IMAGEKIT_URL}`}
+            src={imageURL!}
+            alt={`${currentEvent.title} event photo`}
+            className={`object-cover transition-opacity duration-700 ${
+              imageLoaded ? "opacity-100" : "opacity-0"
+            }`}
+            onLoad={() => setImageLoaded(true)}
+            onError={() => {
+              setImageError(true);
+              setImageLoaded(true);
+            }}
+            fill
+            sizes="(max-width: 768px) 100vw, 42vw"
+            priority
+          />
+        ) : null}
+        {(!imageSelected && (!showImageKitImage || !imageLoaded)) && (
+          <div className="absolute inset-0 animate-pulse bg-gray-200" />
+        )}
+      </div>
+    </div>
+  ) : null;
 
   async function deleteEvent(scope: DeleteEventScope) {
     setIsDeleting(true);
@@ -161,56 +204,7 @@ export default function EventPage({
     setIsLoading(false);
   }
 
-  const imageSection =
-    displayImage && !imageError && process.env.NEXT_PUBLIC_IMAGEKIT_URL ? (
-      <div className="relative min-h-[220px] w-full md:min-h-0 md:max-w-[42%] md:flex-none">
-        <div className="relative h-full min-h-[220px] w-full md:min-h-[320px]">
-          {imageSelected ? (
-            <NextImage
-              src={imageSelected}
-              alt={`${currentEvent.title} event photo`}
-              fill
-              className="object-cover"
-              sizes="(max-width: 768px) 100vw, 42vw"
-            />
-          ) : (
-            <ImageKitImage
-              urlEndpoint={`${process.env.NEXT_PUBLIC_IMAGEKIT_URL}`}
-              src={imageURL!}
-              alt={`${currentEvent.title} event photo`}
-              className={`object-cover transition-opacity duration-700 ${
-                imageLoaded ? "opacity-100" : "opacity-0"
-              }`}
-              onLoad={() => setImageLoaded(true)}
-              onError={() => {
-                setImageError(true);
-                setImageLoaded(true);
-              }}
-              fill
-              sizes="(max-width: 768px) 100vw, 42vw"
-              priority
-            />
-          )}
-          {!imageLoaded && !imageSelected && (
-            <div className="absolute inset-0 animate-pulse bg-emerald-100" />
-          )}
-        </div>
-      </div>
-    ) : (
-      <div className="relative min-h-[220px] w-full md:min-h-0 md:max-w-[42%] md:flex-none">
-        <div className="flex h-full min-h-[220px] w-full items-center justify-center bg-gradient-to-br from-emerald-100 to-lime-100 md:min-h-[320px]">
-          <div className="relative h-full w-full">
-            <NextImage
-              src="/logo.png"
-              alt="GOCCC logo"
-              fill
-              sizes="(max-width: 768px) 100vw, 42vw"
-              className="object-contain p-8 opacity-85"
-            />
-          </div>
-        </div>
-      </div>
-    );
+  const scheduledAt = new Date(currentEvent.scheduledAt);
 
   return (
     <div className="site-shell py-8 md:py-10">
