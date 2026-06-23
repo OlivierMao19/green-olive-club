@@ -8,7 +8,6 @@ import { Button } from "./ui/button";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { getEventImage } from "@/lib/services";
-import NextImage from "next/image";
 
 type BaseProps = {
   event: Activity;
@@ -41,6 +40,10 @@ export default function EventCard(props: EventCardProps) {
   const [imageURL, setImageURL] = useState<string | null>(null);
 
   useEffect(() => {
+    setImageLoaded(false);
+    setImageError(false);
+    setImageURL(null);
+
     let mounted = true;
     async function getImageUrl() {
       const imageId = event.imageId;
@@ -91,21 +94,14 @@ export default function EventCard(props: EventCardProps) {
     setImageLoaded(true);
   }
 
-  const getPlaceholder = () => (
-    <div className="relative overflow-hidden md:min-w-56 md:flex-none md:max-w-[38%]">
-      <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-emerald-100 to-lime-100">
-        <div className="relative h-full min-h-36 w-full">
-          <NextImage
-            src="/logo.png"
-            alt="GOCCC logo"
-            fill
-            sizes="(max-width: 768px) 240px, 36vw"
-            className="object-contain p-5 opacity-85"
-          />
-        </div>
-      </div>
-    </div>
-  );
+  const imageContainerClass =
+    "relative overflow-hidden md:flex-none md:max-w-[40%] md:min-w-52";
+
+  const showImage =
+    event.imageId &&
+    !imageError &&
+    imageURL &&
+    process.env.NEXT_PUBLIC_IMAGEKIT_URL;
 
   return (
     <article
@@ -122,32 +118,29 @@ export default function EventCard(props: EventCardProps) {
         </div>
       )} */}
 
-      {event.imageId &&
-      !imageError &&
-      imageURL &&
-      process.env.NEXT_PUBLIC_IMAGEKIT_URL ? (
-        <div className="relative overflow-hidden md:flex-none md:max-w-[40%] md:min-w-52 ">
-          <div className="relative h-full w-full">
-            <ImageKitImage
-              urlEndpoint={`${process.env.NEXT_PUBLIC_IMAGEKIT_URL}`}
-              src={imageURL}
-              alt={`${event.title} event photo`}
-              className={`object-cover transition-all duration-700 group-hover:scale-105 ${
-                imageLoaded ? "opacity-100" : "opacity-0"
-              }`}
-              onLoad={handleImageLoad}
-              onError={handleImageError}
-              loading="lazy"
-              fill
-              sizes="(max-width: 768px) 100vw, 38vw"
-            />
-            {!imageLoaded && (
-              <div className="absolute inset-0 bg-gray-200 animate-pulse"></div>
+      {event.imageId && (
+        <div className={imageContainerClass}>
+          <div className="relative h-full min-h-36 w-full">
+            {showImage ? (
+              <ImageKitImage
+                urlEndpoint={`${process.env.NEXT_PUBLIC_IMAGEKIT_URL}`}
+                src={imageURL}
+                alt={`${event.title} event photo`}
+                className={`object-cover transition-all duration-700 group-hover:scale-105 ${
+                  imageLoaded ? "opacity-100" : "opacity-0"
+                }`}
+                onLoad={handleImageLoad}
+                onError={handleImageError}
+                loading="lazy"
+                fill
+                sizes="(max-width: 768px) 100vw, 38vw"
+              />
+            ) : null}
+            {(!showImage || !imageLoaded) && (
+              <div className="absolute inset-0 bg-gray-200 animate-pulse" />
             )}
           </div>
         </div>
-      ) : (
-        getPlaceholder()
       )}
 
       <div className="p-6 w-full">
