@@ -88,9 +88,9 @@ export default function Page() {
                 `}
                   >
                     <div
-                      className={`
-                    transform transition-all duration-500 hover:scale-105 md:translate-x-0
-                  `}
+                      className={`transform transition-all duration-500 md:translate-x-0 ${
+                        isPast ? "" : "hover:scale-105"
+                      }`}
                     >
                       <EventCard
                         event={event}
@@ -102,8 +102,18 @@ export default function Page() {
                   </div>
 
                   {/* Mobile Timeline Connector */}
-                  <div className="absolute top-0 bottom-0 left-4 w-0.5 bg-green-200 md:hidden"></div>
-                  <div className="absolute left-2 top-6 h-4 w-4 rounded-full border-4 border-white bg-green-400 shadow-md md:hidden"></div>
+                  <div
+                    className={`absolute top-0 bottom-0 left-4 w-0.5 md:hidden ${
+                      isPast ? "bg-slate-300" : "bg-green-200"
+                    }`}
+                  ></div>
+                  <div
+                    className={`absolute left-2 top-6 h-4 w-4 rounded-full border-4 shadow-md md:hidden ${
+                      isPast
+                        ? "border-slate-200 bg-slate-400"
+                        : "border-white bg-green-400"
+                    }`}
+                  ></div>
                 </div>
               );
             })}

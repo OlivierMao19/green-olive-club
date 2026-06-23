@@ -103,21 +103,33 @@ export default function EventCard(props: EventCardProps) {
     imageURL &&
     process.env.NEXT_PUBLIC_IMAGEKIT_URL;
 
+  const cardClassName = isPast
+    ? "border-slate-200 bg-slate-50 shadow-sm hover:border-slate-300 hover:shadow-md"
+    : "border-emerald-300/80 bg-white shadow-lg hover:-translate-y-0.5 hover:border-emerald-400 hover:shadow-xl";
+
+  const titleClassName = isPast
+    ? "text-slate-600 group-hover:text-slate-700"
+    : "text-emerald-950 group-hover:text-emerald-700";
+
+  const descriptionClassName = isPast
+    ? "text-slate-500"
+    : "text-emerald-900/72";
+
+  const metaClassName = isPast ? "text-slate-500" : "text-emerald-900/65";
+
+  const iconClassName = isPast ? "text-slate-400" : "text-emerald-500";
+
+  const detailsButtonClassName = isPast
+    ? "border-slate-200 bg-slate-100/80 text-slate-600 hover:bg-slate-100"
+    : "border-emerald-200 bg-white/80 text-emerald-900 hover:bg-emerald-50";
+
   return (
     <article
-      className={`group relative overflow-hidden rounded-2xl border border-emerald-300/80 bg-white shadow-lg transition-all duration-300 hover:-translate-y-0.5 hover:border-emerald-400 hover:shadow-xl ${
-        isPast ? "bg-emerald-50/60 " : "bg-white"
-      } ${className} md:flex md:min-h-[190px] md:items-stretch`}
+      className={`group relative overflow-hidden rounded-2xl border transition-all duration-300 ${cardClassName} ${className} md:flex md:min-h-[190px] md:items-stretch`}
       role="article"
-      aria-label={`Event: ${event.title}`}
+      aria-label={`Event: ${event.title}${isPast ? " (past)" : ""}`}
       onClick={handleActivate}
     >
-      {/* {isPast && (
-        <div className="absolute top-4 right-4 z-10 bg-green-500 text-white px-3 py-1 rounded-full text-xs font-semibold shadow-md">
-          Happening Now
-        </div>
-      )} */}
-
       {event.imageId && (
         <div className={imageContainerClass}>
           <div className="relative h-full min-h-36 w-full">
@@ -128,7 +140,7 @@ export default function EventCard(props: EventCardProps) {
                 alt={`${event.title} event photo`}
                 className={`object-cover transition-all duration-700 group-hover:scale-105 ${
                   imageLoaded ? "opacity-100" : "opacity-0"
-                }`}
+                } ${isPast ? "grayscale-[65%] opacity-80" : ""}`}
                 onLoad={handleImageLoad}
                 onError={handleImageError}
                 loading="lazy"
@@ -144,14 +156,23 @@ export default function EventCard(props: EventCardProps) {
       )}
 
       <div className="p-6 w-full">
-        <div className="flex items-center justify-between mb-3">
-          <h3 className="text-xl font-bold text-emerald-950 leading-tight group-hover:text-emerald-700 transition-colors duration-200">
-            {event.title}
-          </h3>
+        <div className="flex items-start justify-between gap-3 mb-3">
+          <div className="flex min-w-0 items-center gap-2">
+            {isPast && (
+              <span className="shrink-0 rounded-full bg-slate-200 px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wide text-slate-600">
+                Past
+              </span>
+            )}
+            <h3
+              className={`text-xl font-bold leading-tight transition-colors duration-200 ${titleClassName}`}
+            >
+              {event.title}
+            </h3>
+          </div>
           <Button
             variant="outline"
             asChild
-            className="border-emerald-200 bg-white/80 text-emerald-900 hover:bg-emerald-50"
+            className={detailsButtonClassName}
           >
             <Link
               href={`/events/${event.id}`}
@@ -162,13 +183,13 @@ export default function EventCard(props: EventCardProps) {
           </Button>
         </div>
 
-        <p className="mb-4 leading-relaxed text-emerald-900/72">
+        <p className={`mb-4 leading-relaxed ${descriptionClassName}`}>
           {event.description}
         </p>
 
         <div className="space-y-2 mb-4">
-          <div className="flex items-center text-sm text-emerald-900/65">
-            <Calendar className="mr-2 h-4 w-4 text-emerald-500" />
+          <div className={`flex items-center text-sm ${metaClassName}`}>
+            <Calendar className={`mr-2 h-4 w-4 ${iconClassName}`} />
             <span>
               {event.date.toLocaleString(undefined, {
                 weekday: "short",
@@ -181,8 +202,8 @@ export default function EventCard(props: EventCardProps) {
           </div>
 
           {event.location && (
-            <div className="flex items-center text-sm text-emerald-900/65">
-              <MapPin className="mr-2 h-4 w-4 text-emerald-500" />
+            <div className={`flex items-center text-sm ${metaClassName}`}>
+              <MapPin className={`mr-2 h-4 w-4 ${iconClassName}`} />
               <span>{event.location}</span>
             </div>
           )}
