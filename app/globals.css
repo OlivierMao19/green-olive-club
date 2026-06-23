@@ -225,6 +225,10 @@
     animation: float 8s ease-in-out infinite;
   }
 
+  .animate-carousel-breathe {
+    animation: carousel-breathe 8s ease-in-out infinite;
+  }
+
   .bg-grid-soft {
     background-image: linear-gradient(
         to right,
@@ -261,5 +265,16 @@
 
   50% {
     transform: translateY(-8px);
+  }
+}
+
+@keyframes carousel-breathe {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.02);
   }
 }

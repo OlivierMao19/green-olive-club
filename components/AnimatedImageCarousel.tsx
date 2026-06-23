@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -20,6 +20,7 @@ const AnimatedImageCarousel: React.FC<AnimatedImageCarouselProps> = ({
   const [loadedIndices, setLoadedIndices] = useState<Set<number>>(
     () => new Set()
   );
+  const imageRef = useRef<HTMLImageElement>(null);
 
   useEffect(() => {
     if (images.length === 0) return;
@@ -31,14 +32,25 @@ const AnimatedImageCarousel: React.FC<AnimatedImageCarouselProps> = ({
     return () => clearInterval(timer);
   }, [images.length, interval]);
 
-  if (images.length === 0) {
-    return null;
-  }
-
   const currentImage = images[currentIndex];
   const imageSrc = currentImage?.src?.startsWith("/")
     ? currentImage.src
     : `/${currentImage?.src ?? ""}`;
+
+  useEffect(() => {
+    const img = imageRef.current;
+    if (img?.complete && img.naturalWidth > 0) {
+      setLoadedIndices((prev) => {
+        if (prev.has(currentIndex)) return prev;
+        return new Set(prev).add(currentIndex);
+      });
+    }
+  }, [currentIndex, imageSrc]);
+
+  if (images.length === 0) {
+    return null;
+  }
+
   const nextIndex = (currentIndex + 1) % images.length;
   const nextImageSrc = images[nextIndex]?.src?.startsWith("/")
     ? images[nextIndex].src
@@ -96,16 +108,9 @@ const AnimatedImageCarousel: React.FC<AnimatedImageCarouselProps> = ({
                 <div className="absolute inset-0 animate-pulse bg-gradient-to-br from-emerald-100 via-emerald-50 to-lime-100" />
               )}
 
-              <motion.div
-                className="relative h-full w-full"
-                animate={{ scale: [1, 1.02, 1] }}
-                transition={{
-                  duration: 8,
-                  repeat: Infinity,
-                  repeatType: "reverse",
-                }}
-              >
+              <div className="relative h-full w-full animate-carousel-breathe">
                 <Image
+                  ref={imageRef}
                   src={imageSrc}
                   alt={currentImage?.alt ?? "Club image"}
                   fill
@@ -116,7 +121,7 @@ const AnimatedImageCarousel: React.FC<AnimatedImageCarouselProps> = ({
                   }`}
                   onLoad={() => handleImageLoad(currentIndex)}
                 />
-              </motion.div>
+              </div>
             </div>
           </motion.div>
         </AnimatePresence>
