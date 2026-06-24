@@ -4,236 +4,612 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Good News for a Restless World</title>
+
     <style>
       :root {
-        --olive-dark: #2f5e3a;
-        --olive: #6cab4b;
-        --olive-light: #a8d57e;
-        --yellow: #f4e285;
-        --cream: #fbfcf3;
-        --ink: #1f3322;
+        --olive-dark: #142414;
+        --olive: #506b2f;
+        --olive-soft: #8fa75a;
+        --gold: #f2c75c;
+        --warm-gold: #eaa34b;
+        --cream: #fff7df;
+        --white: #ffffff;
+        --ink: #161812;
+        --muted: rgba(255, 255, 255, 0.78);
       }
+
       * {
-        margin: 0;
-        padding: 0;
         box-sizing: border-box;
       }
+
+      html,
       body {
-        font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
-        background: var(--cream);
-        color: var(--ink);
-        display: flex;
-        justify-content: center;
+        margin: 0;
+        min-height: 100%;
+        background: #1f2518;
+        font-family: Inter, Avenir, "Segoe UI", Helvetica, Arial, sans-serif;
+        color: var(--white);
       }
-      .page {
-        width: 210mm;
-        min-height: 290mm;
+
+      body {
+        display: grid;
+        place-items: center;
+        padding: 28px;
+      }
+
+      .poster {
+        position: relative;
+        width: min(100%, 820px);
+        aspect-ratio: 8.5 / 11;
+        overflow: hidden;
         background:
           radial-gradient(
-            circle at 12% 8%,
-            rgba(168, 213, 126, 0.35),
-            transparent 40%
+            circle at 52% 38%,
+            rgba(255, 241, 178, 0.92) 0%,
+            rgba(239, 169, 66, 0.78) 18%,
+            rgba(131, 91, 36, 0.32) 34%,
+            rgba(28, 42, 24, 0.08) 52%,
+            rgba(15, 25, 16, 0.9) 100%
           ),
+          linear-gradient(135deg, #24381f 0%, #7d7a31 45%, #162414 100%);
+        box-shadow: 0 28px 90px rgba(0, 0, 0, 0.55);
+        isolation: isolate;
+      }
+
+      .poster::before {
+        position: absolute;
+        inset: -12%;
+        z-index: -2;
+        content: "";
+        background:
+          linear-gradient(
+            112deg,
+            transparent 0%,
+            rgba(255, 255, 255, 0.11) 22%,
+            transparent 42%
+          ),
+          linear-gradient(
+            72deg,
+            transparent 8%,
+            rgba(255, 234, 152, 0.16) 34%,
+            transparent 54%
+          ),
+          repeating-linear-gradient(
+            102deg,
+            rgba(255, 255, 255, 0.025) 0,
+            rgba(255, 255, 255, 0.025) 1px,
+            transparent 1px,
+            transparent 54px
+          );
+        transform: rotate(-5deg);
+      }
+
+      .poster::after {
+        position: absolute;
+        inset: auto -5% -8% -5%;
+        height: 36%;
+        z-index: -1;
+        content: "";
+        background:
           radial-gradient(
-            circle at 90% 95%,
-            rgba(244, 226, 133, 0.45),
-            transparent 45%
+            ellipse at center,
+            rgba(255, 255, 255, 0.7) 0%,
+            rgba(255, 247, 223, 0.62) 25%,
+            rgba(255, 247, 223, 0.28) 48%,
+            transparent 72%
           ),
-          var(--cream);
-        border: 10px solid var(--olive);
-        padding: 22mm 18mm;
+          linear-gradient(
+            to top,
+            rgba(255, 247, 223, 0.9),
+            rgba(255, 247, 223, 0.14),
+            transparent
+          );
+        filter: blur(1px);
+      }
+
+      .noise {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        pointer-events: none;
+        opacity: 0.28;
+        background-image:
+          linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        background-size: 18px 18px;
+        mix-blend-mode: overlay;
+      }
+
+      .olive-branch {
+        position: absolute;
+        right: -48px;
+        top: 108px;
+        width: 290px;
+        height: 500px;
+        z-index: 2;
+        opacity: 0.24;
+        transform: rotate(-16deg);
+      }
+
+      .olive-branch span {
+        position: absolute;
+        left: 50%;
+        width: 4px;
+        height: 470px;
+        background: rgba(255, 255, 255, 0.6);
+        border-radius: 999px;
+        transform: translateX(-50%);
+      }
+
+      .olive-branch i {
+        position: absolute;
+        width: 62px;
+        height: 28px;
+        background: rgba(255, 255, 255, 0.58);
+        border-radius: 999px 0 999px 0;
+        transform-origin: left center;
+      }
+
+      .olive-branch i:nth-child(2) {
+        top: 42px;
+        left: 138px;
+        transform: rotate(-34deg);
+      }
+
+      .olive-branch i:nth-child(3) {
+        top: 92px;
+        left: 86px;
+        transform: rotate(152deg);
+      }
+
+      .olive-branch i:nth-child(4) {
+        top: 142px;
+        left: 140px;
+        transform: rotate(-30deg);
+      }
+
+      .olive-branch i:nth-child(5) {
+        top: 194px;
+        left: 82px;
+        transform: rotate(150deg);
+      }
+
+      .olive-branch i:nth-child(6) {
+        top: 248px;
+        left: 140px;
+        transform: rotate(-30deg);
+      }
+
+      .olive-branch i:nth-child(7) {
+        top: 302px;
+        left: 84px;
+        transform: rotate(150deg);
+      }
+
+      .olive-branch i:nth-child(8) {
+        top: 360px;
+        left: 140px;
+        transform: rotate(-30deg);
+      }
+
+      .content {
         position: relative;
-        overflow: hidden;
+        z-index: 3;
         display: flex;
+        min-height: 100%;
         flex-direction: column;
+        padding: 48px 54px 42px;
       }
-      .leaf-band {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 14mm;
-        background: linear-gradient(
-          90deg,
-          var(--olive-dark),
-          var(--olive),
-          var(--olive-light)
-        );
-      }
-      .header {
-        display: flex;
-        align-items: center;
-        gap: 18px;
-        margin-top: 6mm;
-      }
-      .header img {
-        width: 110px;
-        height: auto;
-      }
-      .club {
-        font-size: 22px;
-        font-weight: 700;
-        color: var(--olive-dark);
-        line-height: 1.3;
-      }
-      .club small {
-        display: block;
-        font-size: 14px;
-        color: var(--olive);
-        font-weight: 500;
-      }
-      .hook {
-        margin: 10mm 0 4mm;
-        text-align: center;
-      }
-      .hook .eyebrow {
-        display: inline-block;
-        background: var(--yellow);
-        color: var(--olive-dark);
-        padding: 6px 18px;
-        border-radius: 30px;
-        font-weight: 700;
-        letter-spacing: 2px;
-        font-size: 16px;
-      }
-      .title {
-        text-align: center;
-        font-size: 54px;
-        font-weight: 900;
-        line-height: 1.15;
-        margin: 8mm 0;
-        color: var(--olive-dark);
-        text-shadow: 2px 3px 0 var(--olive-light);
-      }
-      .subtitle {
-        text-align: center;
-        font-size: 22px;
-        color: var(--olive);
-        margin-bottom: 8mm;
-        font-weight: 600;
-      }
-      .intro {
-        text-align: center;
-        font-size: 18px;
-        line-height: 1.8;
-        max-width: 150mm;
-        margin: 0 auto 8mm;
-      }
-      .topics {
-        background: rgba(108, 171, 75, 0.12);
-        border-left: 6px solid var(--olive);
-        border-radius: 12px;
-        padding: 18px 26px;
-        margin: 0 auto 8mm;
-        max-width: 160mm;
-      }
-      .topics h3 {
-        color: var(--olive-dark);
-        font-size: 20px;
-        margin-bottom: 10px;
-      }
-      .topics ul {
-        list-style: none;
-        columns: 2;
-        column-gap: 30px;
-      }
-      .topics li {
-        font-size: 16px;
-        padding: 5px 0 5px 22px;
-        position: relative;
-      }
-      .topics li::before {
-        content: "🌿";
-        position: absolute;
-        left: 0;
-      }
-      .footer {
+
+      .topbar {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: 20px;
-        margin-top: auto;
-        background: var(--olive-dark);
-        color: #fff;
-        border-radius: 16px;
-        padding: 20px 26px;
+        gap: 24px;
       }
-      .footer .details {
-        font-size: 17px;
-        line-height: 1.9;
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 13px;
+        min-width: 0;
       }
-      .footer .details strong {
-        color: var(--yellow);
+
+      .brand img {
+        width: 46px;
+        height: 46px;
+        object-fit: contain;
+        filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.25));
       }
-      .qr {
-        text-align: center;
+
+      .club-text {
+        display: grid;
+        gap: 2px;
+        text-transform: uppercase;
+        letter-spacing: 0.13em;
       }
-      .qr img {
-        width: 130px;
-        height: auto;
-        background: #fff;
-        border-radius: 10px;
-        padding: 6px;
-      }
-      .qr p {
+
+      .club-text strong {
         font-size: 13px;
-        margin-top: 6px;
-        color: var(--yellow);
+        font-weight: 850;
+      }
+
+      .club-text span {
+        color: var(--muted);
+        font-size: 9px;
+        font-weight: 700;
+      }
+
+      .presented {
+        border: 1px solid rgba(255, 255, 255, 0.38);
+        border-radius: 999px;
+        padding: 8px 13px;
+        background: rgba(255, 255, 255, 0.08);
+        color: rgba(255, 255, 255, 0.86);
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        backdrop-filter: blur(14px);
+      }
+
+      .hero {
+        display: grid;
+        flex: 1;
+        align-content: center;
+        padding: 38px 0 28px;
+      }
+
+      .eyebrow {
+        width: fit-content;
+        margin-bottom: 20px;
+        border-left: 5px solid var(--gold);
+        padding: 7px 0 7px 14px;
+        color: var(--cream);
+        font-size: 16px;
+        font-weight: 750;
+        letter-spacing: 0.13em;
+        text-transform: uppercase;
+        text-shadow: 0 4px 20px rgba(0, 0, 0, 0.28);
+      }
+
+      h1 {
+        max-width: 720px;
+        margin: 0;
+        text-transform: uppercase;
+        letter-spacing: -0.055em;
+        line-height: 0.82;
+        font-size: clamp(74px, 15vw, 142px);
+        font-weight: 950;
+        text-shadow:
+          0 8px 0 rgba(26, 36, 18, 0.28),
+          0 20px 55px rgba(0, 0, 0, 0.36);
+      }
+
+      .title-good {
+        display: block;
+        color: #fff8dc;
+      }
+
+      .title-news {
+        display: block;
+        color: transparent;
+        -webkit-text-stroke: 2px rgba(255, 255, 255, 0.88);
+        text-shadow:
+          0 8px 0 rgba(26, 36, 18, 0.18),
+          0 18px 55px rgba(0, 0, 0, 0.32);
+      }
+
+      .script {
+        display: block;
+        margin-top: -10px;
+        margin-left: 11px;
+        color: var(--gold);
+        font-family:
+          "Brush Script MT", "Segoe Script", "Snell Roundhand", cursive;
+        font-size: clamp(54px, 10vw, 100px);
+        font-weight: 400;
+        letter-spacing: -0.04em;
+        line-height: 0.9;
+        text-transform: none;
+        text-shadow: 0 12px 32px rgba(59, 40, 8, 0.45);
+        transform: rotate(-3deg);
+      }
+
+      .hook {
+        max-width: 610px;
+        margin: 30px 0 0;
+        color: rgba(255, 255, 255, 0.92);
+        font-size: 24px;
+        font-weight: 650;
+        line-height: 1.25;
+        text-shadow: 0 6px 24px rgba(0, 0, 0, 0.32);
+      }
+
+      .subhook {
+        max-width: 570px;
+        margin: 13px 0 0;
+        color: rgba(255, 255, 255, 0.78);
+        font-size: 15px;
+        font-weight: 500;
+        line-height: 1.55;
+      }
+
+      .details {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: end;
+        gap: 28px;
+        margin-top: 28px;
+      }
+
+      .info-card {
+        display: grid;
+        gap: 18px;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        border-radius: 28px;
+        padding: 23px 24px;
+        background:
+          linear-gradient(
+            135deg,
+            rgba(13, 28, 15, 0.78),
+            rgba(84, 107, 46, 0.48)
+          ),
+          rgba(255, 255, 255, 0.08);
+        box-shadow: 0 20px 55px rgba(0, 0, 0, 0.22);
+        backdrop-filter: blur(18px);
+      }
+
+      .meta {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 14px;
+      }
+
+      .meta-item {
+        min-height: 78px;
+        border-radius: 19px;
+        padding: 14px 15px;
+        background: rgba(255, 255, 255, 0.1);
+      }
+
+      .meta-item span {
+        display: block;
+        margin-bottom: 7px;
+        color: rgba(255, 255, 255, 0.58);
+        font-size: 9px;
+        font-weight: 900;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+      }
+
+      .meta-item strong {
+        display: block;
+        color: #fff9df;
+        font-size: 17px;
+        font-weight: 850;
+        line-height: 1.12;
+      }
+
+      .tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 9px;
+      }
+
+      .tag {
+        border-radius: 999px;
+        padding: 8px 11px;
+        background: rgba(255, 214, 98, 0.18);
+        color: #fff3c2;
+        font-size: 11px;
+        font-weight: 850;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+
+      .qr-wrap {
+        display: grid;
+        width: 164px;
+        justify-items: center;
+        gap: 10px;
+        border-radius: 27px;
+        padding: 15px;
+        background: rgba(255, 247, 223, 0.95);
+        color: var(--ink);
+        box-shadow: 0 18px 48px rgba(0, 0, 0, 0.28);
+      }
+
+      .qr-wrap img {
+        width: 132px;
+        height: 132px;
+        object-fit: contain;
+      }
+
+      .qr-wrap strong {
+        font-size: 13px;
+        font-weight: 950;
+        letter-spacing: 0.04em;
+        text-align: center;
+        text-transform: uppercase;
+      }
+
+      .website {
+        color: rgba(22, 24, 18, 0.68);
+        font-size: 10px;
+        font-weight: 800;
+      }
+
+      .footer-note {
+        margin-top: 15px;
+        color: rgba(255, 255, 255, 0.64);
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-align: center;
+        text-transform: uppercase;
+      }
+
+      @media (max-width: 760px) {
+        body {
+          padding: 12px;
+        }
+
+        .content {
+          padding: 36px 32px 30px;
+        }
+
+        .presented {
+          display: none;
+        }
+
+        .details {
+          grid-template-columns: 1fr;
+        }
+
+        .qr-wrap {
+          width: 100%;
+          grid-template-columns: auto 1fr;
+          justify-items: start;
+          text-align: left;
+        }
+
+        .qr-wrap img {
+          width: 116px;
+          height: 116px;
+        }
+
+        .meta {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @page {
+        size: letter;
+        margin: 0;
+      }
+
+      @media print {
+        html,
+        body {
+          width: 8.5in;
+          height: 11in;
+          margin: 0;
+          padding: 0;
+          background: white;
+        }
+
+        body {
+          display: block;
+        }
+
+        .poster {
+          width: 8.5in;
+          height: 11in;
+          box-shadow: none;
+          print-color-adjust: exact;
+          -webkit-print-color-adjust: exact;
+        }
       }
     </style>
   </head>
+
   <body>
-    <div class="page">
-      <div class="leaf-band"></div>
-      <div class="header">
-        <img src="bigLogo.png" alt="Green Olive logo" />
-        <div class="club">
-          Green Olive Chinese Christian Club
-          <small>青橄榄华人基督徒团契</small>
-        </div>
+    <main class="poster" aria-label="Good News for a Restless World poster">
+      <div class="noise"></div>
+
+      <div class="olive-branch" aria-hidden="true">
+        <span></span>
+        <i></i>
+        <i></i>
+        <i></i>
+        <i></i>
+        <i></i>
+        <i></i>
+        <i></i>
       </div>
 
-      <div class="hook">
-        <span class="eyebrow">SPECIAL GATHERING · ALL WELCOME</span>
-      </div>
+      <section class="content">
+        <header class="topbar">
+          <div class="brand">
+            <img
+              src="bigLogo.png"
+              alt="Green Olive Chinese Christian Club logo"
+            />
+            <div class="club-text">
+              <strong>Green Olive</strong>
+              <span>Chinese Christian Club</span>
+            </div>
+          </div>
 
-      <h1 class="title">Good News for a<br />Restless World</h1>
-      <p class="subtitle">
-        In a world that never stops shaking, there is a hope that cannot be
-        shaken.
-      </p>
+          <div class="presented">Campus Event</div>
+        </header>
 
-      <p class="intro">
-        Tired, anxious, restless? Our world is full of uncertainty — but there
-        is a piece of good news, thousands of years in the making, that brings
-        real peace and lasting hope. Come and hear it, and bring every question
-        you have.
-      </p>
+        <section class="hero">
+          <div class="eyebrow">An open night for honest questions</div>
 
-      <div class="topics">
-        <h3>Together we'll explore:</h3>
-        <ul>
-          <li>The one Creator God</li>
-          <li>Human sin and the fall</li>
-          <li>Who Jesus Christ is &amp; what He has done</li>
-          <li>How sinners are saved by faith</li>
-          <li>The church &amp; the return of Christ</li>
-          <li>Open Q&amp;A session</li>
-        </ul>
-      </div>
+          <h1>
+            <span class="title-good">Good</span>
+            <span class="title-news">News</span>
+            <span class="script">for a Restless World</span>
+          </h1>
 
-      <div class="footer">
-        <div class="details">
-          📅 <strong>Date:</strong> See registration page<br />
-          📍 <strong>Location:</strong> See registration page<br />
-          🌐 <strong>Web:</strong> www.goccc.ca<br />
-          ☕ Free entry · Refreshments provided
-        </div>
-        <div class="qr">
-          <img src="evangilism_event_qr_code.png" alt="Registration QR code" />
-          <p>Scan to register</p>
-        </div>
-      </div>
-    </div>
+          <p class="hook">
+            In an anxious and uncertain world, is there still truly good news?
+          </p>
+
+          <p class="subhook">
+            A welcoming introduction to the Christian gospel, followed by open
+            Q&amp;A and thoughtful discussion. Christians, seekers, skeptics,
+            and the simply curious are all welcome.
+          </p>
+        </section>
+
+        <section class="details" aria-label="Event details and registration">
+          <div>
+            <div class="info-card">
+              <div class="meta">
+                <div class="meta-item">
+                  <span>What</span>
+                  <strong>Gospel Talk</strong>
+                </div>
+
+                <div class="meta-item">
+                  <span>Plus</span>
+                  <strong>Open Q&amp;A</strong>
+                </div>
+
+                <div class="meta-item">
+                  <span>For</span>
+                  <strong>All Students</strong>
+                </div>
+              </div>
+
+              <div class="tags">
+                <span class="tag">Christianity</span>
+                <span class="tag">Meaning</span>
+                <span class="tag">Hope</span>
+                <span class="tag">Discussion</span>
+              </div>
+            </div>
+
+            <div class="footer-note">
+              Scan for time, location, and registration
+            </div>
+          </div>
+
+          <aside class="qr-wrap" aria-label="Registration QR code">
+            <img
+              src="evangilism_event_qr_code.png"
+              alt="QR code for event registration"
+            />
+            <div>
+              <strong>Scan to Register</strong>
+              <div class="website">www.goccc.ca</div>
+            </div>
+          </aside>
+        </section>
+      </section>
+    </main>
   </body>
 </html>
