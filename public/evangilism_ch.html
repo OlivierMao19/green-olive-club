@@ -1,0 +1,400 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>给不安世界的好消息</title>
+    <style>
+      @page {
+        size: A4;
+        margin: 0;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: #eef7e4;
+        color: #143b2d;
+        font-family:
+          "Noto Sans SC", "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+      }
+
+      .page {
+        position: relative;
+        width: 210mm;
+        min-height: 297mm;
+        margin: 0 auto;
+        overflow: hidden;
+        background:
+          radial-gradient(circle at top left, #fff8c8 0, transparent 32%),
+          radial-gradient(circle at bottom right, #b7e27a 0, transparent 34%),
+          linear-gradient(145deg, #faffed 0%, #e5f4d2 45%, #d7efb5 100%);
+        padding: 14mm 15mm 12mm;
+      }
+
+      .olive-shape {
+        position: absolute;
+        border-radius: 999px;
+        opacity: 0.18;
+        filter: blur(0.2px);
+      }
+
+      .olive-1 {
+        width: 120mm;
+        height: 55mm;
+        right: -32mm;
+        top: 18mm;
+        background: #8fcf39;
+        transform: rotate(-28deg);
+      }
+
+      .olive-2 {
+        width: 90mm;
+        height: 38mm;
+        left: -25mm;
+        bottom: 38mm;
+        background: #f6c948;
+        transform: rotate(26deg);
+      }
+
+      .olive-3 {
+        width: 50mm;
+        height: 50mm;
+        right: 18mm;
+        bottom: 18mm;
+        background: #2f8f5b;
+      }
+
+      .content {
+        position: relative;
+        z-index: 2;
+        display: flex;
+        min-height: 268mm;
+        flex-direction: column;
+      }
+
+      .top-bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10mm;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 5mm;
+      }
+
+      .logo {
+        width: 24mm;
+        height: 24mm;
+        object-fit: contain;
+      }
+
+      .club-name {
+        font-size: 15pt;
+        font-weight: 800;
+        letter-spacing: 0.03em;
+        color: #1d5c3f;
+      }
+
+      .tag {
+        border: 2px solid #5d9b3d;
+        border-radius: 999px;
+        padding: 2.2mm 5mm;
+        background: rgba(255, 255, 255, 0.64);
+        color: #2f6f2d;
+        font-size: 11pt;
+        font-weight: 700;
+        white-space: nowrap;
+      }
+
+      .hero {
+        margin-top: 13mm;
+        text-align: center;
+      }
+
+      .eyebrow {
+        display: inline-block;
+        margin-bottom: 5mm;
+        border-radius: 999px;
+        background: #ffe785;
+        padding: 2.8mm 7mm;
+        color: #5c4a00;
+        font-size: 15pt;
+        font-weight: 800;
+        box-shadow: 0 4px 0 rgba(109, 129, 45, 0.18);
+      }
+
+      h1 {
+        margin: 0;
+        color: #174c36;
+        font-size: 42pt;
+        font-weight: 950;
+        line-height: 1.12;
+        letter-spacing: -0.05em;
+      }
+
+      .subtitle {
+        margin: 6mm auto 0;
+        max-width: 145mm;
+        color: #3f6c36;
+        font-size: 17pt;
+        font-weight: 700;
+        line-height: 1.55;
+      }
+
+      .question-card {
+        margin: 12mm auto 0;
+        border: 3px solid rgba(47, 143, 91, 0.35);
+        border-radius: 9mm;
+        background: rgba(255, 255, 255, 0.74);
+        padding: 7mm 9mm;
+        box-shadow: 0 12px 30px rgba(51, 107, 47, 0.14);
+      }
+
+      .big-question {
+        margin: 0;
+        color: #102f24;
+        font-size: 23pt;
+        font-weight: 900;
+        line-height: 1.35;
+        text-align: center;
+      }
+
+      .details {
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 9mm;
+        margin-top: 11mm;
+        align-items: stretch;
+      }
+
+      .panel {
+        border-radius: 8mm;
+        background: rgba(255, 255, 255, 0.76);
+        padding: 7mm;
+        box-shadow: 0 10px 24px rgba(42, 84, 37, 0.12);
+      }
+
+      .panel h2 {
+        margin: 0 0 4mm;
+        color: #1a5c3c;
+        font-size: 18pt;
+        font-weight: 900;
+      }
+
+      .topics {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .topics li {
+        position: relative;
+        margin: 3.2mm 0;
+        padding-left: 8mm;
+        color: #254b37;
+        font-size: 13.6pt;
+        font-weight: 650;
+        line-height: 1.35;
+      }
+
+      .topics li::before {
+        position: absolute;
+        left: 0;
+        top: 0.2em;
+        width: 4.2mm;
+        height: 4.2mm;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #7abf38, #f7d95d);
+        content: "";
+      }
+
+      .info-grid {
+        display: grid;
+        gap: 4mm;
+      }
+
+      .info-item {
+        border-left: 5px solid #8fcf39;
+        border-radius: 4mm;
+        background: #f8ffe9;
+        padding: 3.4mm 4mm;
+      }
+
+      .label {
+        display: block;
+        color: #3e7b37;
+        font-size: 10.5pt;
+        font-weight: 900;
+      }
+
+      .value {
+        display: block;
+        margin-top: 1mm;
+        color: #18372a;
+        font-size: 14pt;
+        font-weight: 800;
+      }
+
+      .bottom {
+        display: grid;
+        grid-template-columns: 1fr 42mm;
+        gap: 7mm;
+        margin-top: auto;
+        align-items: end;
+      }
+
+      .invite {
+        border-radius: 8mm;
+        background: #174c36;
+        padding: 6mm 7mm;
+        color: #fffdf0;
+      }
+
+      .invite h2 {
+        margin: 0 0 3mm;
+        color: #fff2a8;
+        font-size: 18pt;
+        font-weight: 950;
+      }
+
+      .invite p {
+        margin: 0;
+        font-size: 13.6pt;
+        font-weight: 650;
+        line-height: 1.45;
+      }
+
+      .qr-box {
+        border: 4px solid #174c36;
+        border-radius: 6mm;
+        background: white;
+        padding: 3mm;
+        text-align: center;
+      }
+
+      .qr-box img {
+        width: 34mm;
+        height: 34mm;
+        object-fit: contain;
+      }
+
+      .qr-text {
+        margin-top: 1mm;
+        color: #174c36;
+        font-size: 9.5pt;
+        font-weight: 900;
+        line-height: 1.2;
+      }
+
+      .website {
+        font-size: 8.5pt;
+        font-weight: 700;
+      }
+
+      @media print {
+        body {
+          background: white;
+        }
+
+        .page {
+          margin: 0;
+          box-shadow: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <div class="olive-shape olive-1"></div>
+      <div class="olive-shape olive-2"></div>
+      <div class="olive-shape olive-3"></div>
+
+      <section class="content">
+        <header class="top-bar">
+          <div class="brand">
+            <img class="logo" src="bigLogo.png" alt="Green Olive Club logo" />
+            <div class="club-name">Green Olive Chinese Christian Club</div>
+          </div>
+          <div class="tag">福音讲座 · 欢迎提问</div>
+        </header>
+
+        <section class="hero">
+          <div class="eyebrow">在焦虑、破碎与未知之中</div>
+          <h1>给不安世界的<br />好消息</h1>
+          <p class="subtitle">
+            一场关于基督信仰核心信息的公开分享：
+            这个世界为何不安？真正的盼望从哪里来？
+          </p>
+        </section>
+
+        <section class="question-card">
+          <p class="big-question">
+            如果有一位创造天地的神，祂向这个世界传达的“好消息”是什么？
+          </p>
+        </section>
+
+        <section class="details">
+          <div class="panel">
+            <h2>我们将一起思想</h2>
+            <ul class="topics">
+              <li>独一的创造主上帝</li>
+              <li>人的罪、堕落与世界的破碎</li>
+              <li>耶稣基督是谁，祂成就了什么</li>
+              <li>罪人如何因信得救</li>
+              <li>教会、盼望与基督的再来</li>
+              <li>开放问答：欢迎任何真诚的问题</li>
+            </ul>
+          </div>
+
+          <div class="panel">
+            <h2>活动信息</h2>
+            <div class="info-grid">
+              <div class="info-item">
+                <span class="label">时间</span>
+                <span class="value">____年__月__日 __:__</span>
+              </div>
+              <div class="info-item">
+                <span class="label">地点</span>
+                <span class="value">________________</span>
+              </div>
+              <div class="info-item">
+                <span class="label">对象</span>
+                <span class="value">欢迎所有背景的朋友</span>
+              </div>
+              <div class="info-item">
+                <span class="label">费用</span>
+                <span class="value">免费参加</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="bottom">
+          <div class="invite">
+            <h2>不需要有圣经基础，也可以来听、来问。</h2>
+            <p>
+              也许你对信仰好奇，也许你正在寻找答案。欢迎你带着真实的问题来，
+              一起听见基督福音所带来的盼望。
+            </p>
+          </div>
+
+          <div class="qr-box">
+            <img
+              src="evangilism_event_qr_code.png"
+              alt="Registration QR code"
+            />
+            <div class="qr-text">扫码报名</div>
+            <div class="website">www.goccc.ca</div>
+          </div>
+        </section>
+      </section>
+    </main>
+  </body>
+</html>
