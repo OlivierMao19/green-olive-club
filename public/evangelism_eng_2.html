@@ -142,11 +142,11 @@
 
       .aura {
         position: absolute;
-        right: 18px;
-        top: 54px;
+        right: 4%;
+        top: 5.8%;
         z-index: 0;
-        width: 430px;
-        height: 560px;
+        width: 95%;
+        aspect-ratio: 430 / 560;
         border-radius: 999px;
         background: radial-gradient(
           circle at 50% 38%,
@@ -156,22 +156,22 @@
           rgba(52, 91, 28, 0.26) 58%,
           transparent 78%
         );
-        filter: blur(24px);
+        filter: blur(clamp(14px, 2.9vw, 24px));
         opacity: 0.9;
       }
 
       .aura-ring {
         position: absolute;
-        right: 48px;
-        top: 92px;
+        right: 11%;
+        top: 10%;
         z-index: 1;
-        width: 350px;
-        height: 350px;
+        width: 78%;
+        aspect-ratio: 1;
         border: 2px solid rgba(242, 201, 76, 0.24);
         border-radius: 999px;
         box-shadow:
-          0 0 60px rgba(242, 201, 76, 0.2),
-          inset 0 0 72px rgba(155, 184, 90, 0.14);
+          0 0 clamp(30px, 7.3vw, 60px) rgba(242, 201, 76, 0.2),
+          inset 0 0 clamp(36px, 8.8vw, 72px) rgba(155, 184, 90, 0.14);
       }
 
       .speaker-img {
