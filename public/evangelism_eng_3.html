@@ -1,24 +1,21 @@
 <!doctype html>
-<html lang="en">
+<html lang="zh-Hans">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Good News for a Restless World</title>
+    <title>给不安世界的好消息</title>
 
     <style>
       :root {
-        --black-green: #2a3d22;
-        --deep-green: #3d5530;
-        --forest: #4a6338;
-        --olive: #6b8a42;
-        --olive-light: #a8c46e;
-        --gold: #d4a843;
-        --warm-gold: #e8b85a;
-        --cream: #faf6ea;
+        --olive-dark: #142414;
+        --olive: #506b2f;
+        --olive-soft: #8fa75a;
+        --gold: #f2c75c;
+        --warm-gold: #eaa34b;
+        --cream: #fff7df;
         --white: #ffffff;
-        --muted: rgba(42, 61, 34, 0.72);
-        --text: #2a3d22;
-        --text-soft: rgba(42, 61, 34, 0.82);
+        --ink: #161812;
+        --muted: rgba(255, 255, 255, 0.78);
       }
 
       * {
@@ -29,11 +26,11 @@
       body {
         margin: 0;
         min-height: 100%;
-        background: #eef3e6;
-        color: var(--text);
+        background: #1f2518;
         font-family:
-          "Arial Narrow", "Roboto Condensed", Impact, Haettenschweiler,
-          "Segoe UI", Arial, sans-serif;
+          "Noto Sans SC", "Microsoft YaHei", "PingFang SC", Inter, Avenir,
+          "Segoe UI", Helvetica, Arial, sans-serif;
+        color: var(--white);
       }
 
       body {
@@ -49,444 +46,411 @@
         overflow: hidden;
         background:
           radial-gradient(
-            circle at 73% 35%,
-            rgba(255, 228, 140, 0.72) 0%,
-            rgba(196, 218, 140, 0.55) 24%,
-            rgba(168, 196, 120, 0.28) 48%,
-            transparent 68%
+            circle at 52% 38%,
+            rgba(255, 241, 178, 0.92) 0%,
+            rgba(239, 169, 66, 0.78) 18%,
+            rgba(131, 91, 36, 0.32) 34%,
+            rgba(28, 42, 24, 0.08) 52%,
+            rgba(15, 25, 16, 0.9) 100%
           ),
-          radial-gradient(
-            circle at 18% 18%,
-            rgba(210, 232, 168, 0.65) 0%,
-            rgba(186, 210, 148, 0.38) 30%,
-            transparent 52%
-          ),
-          linear-gradient(
-            115deg,
-            #f7faf2 0%,
-            #e8f0da 32%,
-            #dce8c8 58%,
-            #f2f6ea 100%
-          );
-        box-shadow:
-          0 24px 64px rgba(74, 99, 56, 0.14),
-          0 8px 24px rgba(74, 99, 56, 0.08);
+          linear-gradient(135deg, #24381f 0%, #7d7a31 45%, #162414 100%);
+        box-shadow: 0 28px 90px rgba(0, 0, 0, 0.55);
         isolation: isolate;
       }
 
       .poster::before {
         position: absolute;
-        inset: 0;
-        z-index: 1;
+        inset: -12%;
+        z-index: -2;
         content: "";
         background:
           linear-gradient(
-            90deg,
-            rgba(255, 255, 255, 0.55) 0%,
-            rgba(255, 255, 255, 0.28) 42%,
-            rgba(255, 255, 255, 0.04) 70%,
-            rgba(255, 255, 255, 0.18) 100%
-          ),
-          radial-gradient(
-            circle at 54% 48%,
+            112deg,
             transparent 0%,
-            rgba(255, 255, 255, 0.08) 58%,
-            rgba(210, 228, 180, 0.22) 100%
+            rgba(255, 255, 255, 0.11) 22%,
+            transparent 42%
+          ),
+          linear-gradient(
+            72deg,
+            transparent 8%,
+            rgba(255, 234, 152, 0.16) 34%,
+            transparent 54%
+          ),
+          repeating-linear-gradient(
+            102deg,
+            rgba(255, 255, 255, 0.025) 0,
+            rgba(255, 255, 255, 0.025) 1px,
+            transparent 1px,
+            transparent 54px
           );
-        pointer-events: none;
+        transform: rotate(-5deg);
       }
 
       .poster::after {
         position: absolute;
-        inset: 0;
-        z-index: 2;
+        inset: auto -5% -8% -5%;
+        height: 36%;
+        z-index: -1;
         content: "";
         background:
-          linear-gradient(
-            120deg,
-            transparent 0%,
-            rgba(255, 255, 255, 0.42) 26%,
-            transparent 46%
+          radial-gradient(
+            ellipse at center,
+            rgba(255, 255, 255, 0.7) 0%,
+            rgba(255, 247, 223, 0.62) 25%,
+            rgba(255, 247, 223, 0.28) 48%,
+            transparent 72%
           ),
           linear-gradient(
-            70deg,
-            transparent 12%,
-            rgba(232, 184, 90, 0.18) 36%,
-            transparent 58%
+            to top,
+            rgba(255, 247, 223, 0.9),
+            rgba(255, 247, 223, 0.14),
+            transparent
           );
-        opacity: 0.85;
-        pointer-events: none;
+        filter: blur(1px);
       }
 
-      .grain {
+      .noise {
         position: absolute;
         inset: 0;
-        z-index: 3;
-        pointer-events: none;
-        opacity: 0.12;
-        background-image:
-          linear-gradient(rgba(107, 138, 66, 0.04) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(107, 138, 66, 0.03) 1px, transparent 1px);
-        background-size: 18px 18px;
-        mix-blend-mode: multiply;
-      }
-
-      .speaker-area {
-        position: absolute;
-        right: -28px;
-        bottom: 0;
-        z-index: 4;
-        width: 55%;
-        height: 88%;
-      }
-
-      .aura {
-        position: absolute;
-        right: 4%;
-        top: 5.8%;
-        z-index: 0;
-        width: 95%;
-        aspect-ratio: 430 / 560;
-        border-radius: 999px;
-        background: radial-gradient(
-          circle at 50% 38%,
-          rgba(255, 252, 235, 0.95) 0%,
-          rgba(248, 220, 140, 0.72) 18%,
-          rgba(196, 218, 140, 0.48) 38%,
-          rgba(168, 196, 120, 0.18) 62%,
-          transparent 82%
-        );
-        filter: blur(clamp(14px, 2.9vw, 24px));
-        opacity: 0.95;
-      }
-
-      .aura-ring {
-        position: absolute;
-        right: 11%;
-        top: 10%;
         z-index: 1;
-        width: 78%;
-        aspect-ratio: 1;
-        border: 2px solid rgba(212, 168, 67, 0.38);
-        border-radius: 999px;
-        box-shadow:
-          0 0 clamp(30px, 7.3vw, 60px) rgba(212, 168, 67, 0.22),
-          inset 0 0 clamp(36px, 8.8vw, 72px) rgba(168, 196, 110, 0.2);
+        pointer-events: none;
+        opacity: 0.28;
+        background-image:
+          linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        background-size: 18px 18px;
+        mix-blend-mode: overlay;
       }
 
-      .speaker-img {
+      .olive-branch {
         position: absolute;
-        right: 0;
-        bottom: 0;
+        right: -48px;
+        top: 108px;
+        width: 290px;
+        height: 500px;
         z-index: 2;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        object-position: center bottom;
-        filter: contrast(1.02) saturate(1.02)
-          drop-shadow(-16px 18px 28px rgba(74, 99, 56, 0.18));
+        opacity: 0.24;
+        transform: rotate(-16deg);
       }
 
-      .speaker-shadow {
+      .olive-branch span {
         position: absolute;
-        right: 0;
-        bottom: 0;
-        z-index: 3;
-        width: 100%;
-        height: 42%;
-        background: linear-gradient(
-          to top,
-          rgba(232, 240, 218, 0.72),
-          rgba(232, 240, 218, 0.28),
-          transparent
-        );
-        pointer-events: none;
+        left: 50%;
+        width: 4px;
+        height: 470px;
+        background: rgba(255, 255, 255, 0.6);
+        border-radius: 999px;
+        transform: translateX(-50%);
       }
 
-      .bottom-fade {
+      .olive-branch i {
         position: absolute;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        z-index: 5;
-        height: 30%;
-        background: linear-gradient(
-          to top,
-          rgba(232, 240, 218, 0.85),
-          rgba(232, 240, 218, 0.35),
-          transparent
-        );
-        pointer-events: none;
+        width: 62px;
+        height: 28px;
+        background: rgba(255, 255, 255, 0.58);
+        border-radius: 999px 0 999px 0;
+        transform-origin: left center;
+      }
+
+      .olive-branch i:nth-child(2) {
+        top: 42px;
+        left: 138px;
+        transform: rotate(-34deg);
+      }
+
+      .olive-branch i:nth-child(3) {
+        top: 92px;
+        left: 86px;
+        transform: rotate(152deg);
+      }
+
+      .olive-branch i:nth-child(4) {
+        top: 142px;
+        left: 140px;
+        transform: rotate(-30deg);
+      }
+
+      .olive-branch i:nth-child(5) {
+        top: 194px;
+        left: 82px;
+        transform: rotate(150deg);
+      }
+
+      .olive-branch i:nth-child(6) {
+        top: 248px;
+        left: 140px;
+        transform: rotate(-30deg);
+      }
+
+      .olive-branch i:nth-child(7) {
+        top: 302px;
+        left: 84px;
+        transform: rotate(150deg);
+      }
+
+      .olive-branch i:nth-child(8) {
+        top: 360px;
+        left: 140px;
+        transform: rotate(-30deg);
       }
 
       .content {
         position: relative;
-        z-index: 6;
+        z-index: 3;
         display: flex;
         min-height: 100%;
         flex-direction: column;
-        padding: 44px 50px 38px;
+        padding: 48px 54px 42px;
       }
 
       .topbar {
         display: flex;
         align-items: center;
-        gap: 12px;
-        width: fit-content;
-        max-width: 420px;
+        justify-content: space-between;
+        gap: 24px;
       }
 
-      .topbar img {
-        width: 42px;
-        height: 42px;
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 13px;
+        min-width: 0;
+      }
+
+      .brand img {
+        width: 46px;
+        height: 46px;
         object-fit: contain;
-        filter: drop-shadow(0 4px 10px rgba(74, 99, 56, 0.12));
+        filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.25));
       }
 
-      .club-kicker {
+      .club-text {
         display: grid;
-        gap: 3px;
-        letter-spacing: 0.14em;
+        gap: 2px;
         text-transform: uppercase;
+        letter-spacing: 0.13em;
       }
 
-      .club-kicker span {
-        color: rgba(42, 61, 34, 0.62);
-        font-size: 10px;
-        font-weight: 800;
-      }
-
-      .club-kicker strong {
-        color: var(--forest);
+      .club-text strong {
         font-size: 13px;
-        font-weight: 950;
+        font-weight: 850;
       }
 
-      .main {
-        display: grid;
-        flex: 1;
-        align-content: center;
-        max-width: 520px;
-        padding-bottom: 64px;
+      .club-text span {
+        color: var(--muted);
+        font-size: 9px;
+        font-weight: 700;
       }
 
       .presented {
-        margin-bottom: 16px;
-        color: var(--olive);
+        border: 1px solid rgba(255, 255, 255, 0.38);
+        border-radius: 999px;
+        padding: 8px 13px;
+        background: rgba(255, 255, 255, 0.08);
+        color: rgba(255, 255, 255, 0.86);
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        backdrop-filter: blur(14px);
+      }
+
+      .hero {
+        display: grid;
+        flex: 1;
+        align-content: center;
+        padding: 38px 0 28px;
+      }
+
+      .eyebrow {
+        width: fit-content;
+        margin-bottom: 20px;
+        border-left: 5px solid var(--gold);
+        padding: 7px 0 7px 14px;
+        color: var(--cream);
         font-size: 16px;
+        font-weight: 750;
+        letter-spacing: 0.13em;
+        text-transform: uppercase;
+        text-shadow: 0 4px 20px rgba(0, 0, 0, 0.28);
+      }
+
+      h1 {
+        max-width: 720px;
+        margin: 0;
+        text-transform: uppercase;
+        letter-spacing: -0.055em;
+        line-height: 0.82;
+        font-size: clamp(74px, 15vw, 142px);
         font-weight: 950;
+        text-shadow:
+          0 8px 0 rgba(26, 36, 18, 0.28),
+          0 20px 55px rgba(0, 0, 0, 0.36);
+      }
+
+      .title-good {
+        display: block;
+        color: #fff8dc;
+        white-space: nowrap;
+      }
+
+      .title-news {
+        display: block;
+        color: transparent;
+        white-space: nowrap;
+        -webkit-text-stroke: 2px rgba(255, 255, 255, 0.88);
+        text-shadow:
+          0 8px 0 rgba(26, 36, 18, 0.18),
+          0 18px 55px rgba(0, 0, 0, 0.32);
+      }
+
+      .script {
+        display: block;
+        margin-top: -10px;
+        margin-left: 11px;
+        color: var(--gold);
+        white-space: nowrap;
+        font-family:
+          "STKaiti", "KaiTi", "华文行楷", "Brush Script MT", "Segoe Script",
+          cursive;
+        font-size: clamp(54px, 10vw, 100px);
+        font-weight: 400;
+        letter-spacing: -0.04em;
+        line-height: 0.9;
+        text-transform: none;
+        text-shadow: 0 12px 32px rgba(59, 40, 8, 0.45);
+        transform: rotate(-3deg);
+      }
+
+      .hook {
+        max-width: 610px;
+        margin: 30px 0 0;
+        color: rgba(255, 255, 255, 0.92);
+        font-size: 24px;
+        font-weight: 650;
+        line-height: 1.25;
+        text-shadow: 0 6px 24px rgba(0, 0, 0, 0.32);
+      }
+
+      .subhook {
+        max-width: 570px;
+        margin: 13px 0 0;
+        color: rgba(255, 255, 255, 0.78);
+        font-size: 15px;
+        font-weight: 500;
+        line-height: 1.55;
+      }
+
+      .details {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: end;
+        gap: 28px;
+        margin-top: 28px;
+      }
+
+      .info-card {
+        display: grid;
+        gap: 18px;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        border-radius: 28px;
+        padding: 23px 24px;
+        background:
+          linear-gradient(
+            135deg,
+            rgba(13, 28, 15, 0.78),
+            rgba(84, 107, 46, 0.48)
+          ),
+          rgba(255, 255, 255, 0.08);
+        box-shadow: 0 20px 55px rgba(0, 0, 0, 0.22);
+        backdrop-filter: blur(18px);
+      }
+
+      .meta {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 14px;
+      }
+
+      .meta-item {
+        min-height: 78px;
+        border-radius: 19px;
+        padding: 14px 15px;
+        background: rgba(255, 255, 255, 0.1);
+      }
+
+      .meta-item span {
+        display: block;
+        margin-bottom: 7px;
+        color: rgba(255, 255, 255, 0.58);
+        font-size: 9px;
+        font-weight: 900;
         letter-spacing: 0.18em;
         text-transform: uppercase;
       }
 
-      h1 {
-        margin: 0;
-        text-transform: uppercase;
-        letter-spacing: -0.045em;
-        line-height: 0.84;
-        font-size: clamp(66px, 12vw, 118px);
-        font-style: italic;
-        font-weight: 950;
-        text-shadow:
-          0 3px 0 rgba(255, 255, 255, 0.5),
-          0 8px 24px rgba(74, 99, 56, 0.12);
-      }
-
-      .line {
+      .meta-item strong {
         display: block;
-      }
-
-      .good,
-      .news {
-        color: var(--deep-green);
-      }
-
-      .for-world {
-        display: block;
-        margin-top: -4px;
-        color: var(--gold);
-        font-family:
-          "Brush Script MT", "Segoe Script", "Snell Roundhand", cursive;
-        font-size: clamp(66px, 12vw, 120px);
-        font-style: normal;
-        font-weight: 400;
-        letter-spacing: -0.08em;
-        line-height: 0.78;
-        text-transform: none;
-        text-shadow:
-          0 4px 0 rgba(255, 255, 255, 0.35),
-          0 10px 28px rgba(168, 120, 40, 0.18);
-        transform: rotate(-3deg);
-      }
-
-      .highlight-bar {
-        display: flex;
-        align-items: center;
-        width: fit-content;
-        margin-top: 28px;
-        overflow: hidden;
-        border-radius: 2px;
-        box-shadow: 0 10px 22px rgba(74, 99, 56, 0.12);
-      }
-
-      .highlight-bar span {
-        padding: 9px 12px;
-        background: #ffffff;
-        color: var(--forest);
-        font-size: 19px;
-        font-weight: 950;
-        letter-spacing: 0.06em;
-        text-transform: uppercase;
-      }
-
-      .highlight-bar strong {
-        padding: 9px 14px;
-        background: linear-gradient(90deg, var(--gold), var(--warm-gold));
-        color: #3d2e12;
-        font-size: 19px;
-        font-weight: 950;
-        letter-spacing: 0.05em;
-        text-transform: uppercase;
-      }
-
-      .speaker-name {
-        width: fit-content;
-        margin-top: 14px;
-        border-left: 5px solid var(--gold);
-        padding: 7px 0 7px 12px;
-        color: var(--deep-green);
-        font-size: 20px;
-        font-weight: 950;
-        letter-spacing: 0.06em;
-        text-transform: uppercase;
-        text-shadow: 0 4px 14px rgba(74, 99, 56, 0.1);
-      }
-
-      .speaker-name span {
-        color: var(--gold);
-      }
-
-      .hook {
-        max-width: 410px;
-        margin: 20px 0 0;
-        color: var(--text-soft);
-        font-family: "Segoe UI", Arial, sans-serif;
+        color: #fff9df;
         font-size: 17px;
-        font-weight: 650;
-        line-height: 1.42;
-        text-shadow: none;
+        font-weight: 850;
+        line-height: 1.12;
       }
 
-      .footer {
-        position: relative;
-        z-index: 7;
-        display: grid;
-        grid-template-columns: 1fr auto;
-        align-items: end;
-        gap: 24px;
-      }
-
-      .event-info {
-        display: grid;
-        gap: 14px;
-      }
-
-      .info-row {
+      .tags {
         display: flex;
-        align-items: center;
-        gap: 13px;
+        flex-wrap: wrap;
+        gap: 9px;
       }
 
-      .icon {
-        display: grid;
-        flex: 0 0 auto;
-        width: 35px;
-        height: 35px;
-        place-items: center;
-        border: 2px solid rgba(74, 99, 56, 0.45);
-        border-radius: 8px;
-        color: var(--forest);
-        font-family: "Segoe UI Symbol", Arial, sans-serif;
-        font-size: 18px;
-        font-weight: 900;
-      }
-
-      .info-text {
-        display: grid;
-        gap: 1px;
-      }
-
-      .info-text strong {
-        color: var(--deep-green);
-        font-size: 24px;
-        font-weight: 950;
+      .tag {
+        border-radius: 999px;
+        padding: 8px 11px;
+        background: rgba(255, 214, 98, 0.18);
+        color: #fff3c2;
+        font-size: 11px;
+        font-weight: 850;
         letter-spacing: 0.04em;
-        line-height: 1;
         text-transform: uppercase;
       }
 
-      .info-text span {
-        color: rgba(42, 61, 34, 0.68);
-        font-family: "Segoe UI", Arial, sans-serif;
-        font-size: 12px;
-        font-weight: 700;
-        letter-spacing: 0.04em;
-      }
-
-      .small-note {
-        margin-top: 6px;
-        max-width: 360px;
-        color: rgba(42, 61, 34, 0.62);
-        font-family: "Segoe UI", Arial, sans-serif;
-        font-size: 12px;
-        font-weight: 600;
-        line-height: 1.45;
-      }
-
-      .qr-card {
+      .qr-wrap {
         display: grid;
+        width: 164px;
         justify-items: center;
-        gap: 9px;
-        width: 150px;
-        border-radius: 10px;
-        padding: 11px;
-        background: rgba(255, 255, 255, 0.96);
-        color: var(--text);
-        box-shadow: 0 12px 32px rgba(74, 99, 56, 0.14);
+        gap: 10px;
+        border-radius: 27px;
+        padding: 15px;
+        background: rgba(255, 247, 223, 0.95);
+        color: var(--ink);
+        box-shadow: 0 18px 48px rgba(0, 0, 0, 0.28);
       }
 
-      .qr-card img {
-        width: 124px;
-        height: 124px;
+      .qr-wrap img {
+        width: 132px;
+        height: 132px;
         object-fit: contain;
       }
 
-      .qr-card strong {
-        color: var(--forest);
+      .qr-wrap strong {
         font-size: 13px;
         font-weight: 950;
-        letter-spacing: 0.06em;
+        letter-spacing: 0.04em;
         text-align: center;
         text-transform: uppercase;
       }
 
-      .qr-card span {
-        color: rgba(42, 61, 34, 0.55);
-        font-family: "Segoe UI", Arial, sans-serif;
+      .website {
+        color: rgba(22, 24, 18, 0.68);
         font-size: 10px;
         font-weight: 800;
       }
 
-      .website-line {
-        position: absolute;
-        right: 0;
-        bottom: 12px;
-        left: 0;
-        z-index: 8;
-        color: rgba(42, 61, 34, 0.48);
-        font-family: "Segoe UI", Arial, sans-serif;
-        font-size: 9px;
-        font-weight: 800;
+      .footer-note {
+        margin-top: 15px;
+        color: rgba(255, 255, 255, 0.64);
+        font-size: 11px;
+        font-weight: 600;
         letter-spacing: 0.08em;
         text-align: center;
         text-transform: uppercase;
@@ -498,33 +462,31 @@
         }
 
         .content {
-          padding: 34px 30px 30px;
+          padding: 36px 32px 30px;
         }
 
-        .speaker-area {
-          right: -120px;
-          width: 72%;
-          opacity: 0.82;
+        .presented {
+          display: none;
         }
 
-        .main {
-          max-width: 430px;
-        }
-
-        .footer {
+        .details {
           grid-template-columns: 1fr;
         }
 
-        .qr-card {
+        .qr-wrap {
           width: 100%;
-          max-width: 260px;
           grid-template-columns: auto 1fr;
           justify-items: start;
+          text-align: left;
         }
 
-        .qr-card img {
-          width: 104px;
-          height: 104px;
+        .qr-wrap img {
+          width: 116px;
+          height: 116px;
+        }
+
+        .meta {
+          grid-template-columns: 1fr;
         }
       }
 
@@ -559,94 +521,94 @@
   </head>
 
   <body>
-    <main
-      class="poster"
-      aria-label="Good News for a Restless World event poster"
-    >
-      <div class="grain"></div>
+    <main class="poster" aria-label="给不安世界的好消息海报">
+      <div class="noise"></div>
 
-      <section class="speaker-area" aria-hidden="true">
-        <div class="aura"></div>
-        <div class="aura-ring"></div>
-        <img class="speaker-img" src="speaker.png" alt="" />
-        <div class="speaker-shadow"></div>
-      </section>
-
-      <div class="bottom-fade"></div>
+      <div class="olive-branch" aria-hidden="true">
+        <span></span>
+        <i></i>
+        <i></i>
+        <i></i>
+        <i></i>
+        <i></i>
+        <i></i>
+        <i></i>
+      </div>
 
       <section class="content">
         <header class="topbar">
-          <img
-            src="bigLogo.png"
-            alt="Green Olive Chinese Christian Club logo"
-          />
-
-          <div class="club-kicker">
-            <span>Your club presents</span>
-            <strong>Green Olive Chinese Christian Club</strong>
+          <div class="brand">
+            <img
+              src="bigLogo.png"
+              alt="Green Olive Chinese Christian Club 标志"
+            />
+            <div class="club-text">
+              <strong>Green Olive</strong>
+              <span>Chinese Christian Club</span>
+            </div>
           </div>
+
+          <div class="presented">校园活动</div>
         </header>
 
-        <section class="main">
-          <div class="presented">An open night for honest questions</div>
+        <section class="hero">
+          <div class="eyebrow">坦诚提问的开放之夜</div>
 
           <h1>
-            <span class="line good">Good</span>
-            <span class="line news">News</span>
-            <span class="for-world">for a Restless World</span>
+            <span class="title-good">给不安</span>
+            <span class="title-news">世界</span>
+            <span class="script">的好消息海报</span>
           </h1>
 
-          <div class="highlight-bar">
-            <span>Gospel</span>
-            <strong>Talk + Q&amp;A</strong>
-          </div>
-
-          <div class="speaker-name">Speaker: <span>WuTao</span></div>
-
           <p class="hook">
-            In an anxious and uncertain world, is there still truly good news?
-            Come hear the Christian message and ask your honest questions.
+            在焦虑不安、充满不确定的世界里，还有真正的好消息吗？
+          </p>
+
+          <p class="subhook">
+            友善介绍基督教福音，随后开放问答与深入讨论。基督徒、慕道友、怀疑者，以及单纯好奇的朋友，都欢迎参加。
           </p>
         </section>
 
-        <footer class="footer">
-          <div class="event-info">
-            <div class="info-row">
-              <div class="icon">✓</div>
-              <div class="info-text">
-                <strong>All Students Welcome</strong>
-                <span>Christians, seekers, skeptics, and the curious</span>
+        <section class="details" aria-label="活动详情与报名">
+          <div>
+            <div class="info-card">
+              <div class="meta">
+                <div class="meta-item">
+                  <span>内容</span>
+                  <strong>福音讲座</strong>
+                </div>
+
+                <div class="meta-item">
+                  <span>还有</span>
+                  <strong>开放问答</strong>
+                </div>
+
+                <div class="meta-item">
+                  <span>对象</span>
+                  <strong>所有学生</strong>
+                </div>
+              </div>
+
+              <div class="tags">
+                <span class="tag">基督教</span>
+                <span class="tag">意义</span>
+                <span class="tag">盼望</span>
+                <span class="tag">交流讨论</span>
               </div>
             </div>
 
-            <div class="info-row">
-              <div class="icon">?</div>
-              <div class="info-text">
-                <strong>Open Q&amp;A</strong>
-                <span>Ask anything about Christianity, faith, and life</span>
-              </div>
-            </div>
-
-            <p class="small-note">
-              Scan the QR code for event time, location, details, and
-              registration.
-            </p>
+            <div class="footer-note">扫码查看时间、地点与报名</div>
           </div>
 
-          <aside class="qr-card" aria-label="Registration QR code">
-            <img
-              src="evangilism_event_qr_code.png"
-              alt="QR code for event registration"
-            />
+          <aside class="qr-wrap" aria-label="报名二维码">
+            <img src="evangilism_event_qr_code.png" alt="活动报名二维码" />
             <div>
-              <strong>Scan to Register</strong>
-              <span>www.goccc.ca</span>
+              <strong>扫码报名</strong>
+              <div class="website">www.goccc.ca</div>
             </div>
           </aside>
-        </footer>
+        </section>
       </section>
-
-      <div class="website-line">Green Olive Chinese Christian Club</div>
     </main>
   </body>
 </html>
