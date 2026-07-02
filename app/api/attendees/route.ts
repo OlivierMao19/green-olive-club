@@ -13,15 +13,44 @@ export async function GET(req: Request) {
       );
     }
 
-    const attendees = await prisma.userOnEvent.findMany({
-      select: {
-        user: true,
-        userId: true,
-        createdAt: true,
-      },
-      where: { eventId: eventId },
-      orderBy: { createdAt: "asc" },
-    });
+    const [userAttendees, guestAttendees] = await Promise.all([
+      prisma.userOnEvent.findMany({
+        select: {
+          user: true,
+          userId: true,
+          createdAt: true,
+        },
+        where: { eventId },
+        orderBy: { createdAt: "asc" },
+      }),
+      prisma.guestRegistration.findMany({
+        where: { eventId },
+        orderBy: { createdAt: "asc" },
+      }),
+    ]);
+
+    const attendees = [
+      ...userAttendees.map((attendee) => ({
+        id: attendee.userId,
+        email: attendee.user.email,
+        name: attendee.user.name ?? "",
+        mcgillId: attendee.user.mcgillId ?? "",
+        registrationDate: attendee.createdAt,
+        isGuest: false,
+      })),
+      ...guestAttendees.map((guest) => ({
+        id: guest.id,
+        email: guest.email,
+        name: guest.name,
+        mcgillId: guest.mcgillId,
+        registrationDate: guest.createdAt,
+        isGuest: true,
+      })),
+    ].sort(
+      (a, b) =>
+        new Date(a.registrationDate).getTime() -
+        new Date(b.registrationDate).getTime()
+    );
 
     return NextResponse.json(attendees, { status: 200 });
   } catch (error) {

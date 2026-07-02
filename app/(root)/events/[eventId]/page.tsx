@@ -18,7 +18,20 @@ export default async function Event({
   const session = await auth();
   const userId = session?.user?.id;
 
-  const mcGillId = session?.user?.mcgillId;
+  const user = userId
+    ? await prisma.user.findUnique({
+        where: { id: userId },
+        select: { name: true, email: true, mcgillId: true },
+      })
+    : null;
+
+  const userDetails = user
+    ? {
+        name: user.name ?? "",
+        email: user.email ?? "",
+        mcgillId: user.mcgillId ?? "",
+      }
+    : null;
 
   const registration = userId
     ? await prisma.userOnEvent.findUnique({
@@ -32,7 +45,7 @@ export default async function Event({
       event={event}
       userId={userId}
       initialRegistrationStatus={isRegistered}
-      mcGillId={mcGillId}
+      userDetails={userDetails}
       isAdmin={session?.user?.isAdmin || false}
       isRecurring={event?.seriesId != null}
     />

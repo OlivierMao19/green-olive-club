@@ -26,7 +26,11 @@ type EventPagePayload = {
   event: Event | null;
   userId: string | undefined;
   initialRegistrationStatus: boolean;
-  mcGillId: string | undefined;
+  userDetails: {
+    name: string;
+    email: string;
+    mcgillId: string;
+  } | null;
   isAdmin: boolean;
   isRecurring: boolean;
 };
@@ -41,7 +45,7 @@ export default function EventPage({
   event,
   userId,
   initialRegistrationStatus,
-  mcGillId,
+  userDetails,
   isAdmin,
   isRecurring,
 }: EventPagePayload) {
@@ -344,7 +348,7 @@ export default function EventPage({
                 userId={userId}
                 eventId={currentEvent.id}
                 initialRegistrationStatus={initialRegistrationStatus}
-                hasMcGillId={!!mcGillId}
+                userDetails={userDetails}
               />
 
               {isAdmin && (

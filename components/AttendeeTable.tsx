@@ -15,21 +15,23 @@ interface AttendeeTableProps {
   eventId: string;
 }
 
+interface Attendee {
+  id: string;
+  email: string;
+  name: string;
+  mcgillId: string;
+  registrationDate: Date;
+  isGuest: boolean;
+}
+
 export default function AttendeeTable({ eventId }: AttendeeTableProps) {
   const [searchTerm, setSearchTerm] = useState("");
   const [sortConfig, setSortConfig] = useState<{
-    key: keyof User;
+    key: keyof Attendee;
     direction: "ascending" | "descending";
   } | null>(null);
 
-  interface User {
-    id: string;
-    email: string;
-    name: string;
-    mcgillId: string;
-    registrationDate: Date;
-  }
-  const [eventAttendees, setEventAttendees] = useState<User[]>([]);
+  const [eventAttendees, setEventAttendees] = useState<Attendee[]>([]);
 
   useEffect(() => {
     const fetchAttendees = async () => {
@@ -38,12 +40,20 @@ export default function AttendeeTable({ eventId }: AttendeeTableProps) {
           method: "GET",
         });
         const data = await response.json();
-        const eventAttendees = data.map((attendee: { userId: string; user: { email: string; name: string; mcgillId: string }; createdAt: string }) => ({
-          id: attendee.userId,
-          email: attendee.user.email,
-          name: attendee.user.name,
-          mcgillId: attendee.user.mcgillId,
-          registrationDate: new Date(attendee.createdAt),
+        const eventAttendees = data.map((attendee: {
+          id: string;
+          email: string;
+          name: string;
+          mcgillId: string;
+          registrationDate: string;
+          isGuest: boolean;
+        }) => ({
+          id: attendee.id,
+          email: attendee.email,
+          name: attendee.name,
+          mcgillId: attendee.mcgillId,
+          registrationDate: new Date(attendee.registrationDate),
+          isGuest: attendee.isGuest,
         }));
         setEventAttendees(eventAttendees);
       } catch (error) {
@@ -70,8 +80,8 @@ export default function AttendeeTable({ eventId }: AttendeeTableProps) {
     const { key, direction } = sortConfig;
 
     // Get values to compare based on key
-    const valueA = a[key as keyof User];
-    const valueB = b[key as keyof User];
+    const valueA = a[key];
+    const valueB = b[key];
 
     if (valueA instanceof Date && valueB instanceof Date) {
       return direction === "ascending"
@@ -95,7 +105,7 @@ export default function AttendeeTable({ eventId }: AttendeeTableProps) {
     return 0;
   });
 
-  const requestSort = (key: keyof User) => {
+  const requestSort = (key: keyof Attendee) => {
     let direction: "ascending" | "descending" = "ascending";
 
     if (sortConfig?.key === key && sortConfig.direction === "ascending") {
@@ -161,6 +171,17 @@ export default function AttendeeTable({ eventId }: AttendeeTableProps) {
                 <TableHead className="hidden md:table-cell">
                   <Button
                     variant="ghost"
+                    onClick={() => requestSort("isGuest")}
+                    className="hover:bg-transparent px-0"
+                  >
+                    Type
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                  </Button>
+                </TableHead>
+
+                <TableHead className="hidden md:table-cell">
+                  <Button
+                    variant="ghost"
                     onClick={() => requestSort("registrationDate")}
                     className="hover:bg-transparent px-0"
                   >
@@ -182,6 +203,10 @@ export default function AttendeeTable({ eventId }: AttendeeTableProps) {
 
                   <TableCell className="font-medium hidden md:table-cell">
                     {attendee.mcgillId}
+                  </TableCell>
+
+                  <TableCell className="hidden md:table-cell">
+                    {attendee.isGuest ? "Guest" : "Member"}
                   </TableCell>
 
                   <TableCell className="font-medium hidden md:table-cell justify-between">
