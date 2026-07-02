@@ -52,17 +52,30 @@ model EventSeriesException {
 }
 
 model Event {
-  id          String        @id @default(cuid())
-  title       String
-  description String?
-  scheduledAt DateTime
-  location    String?
-  imageId     String?
-  seriesId    String?
-  series      EventSeries?  @relation(fields: [seriesId], references: [id], onDelete: SetNull)
-  attendees   UserOnEvent[]
+  id                String              @id @default(cuid())
+  title             String
+  description       String?
+  scheduledAt       DateTime
+  location          String?
+  imageId           String?
+  seriesId          String?
+  series            EventSeries?        @relation(fields: [seriesId], references: [id], onDelete: SetNull)
+  attendees         UserOnEvent[]
+  guestRegistrations GuestRegistration[]
 
   @@unique([seriesId, scheduledAt])
+}
+
+model GuestRegistration {
+  id        String   @id @default(cuid())
+  eventId   String
+  name      String
+  email     String
+  mcgillId  String
+  createdAt DateTime @default(now())
+  event     Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+
+  @@unique([eventId, email])
 }
 
 model UserOnEvent {
