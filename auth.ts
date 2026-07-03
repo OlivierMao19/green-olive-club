@@ -34,6 +34,34 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     }),
   ],
   callbacks: {
+    async signIn({ user, account, profile }) {
+      const email = user?.email ?? profile?.email;
+      if (!email || !account?.provider) return true;
+
+      const existingUser = await prisma.user.findUnique({
+        where: { email },
+        include: { accounts: { select: { provider: true } } },
+      });
+
+      if (!existingUser?.accounts.length) return true;
+
+      const hasMatchingProvider = existingUser.accounts.some(
+        (linkedAccount) => linkedAccount.provider === account.provider
+      );
+      if (hasMatchingProvider) return true;
+
+      const providers = [
+        ...new Set(existingUser.accounts.map((linkedAccount) => linkedAccount.provider)),
+      ].join(",");
+
+      const params = new URLSearchParams({
+        error: "OAuthAccountNotLinked",
+        providers,
+      });
+
+      return `/login?${params.toString()}`;
+    },
+
     async session({ session }) {
       if (session?.user?.email) {
         const dbUser = await prisma.user.findUnique({

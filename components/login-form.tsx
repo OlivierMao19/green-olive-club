@@ -10,11 +10,22 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { signIn } from "@/auth";
+import { getAccountNotLinkedMessage } from "@/lib/authProviders";
+import { AlertCircle } from "lucide-react";
+
+type LoginFormProps = React.ComponentProps<"div"> & {
+  authError?: string;
+  existingProviders?: string[];
+};
 
 export function LoginForm({
   className,
+  authError,
+  existingProviders = [],
   ...props
-}: React.ComponentProps<"div">) {
+}: LoginFormProps) {
+  const showAccountNotLinkedError = authError === "OAuthAccountNotLinked";
+
   return (
     <div className={cn("flex flex-col gap-8", className)} {...props}>
       <Card className="text-green-700">
@@ -26,6 +37,15 @@ export function LoginForm({
         </CardHeader>
         <CardContent className="px-8 pb-8">
           <div className="grid gap-6">
+            {showAccountNotLinkedError && (
+              <div
+                role="alert"
+                className="flex gap-3 rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900"
+              >
+                <AlertCircle className="mt-0.5 size-4 shrink-0" aria-hidden="true" />
+                <p>{getAccountNotLinkedMessage(existingProviders)}</p>
+              </div>
+            )}
             <div className="flex flex-col gap-4">
 
               <form action={async () => { "use server"; await signIn("github", { redirectTo: "/" }); }}>

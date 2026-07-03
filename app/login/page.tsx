@@ -5,11 +5,21 @@ import Link from "next/link"
 import { auth } from "@/auth"
 import { redirect } from "next/navigation"
 
-export default async function LoginPage() {
+export default async function LoginPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ error?: string; providers?: string }>;
+}) {
   const session = await auth()
   if (session) {
     redirect("/")
   }
+
+  const { error, providers } = await searchParams
+  const existingProviders = providers
+    ? providers.split(",").filter(Boolean)
+    : []
+
   return (
     <div className="flex min-h-svh flex-col items-center justify-center gap-6 p-6 md:p-10 bg-gradient-to-b from-green-100/80 to-white text-gray-700">
       <div className="flex w-full max-w-lg flex-col gap-6 text-green-700">
@@ -19,7 +29,7 @@ export default async function LoginPage() {
           </div>
           Green Olive Club
         </Link>
-        <LoginForm />
+        <LoginForm authError={error} existingProviders={existingProviders} />
       </div>
     </div>
   )
