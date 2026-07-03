@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import ProfileForm from "./profile-form"
+import { normalizeRegistrationDetails } from "@/lib/registrationDetails"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { IdCard, LoaderIcon, Mail, User } from "lucide-react"
 
@@ -26,7 +27,7 @@ export default function ProfilePage() {
             try {
                 const response = await fetch('/api/profile');
                 const data = await response.json();
-                setProfileData(data);
+                setProfileData(normalizeRegistrationDetails(data));
                 setLoading(false);
             } catch (error) {
                 console.error("Error fetching profile:", error);

@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import { User, Mail, IdCard } from "lucide-react";
 import {
   type RegistrationDetails,
+  normalizeRegistrationDetails,
   trimRegistrationDetails,
 } from "@/lib/registrationDetails";
 
@@ -25,10 +26,12 @@ export default function RegistrationDetailsForm({
   idPrefix = "registration",
 }: RegistrationDetailsFormProps) {
   const [isLoading, setIsLoading] = useState(false);
-  const [formData, setFormData] = useState(initialData);
+  const [formData, setFormData] = useState(() =>
+    normalizeRegistrationDetails(initialData)
+  );
 
   useEffect(() => {
-    setFormData(initialData);
+    setFormData(normalizeRegistrationDetails(initialData));
   }, [initialData]);
 
   const handleChange = (

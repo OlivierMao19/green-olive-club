@@ -4,6 +4,16 @@ export type RegistrationDetails = {
   mcgillId: string;
 };
 
+export function normalizeRegistrationDetails(
+  details: Partial<RegistrationDetails> | null | undefined
+): RegistrationDetails {
+  return {
+    name: details?.name ?? "",
+    email: details?.email ?? "",
+    mcgillId: details?.mcgillId ?? "",
+  };
+}
+
 export function trimRegistrationDetails(
   details: RegistrationDetails
 ): RegistrationDetails {
