@@ -2,6 +2,7 @@
 
 import { ArrowLeft, Calendar, MapPin, Pencil, Trash2, Upload } from "lucide-react";
 import EventRegistrationButton from "@/components/EventRegistrationButton";
+import EventShareButton from "@/components/EventShareButton";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -349,6 +350,11 @@ export default function EventPage({
                 eventId={currentEvent.id}
                 initialRegistrationStatus={initialRegistrationStatus}
                 userDetails={userDetails}
+              />
+
+              <EventShareButton
+                eventId={currentEvent.id}
+                eventTitle={currentEvent.title}
               />
 
               {isAdmin && (
