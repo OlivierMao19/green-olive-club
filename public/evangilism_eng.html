@@ -264,7 +264,7 @@
         width: fit-content;
         margin-bottom: 20px;
         border-left: 5px solid var(--gold);
-        padding: 7px 0 7px 14px;
+        padding: 0px 0 0px 14px;
         color: var(--cream);
         font-size: 16px;
         font-weight: 750;
@@ -333,6 +333,71 @@
         font-size: 15px;
         font-weight: 500;
         line-height: 1.55;
+      }
+
+      .timeline {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        margin: 30px 0 0;
+        max-width: 640px;
+      }
+
+      .tl-step {
+        display: flex;
+        flex-direction: column;
+        gap: 7px;
+      }
+
+      .tl-top {
+        display: flex;
+        align-items: center;
+        gap: 11px;
+      }
+
+      .tl-dot {
+        flex-shrink: 0;
+        width: 13px;
+        height: 13px;
+        border-radius: 50%;
+        background: var(--gold);
+        box-shadow: 0 0 0 4px rgba(242, 199, 92, 0.18);
+      }
+
+      .tl-time {
+        color: var(--cream);
+        font-size: 15px;
+        font-weight: 800;
+        letter-spacing: 0.01em;
+        white-space: nowrap;
+        text-shadow: 0 3px 14px rgba(0, 0, 0, 0.35);
+      }
+
+      .tl-label {
+        padding-left: 24px;
+        color: #fff9df;
+        font-size: 15px;
+        font-weight: 900;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        text-shadow: 0 3px 14px rgba(0, 0, 0, 0.35);
+      }
+
+      .tl-label--break {
+        color: var(--gold);
+      }
+
+      .tl-line {
+        flex: 1;
+        min-width: 22px;
+        height: 3px;
+        margin-top: 5px;
+        border-radius: 999px;
+        background: linear-gradient(
+          90deg,
+          rgba(242, 199, 92, 0.85),
+          rgba(143, 167, 90, 0.85)
+        );
       }
 
       .details {
@@ -482,6 +547,16 @@
         .meta {
           grid-template-columns: 1fr;
         }
+
+        .timeline {
+          flex-direction: column;
+          align-items: stretch;
+          gap: 14px;
+        }
+
+        .tl-line {
+          display: none;
+        }
       }
 
       @page {
@@ -546,7 +621,10 @@
         </header>
 
         <section class="hero">
-          <div class="eyebrow">An open night for honest questions</div>
+          <div class="eyebrow">
+            <p>Speaker: Wu Tao</p>
+            <p>McGill Theology Graduate Student</p>
+          </div>
 
           <h1>
             <span class="title-good">Good</span>
@@ -563,6 +641,36 @@
             Q&amp;A and thoughtful discussion. Christians, seekers, skeptics,
             and the simply curious are all welcome.
           </p>
+
+          <div class="timeline" aria-label="Event schedule">
+            <div class="tl-step">
+              <div class="tl-top">
+                <span class="tl-dot"></span>
+                <span class="tl-time">5:00 &ndash; 6:15 PM</span>
+              </div>
+              <div class="tl-label">Section 1</div>
+            </div>
+
+            <div class="tl-line" aria-hidden="true"></div>
+
+            <div class="tl-step">
+              <div class="tl-top">
+                <span class="tl-dot"></span>
+                <span class="tl-time">6:15 &ndash; 7:15 PM</span>
+              </div>
+              <div class="tl-label tl-label--break">Lunch Break</div>
+            </div>
+
+            <div class="tl-line" aria-hidden="true"></div>
+
+            <div class="tl-step">
+              <div class="tl-top">
+                <span class="tl-dot"></span>
+                <span class="tl-time">7:15 &ndash; 9:00 PM</span>
+              </div>
+              <div class="tl-label">Section 2 + Q&amp;A</div>
+            </div>
+          </div>
         </section>
 
         <section class="details" aria-label="Event details and registration">
