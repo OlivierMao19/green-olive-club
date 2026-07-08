@@ -80,15 +80,16 @@ export default function EventPage({
     setImageError(false);
     setImageURL(null);
 
-    if (!event?.imageId) {
+    const imageId = event?.imageId;
+    if (!imageId) {
       return;
     }
 
     let mounted = true;
 
-    async function fetchImage() {
+    async function fetchImage(id: string) {
       try {
-        const { uploadedUrl, relativeUrl } = await getEventImage(event!.imageId!);
+        const { uploadedUrl, relativeUrl } = await getEventImage(id);
         if (!mounted) return;
         setImageURL(relativeUrl ?? uploadedUrl ?? null);
       } catch (error) {
@@ -97,7 +98,7 @@ export default function EventPage({
       }
     }
 
-    void fetchImage();
+    void fetchImage(imageId);
 
     return () => {
       mounted = false;
