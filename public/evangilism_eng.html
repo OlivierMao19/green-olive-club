@@ -261,16 +261,24 @@
       }
 
       .eyebrow {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
         width: fit-content;
         margin-bottom: 20px;
         border-left: 5px solid var(--gold);
-        padding: 0px 0 0px 14px;
+        padding: 0 0 0 14px;
         color: var(--cream);
         font-size: 16px;
         font-weight: 750;
         letter-spacing: 0.13em;
         text-transform: uppercase;
         text-shadow: 0 4px 20px rgba(0, 0, 0, 0.28);
+      }
+
+      .eyebrow p {
+        margin: 0;
+        line-height: 1.15;
       }
 
       h1 {
