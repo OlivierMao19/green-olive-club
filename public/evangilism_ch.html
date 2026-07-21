@@ -54,153 +54,10 @@
         aspect-ratio: 8.5 / 11;
         overflow: hidden;
         background:
-          radial-gradient(
-            circle at 52% 38%,
-            rgba(255, 241, 178, 0.92) 0%,
-            rgba(239, 169, 66, 0.78) 18%,
-            rgba(131, 91, 36, 0.32) 34%,
-            rgba(28, 42, 24, 0.08) 52%,
-            rgba(15, 25, 16, 0.9) 100%
-          ),
-          linear-gradient(135deg, #24381f 0%, #7d7a31 45%, #162414 100%);
+          url("poster_bg.png") center / cover no-repeat,
+          #1f2518;
         box-shadow: 0 28px 90px rgba(0, 0, 0, 0.55);
         isolation: isolate;
-      }
-
-      .poster::before {
-        position: absolute;
-        inset: -12%;
-        z-index: -2;
-        content: "";
-        background:
-          linear-gradient(
-            112deg,
-            transparent 0%,
-            rgba(255, 255, 255, 0.11) 22%,
-            transparent 42%
-          ),
-          linear-gradient(
-            72deg,
-            transparent 8%,
-            rgba(255, 234, 152, 0.16) 34%,
-            transparent 54%
-          ),
-          repeating-linear-gradient(
-            102deg,
-            rgba(255, 255, 255, 0.025) 0,
-            rgba(255, 255, 255, 0.025) 1px,
-            transparent 1px,
-            transparent 54px
-          );
-        transform: rotate(-5deg);
-      }
-
-      .poster::after {
-        position: absolute;
-        inset: auto -5% -8% -5%;
-        z-index: -1;
-        height: 36%;
-        content: "";
-        background:
-          radial-gradient(
-            ellipse at center,
-            rgba(255, 255, 255, 0.7) 0%,
-            rgba(255, 247, 223, 0.62) 25%,
-            rgba(255, 247, 223, 0.28) 48%,
-            transparent 72%
-          ),
-          linear-gradient(
-            to top,
-            rgba(255, 247, 223, 0.9),
-            rgba(255, 247, 223, 0.14),
-            transparent
-          );
-        filter: blur(1px);
-      }
-
-      .noise {
-        position: absolute;
-        inset: 0;
-        z-index: 1;
-        pointer-events: none;
-        opacity: 0.28;
-        background-image:
-          linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-        background-size: 18px 18px;
-        mix-blend-mode: overlay;
-      }
-
-      .olive-branch {
-        position: absolute;
-        top: 108px;
-        right: -48px;
-        z-index: 2;
-        width: 290px;
-        height: 500px;
-        opacity: 0.24;
-        transform: rotate(-16deg);
-      }
-
-      .olive-branch span {
-        position: absolute;
-        left: 50%;
-        width: 4px;
-        height: 470px;
-        background: rgba(255, 255, 255, 0.6);
-        border-radius: 999px;
-        transform: translateX(-50%);
-      }
-
-      .olive-branch i {
-        position: absolute;
-        width: 62px;
-        height: 28px;
-        background: rgba(255, 255, 255, 0.58);
-        border-radius: 999px 0 999px 0;
-        transform-origin: left center;
-      }
-
-      .olive-branch i:nth-child(2) {
-        top: 42px;
-        left: 138px;
-        transform: rotate(-34deg);
-      }
-
-      .olive-branch i:nth-child(3) {
-        top: 92px;
-        left: 86px;
-        transform: rotate(152deg);
-      }
-
-      .olive-branch i:nth-child(4) {
-        top: 142px;
-        left: 140px;
-        transform: rotate(-30deg);
-      }
-
-      .olive-branch i:nth-child(5) {
-        top: 194px;
-        left: 82px;
-        transform: rotate(150deg);
-      }
-
-      .olive-branch i:nth-child(6) {
-        top: 248px;
-        left: 140px;
-        transform: rotate(-30deg);
-      }
-
-      .olive-branch i:nth-child(7) {
-        top: 302px;
-        left: 84px;
-        transform: rotate(150deg);
-      }
-
-      .olive-branch i:nth-child(8) {
-        top: 360px;
-        left: 140px;
-        transform: rotate(-30deg);
       }
 
       .content {
@@ -217,6 +74,13 @@
         align-items: center;
         justify-content: space-between;
         gap: 24px;
+        min-height: 58px;
+        margin: -10px -54px 0;
+        padding: 9px 54px;
+        background: rgba(55, 83, 48, 0.94);
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.05),
+          0 8px 24px rgba(19, 30, 15, 0.16);
       }
 
       .brand {
@@ -227,8 +91,8 @@
       }
 
       .brand img {
-        width: 46px;
-        height: 46px;
+        width: 36px;
+        height: 36px;
         object-fit: contain;
         filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.25));
       }
@@ -241,7 +105,7 @@
       }
 
       .club-text strong {
-        font-size: 13px;
+        font-size: 14px;
         font-weight: 850;
       }
 
@@ -252,11 +116,11 @@
       }
 
       .presented {
-        border: 1px solid rgba(255, 255, 255, 0.38);
+        border: 1px solid rgba(231, 207, 129, 0.58);
         border-radius: 999px;
-        padding: 8px 13px;
-        background: rgba(255, 255, 255, 0.08);
-        color: rgba(255, 255, 255, 0.86);
+        padding: 8px 15px;
+        background: rgba(32, 56, 30, 0.18);
+        color: rgba(255, 247, 217, 0.92);
         font-size: 10px;
         font-weight: 800;
         letter-spacing: 0.18em;
@@ -272,15 +136,23 @@
       }
 
       .eyebrow {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
         width: fit-content;
         margin-bottom: 20px;
         border-left: 5px solid var(--gold);
-        padding: 7px 0 7px 14px;
+        padding: 0 0 0 14px;
         color: var(--cream);
         font-size: 16px;
         font-weight: 750;
         letter-spacing: 0.13em;
         text-shadow: 0 4px 20px rgba(0, 0, 0, 0.28);
+      }
+
+      .eyebrow p {
+        margin: 0;
+        line-height: 1.15;
       }
 
       h1 {
@@ -349,6 +221,87 @@
         line-height: 1.55;
       }
 
+      .timeline {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        margin: 30px 0 0;
+        max-width: 640px;
+      }
+
+      .tl-step {
+        display: flex;
+        flex-direction: column;
+        gap: 7px;
+      }
+
+      .tl-top {
+        display: flex;
+        align-items: center;
+        gap: 11px;
+      }
+
+      .tl-dot {
+        flex-shrink: 0;
+        width: 13px;
+        height: 13px;
+        border-radius: 50%;
+        background: var(--gold);
+        box-shadow: 0 0 0 4px rgba(242, 199, 92, 0.18);
+      }
+
+      .tl-time {
+        color: var(--cream);
+        font-size: 15px;
+        font-weight: 800;
+        letter-spacing: 0.01em;
+        white-space: nowrap;
+        text-shadow: 0 3px 14px rgba(0, 0, 0, 0.35);
+      }
+
+      .tl-label {
+        padding-left: 24px;
+        color: #fff9df;
+        font-size: 15px;
+        font-weight: 900;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        text-shadow: 0 3px 14px rgba(0, 0, 0, 0.35);
+      }
+
+      .tl-label--break {
+        position: relative;
+        color: var(--gold);
+      }
+
+      .tl-note {
+        position: absolute;
+        top: calc(100% + 2px);
+        left: 0;
+        width: 100%;
+        color: var(--gold);
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        text-align: center;
+        white-space: nowrap;
+        text-shadow: 0 3px 14px rgba(0, 0, 0, 0.35);
+      }
+
+      .tl-line {
+        flex: 1;
+        min-width: 22px;
+        height: 3px;
+        margin-top: 5px;
+        border-radius: 999px;
+        background: linear-gradient(
+          90deg,
+          rgba(242, 199, 92, 0.85),
+          rgba(143, 167, 90, 0.85)
+        );
+      }
+
       .details {
         display: grid;
         grid-template-columns: 1fr auto;
@@ -360,18 +313,15 @@
       .info-card {
         display: grid;
         gap: 18px;
-        border: 1px solid rgba(255, 255, 255, 0.18);
+        border: 1px solid rgba(255, 255, 255, 0.2);
         border-radius: 28px;
         padding: 23px 24px;
-        background:
-          linear-gradient(
-            135deg,
-            rgba(13, 28, 15, 0.78),
-            rgba(84, 107, 46, 0.48)
-          ),
-          rgba(255, 255, 255, 0.08);
+        background: linear-gradient(
+          135deg,
+          rgba(20, 36, 20, 0.8),
+          rgba(80, 107, 47, 0.65)
+        );
         box-shadow: 0 20px 55px rgba(0, 0, 0, 0.22);
-        backdrop-filter: blur(18px);
       }
 
       .meta {
@@ -381,10 +331,11 @@
       }
 
       .meta-item {
-        min-height: 78px;
+        min-height: 108px;
+        border: 1px solid rgba(255, 255, 255, 0.05);
         border-radius: 19px;
-        padding: 14px 15px;
-        background: rgba(255, 255, 255, 0.1);
+        padding: 18px 20px;
+        background: rgba(133, 155, 98, 0.25);
       }
 
       .meta-item span {
@@ -473,8 +424,32 @@
           padding: 36px 32px 30px;
         }
 
+        .topbar {
+          min-height: 52px;
+          margin: -8px -32px 0;
+          padding: 8px 32px;
+        }
+
+        .brand {
+          gap: 9px;
+        }
+
+        .brand img {
+          width: 31px;
+          height: 31px;
+        }
+
+        .club-text strong {
+          font-size: 11px;
+        }
+
+        .club-text span {
+          font-size: 7px;
+        }
+
         .presented {
-          display: none;
+          padding: 7px 10px;
+          font-size: 8px;
         }
 
         .details {
@@ -495,6 +470,16 @@
 
         .meta {
           grid-template-columns: 1fr;
+        }
+
+        .timeline {
+          flex-direction: column;
+          align-items: stretch;
+          gap: 14px;
+        }
+
+        .tl-line {
+          display: none;
         }
       }
 
@@ -530,19 +515,6 @@
 
   <body>
     <main class="poster" aria-label="给不安世界的好消息活动海报">
-      <div class="noise"></div>
-
-      <div class="olive-branch" aria-hidden="true">
-        <span></span>
-        <i></i>
-        <i></i>
-        <i></i>
-        <i></i>
-        <i></i>
-        <i></i>
-        <i></i>
-      </div>
-
       <section class="content">
         <header class="topbar">
           <div class="brand">
@@ -560,7 +532,10 @@
         </header>
 
         <section class="hero">
-          <div class="eyebrow">一个坦诚提问的夜晚</div>
+          <div class="eyebrow">
+            <p>讲员：吴涛</p>
+            <p>麦吉尔大学神学研究生</p>
+          </div>
 
           <h1>
             <span class="title-good">给不安</span>
@@ -573,6 +548,39 @@
           <p class="subhook">
             欢迎参加这场关于基督福音的介绍，包含开放式问答与真诚交流。无论你是否是基督徒、正在寻找答案，还是只是单纯好奇，都欢迎你来。
           </p>
+
+          <div class="timeline" aria-label="活动流程">
+            <div class="tl-step">
+              <div class="tl-top">
+                <span class="tl-dot"></span>
+                <span class="tl-time">下午 5:00 &ndash; 6:15</span>
+              </div>
+              <div class="tl-label">第一环节</div>
+            </div>
+
+            <div class="tl-line" aria-hidden="true"></div>
+
+            <div class="tl-step">
+              <div class="tl-top">
+                <span class="tl-dot"></span>
+                <span class="tl-time">下午 6:15 &ndash; 7:15</span>
+              </div>
+              <div class="tl-label tl-label--break">
+                晚餐休息
+                <span class="tl-note">（免费餐食）</span>
+              </div>
+            </div>
+
+            <div class="tl-line" aria-hidden="true"></div>
+
+            <div class="tl-step">
+              <div class="tl-top">
+                <span class="tl-dot"></span>
+                <span class="tl-time">晚上 7:15 &ndash; 9:00</span>
+              </div>
+              <div class="tl-label">第二环节 + 问答</div>
+            </div>
+          </div>
         </section>
 
         <section class="details" aria-label="活动信息与报名二维码">
@@ -580,27 +588,27 @@
             <div class="info-card">
               <div class="meta">
                 <div class="meta-item">
-                  <span>主题</span>
-                  <strong>福音分享</strong>
+                  <span>地点</span>
+                  <strong>麦吉尔大学 [地址]</strong>
                 </div>
 
                 <div class="meta-item">
-                  <span>环节</span>
-                  <strong>开放问答</strong>
+                  <span>语言</span>
+                  <strong>普通话</strong>
                 </div>
 
                 <div class="meta-item">
                   <span>对象</span>
-                  <strong>所有同学</strong>
+                  <strong>讲普通话的大学生</strong>
                 </div>
               </div>
 
-              <div class="tags">
+              <!-- <div class="tags">
                 <span class="tag">基督信仰</span>
                 <span class="tag">意义</span>
                 <span class="tag">盼望</span>
                 <span class="tag">交流讨论</span>
-              </div>
+              </div> -->
             </div>
 
             <div class="footer-note">扫码了解时间、地点和报名信息</div>
