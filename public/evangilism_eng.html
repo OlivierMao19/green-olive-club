@@ -392,7 +392,23 @@
       }
 
       .tl-label--break {
+        position: relative;
         color: var(--gold);
+      }
+
+      .tl-note {
+        position: absolute;
+        top: calc(100% + 2px);
+        left: 0;
+        width: 100%;
+        color: var(--gold);
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        text-align: center;
+        white-space: nowrap;
+        text-shadow: 0 3px 14px rgba(0, 0, 0, 0.35);
       }
 
       .tl-line {
@@ -666,7 +682,10 @@
                 <span class="tl-dot"></span>
                 <span class="tl-time">6:15 &ndash; 7:15 PM</span>
               </div>
-              <div class="tl-label tl-label--break">Lunch Break</div>
+              <div class="tl-label tl-label--break">
+                Lunch Break
+                <span class="tl-note">(Free Food)</span>
+              </div>
             </div>
 
             <div class="tl-line" aria-hidden="true"></div>

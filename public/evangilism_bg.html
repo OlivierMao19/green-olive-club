@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Background</title>
+
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        min-height: 100%;
+        background: #1f2518;
+      }
+
+      body {
+        display: grid;
+        place-items: center;
+        padding: 28px;
+      }
+
+      .poster {
+        position: relative;
+        width: min(100%, 820px);
+        aspect-ratio: 8.5 / 11;
+        overflow: hidden;
+        background:
+          radial-gradient(
+            circle at 52% 38%,
+            rgba(255, 241, 178, 0.92) 0%,
+            rgba(239, 169, 66, 0.78) 18%,
+            rgba(131, 91, 36, 0.32) 34%,
+            rgba(28, 42, 24, 0.08) 52%,
+            rgba(15, 25, 16, 0.9) 100%
+          ),
+          linear-gradient(135deg, #24381f 0%, #7d7a31 45%, #162414 100%);
+        box-shadow: 0 28px 90px rgba(0, 0, 0, 0.55);
+        isolation: isolate;
+      }
+
+      .poster::before {
+        position: absolute;
+        inset: -12%;
+        z-index: -2;
+        content: "";
+        background:
+          linear-gradient(
+            112deg,
+            transparent 0%,
+            rgba(255, 255, 255, 0.11) 22%,
+            transparent 42%
+          ),
+          linear-gradient(
+            72deg,
+            transparent 8%,
+            rgba(255, 234, 152, 0.16) 34%,
+            transparent 54%
+          ),
+          repeating-linear-gradient(
+            102deg,
+            rgba(255, 255, 255, 0.025) 0,
+            rgba(255, 255, 255, 0.025) 1px,
+            transparent 1px,
+            transparent 54px
+          );
+        transform: rotate(-5deg);
+      }
+
+      .poster::after {
+        position: absolute;
+        inset: auto -5% -8% -5%;
+        height: 36%;
+        z-index: -1;
+        content: "";
+        background:
+          radial-gradient(
+            ellipse at center,
+            rgba(255, 255, 255, 0.7) 0%,
+            rgba(255, 247, 223, 0.62) 25%,
+            rgba(255, 247, 223, 0.28) 48%,
+            transparent 72%
+          ),
+          linear-gradient(
+            to top,
+            rgba(255, 247, 223, 0.9),
+            rgba(255, 247, 223, 0.14),
+            transparent
+          );
+        filter: blur(1px);
+      }
+
+      .noise {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        pointer-events: none;
+        opacity: 0.28;
+        background-image:
+          linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        background-size: 18px 18px;
+        mix-blend-mode: overlay;
+      }
+
+      .olive-branch {
+        position: absolute;
+        right: -48px;
+        top: 108px;
+        width: 290px;
+        height: 500px;
+        z-index: 2;
+        opacity: 0.24;
+        transform: rotate(-16deg);
+      }
+
+      .olive-branch span {
+        position: absolute;
+        left: 50%;
+        width: 4px;
+        height: 470px;
+        background: rgba(255, 255, 255, 0.6);
+        border-radius: 999px;
+        transform: translateX(-50%);
+      }
+
+      .olive-branch i {
+        position: absolute;
+        width: 62px;
+        height: 28px;
+        background: rgba(255, 255, 255, 0.58);
+        border-radius: 999px 0 999px 0;
+        transform-origin: left center;
+      }
+
+      .olive-branch i:nth-child(2) {
+        top: 42px;
+        left: 138px;
+        transform: rotate(-34deg);
+      }
+
+      .olive-branch i:nth-child(3) {
+        top: 92px;
+        left: 86px;
+        transform: rotate(152deg);
+      }
+
+      .olive-branch i:nth-child(4) {
+        top: 142px;
+        left: 140px;
+        transform: rotate(-30deg);
+      }
+
+      .olive-branch i:nth-child(5) {
+        top: 194px;
+        left: 82px;
+        transform: rotate(150deg);
+      }
+
+      .olive-branch i:nth-child(6) {
+        top: 248px;
+        left: 140px;
+        transform: rotate(-30deg);
+      }
+
+      .olive-branch i:nth-child(7) {
+        top: 302px;
+        left: 84px;
+        transform: rotate(150deg);
+      }
+
+      .olive-branch i:nth-child(8) {
+        top: 360px;
+        left: 140px;
+        transform: rotate(-30deg);
+      }
+
+      @media (max-width: 700px) {
+        body {
+          padding: 14px;
+        }
+
+        .olive-branch {
+          right: -70px;
+          top: 80px;
+          width: 220px;
+          opacity: 0.18;
+        }
+      }
+
+      @media print {
+        body {
+          background: white;
+          padding: 0;
+        }
+
+        .poster {
+          width: 8.5in;
+          height: 11in;
+          aspect-ratio: auto;
+          box-shadow: none;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <main class="poster" aria-label="Background">
+      <div class="noise"></div>
+
+      <div class="olive-branch" aria-hidden="true">
+        <span></span>
+        <i></i>
+        <i></i>
+        <i></i>
+        <i></i>
+        <i></i>
+        <i></i>
+        <i></i>
+      </div>
+    </main>
+  </body>
+</html>
