@@ -297,6 +297,7 @@
       }
 
       .info-card {
+        position: relative;
         display: grid;
         gap: 18px;
         border: 1px solid rgba(255, 255, 255, 0.2);
@@ -308,6 +309,18 @@
           rgba(80, 107, 47, 0.65)
         );
         box-shadow: 0 20px 55px rgba(0, 0, 0, 0.22);
+      }
+
+      .info-olive-branch {
+        position: absolute;
+        z-index: 2;
+        bottom: -23px;
+        left: 58%;
+        width: 170px;
+        height: auto;
+        pointer-events: none;
+        filter: drop-shadow(0 8px 10px rgba(0, 0, 0, 0.28));
+        transform: translateX(-50%);
       }
 
       .meta {
@@ -597,6 +610,13 @@
                   <strong>Mandarin-Speaking University Students</strong>
                 </div>
               </div>
+
+              <img
+                class="info-olive-branch"
+                src="olive_branch.png"
+                alt=""
+                aria-hidden="true"
+              />
               <!-- 
               <div class="tags">
                 <span class="tag">Christianity</span>
