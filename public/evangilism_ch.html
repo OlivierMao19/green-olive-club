@@ -147,6 +147,7 @@
         font-size: 16px;
         font-weight: 750;
         letter-spacing: 0.13em;
+        text-transform: uppercase;
         text-shadow: 0 4px 20px rgba(0, 0, 0, 0.28);
       }
 
@@ -213,7 +214,7 @@
       }
 
       .subhook {
-        max-width: 570px;
+        max-width: 700px;
         margin: 13px 0 0;
         color: rgba(255, 255, 255, 0.78);
         font-size: 15px;
@@ -271,7 +272,9 @@
 
       .tl-label--break {
         position: relative;
+        padding-left: 0;
         color: var(--gold);
+        text-align: center;
       }
 
       .tl-note {
@@ -279,8 +282,8 @@
         top: calc(100% + 2px);
         left: 0;
         width: 100%;
-        color: var(--gold);
-        font-size: 12px;
+        color: rgba(240, 132, 32, 0.92);
+        font-size: 26px;
         font-weight: 700;
         letter-spacing: 0.04em;
         text-transform: uppercase;
@@ -305,12 +308,13 @@
       .details {
         display: grid;
         grid-template-columns: 1fr auto;
-        align-items: end;
+        align-items: start;
         gap: 28px;
         margin-top: 28px;
       }
 
       .info-card {
+        position: relative;
         display: grid;
         gap: 18px;
         border: 1px solid rgba(255, 255, 255, 0.2);
@@ -322,6 +326,18 @@
           rgba(80, 107, 47, 0.65)
         );
         box-shadow: 0 20px 55px rgba(0, 0, 0, 0.22);
+      }
+
+      .info-olive-branch {
+        position: absolute;
+        z-index: 2;
+        bottom: -23px;
+        left: 58%;
+        width: 170px;
+        height: auto;
+        pointer-events: none;
+        filter: drop-shadow(0 8px 10px rgba(0, 0, 0, 0.28));
+        transform: translateX(-50%);
       }
 
       .meta {
@@ -391,6 +407,10 @@
         object-fit: contain;
       }
 
+      .qr-wrap > div {
+        text-align: center;
+      }
+
       .qr-wrap strong {
         font-size: 13px;
         font-weight: 950;
@@ -406,7 +426,7 @@
       }
 
       .footer-note {
-        margin-top: 15px;
+        margin-top: 23px;
         color: rgba(255, 255, 255, 0.64);
         font-size: 11px;
         font-weight: 600;
@@ -533,7 +553,7 @@
 
         <section class="hero">
           <div class="eyebrow">
-            <p>讲员：吴涛</p>
+            <p>讲员：洪武涛</p>
             <p>麦吉尔大学神学研究生</p>
           </div>
 
@@ -546,7 +566,7 @@
           <p class="hook">在这个焦虑和不确定的世界，真的还有好消息吗？</p>
 
           <p class="subhook">
-            欢迎参加这场关于基督福音的介绍，包含开放式问答与真诚交流。无论你是否是基督徒、正在寻找答案，还是只是单纯好奇，都欢迎你来。
+            本次活动将以平和、开放的方式，与大家聊聊“基督福音”究竟在讲什么。我们鼓励坦诚的开放式问答，不回避质疑，也不急于说服。无论你是在寻找一个答案，还是想满足好奇心，我们都欢迎你参加。
           </p>
 
           <div class="timeline" aria-label="活动流程">
@@ -567,7 +587,7 @@
               </div>
               <div class="tl-label tl-label--break">
                 晚餐休息
-                <span class="tl-note">（免费餐食）</span>
+                <span class="tl-note">（免费餐食!）</span>
               </div>
             </div>
 
@@ -589,7 +609,7 @@
               <div class="meta">
                 <div class="meta-item">
                   <span>地点</span>
-                  <strong>麦吉尔大学 [地址]</strong>
+                  <strong>麦吉尔大学 Leacock 232</strong>
                 </div>
 
                 <div class="meta-item">
@@ -602,6 +622,13 @@
                   <strong>讲普通话的大学生</strong>
                 </div>
               </div>
+
+              <img
+                class="info-olive-branch"
+                src="olive_branch.png"
+                alt=""
+                aria-hidden="true"
+              />
 
               <!-- <div class="tags">
                 <span class="tag">基督信仰</span>
