@@ -196,9 +196,22 @@
         transform: rotate(-3deg);
       }
 
+      .pitch {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        align-items: center;
+        justify-content: start;
+        gap: 22px;
+        margin-top: 44px;
+      }
+
+      .pitch-copy {
+        min-width: 0;
+      }
+
       .hook {
         max-width: 610px;
-        margin: 44px 0 0;
+        margin: 0;
         color: rgba(255, 255, 255, 0.95);
         font-size: 25px;
         font-weight: 750;
@@ -221,8 +234,32 @@
         line-height: 1.6;
       }
 
-      .subhook + .subhook {
-        margin-top: 17px;
+      .welcome-note {
+        position: relative;
+        width: 150px;
+        color: var(--gold);
+        font-family: var(--script);
+        font-size: 34px;
+        font-weight: 600;
+        line-height: 0.85;
+        white-space: nowrap;
+        text-shadow: 0 6px 20px rgba(45, 30, 6, 0.45);
+        transform: rotate(-15deg);
+      }
+
+      .welcome-heart {
+        position: absolute;
+        top: -2px;
+        right: 6px;
+        width: 21px;
+        height: 21px;
+      }
+
+      .welcome-swoosh {
+        display: block;
+        width: 118px;
+        height: 18px;
+        margin: 1px 0 0 6px;
       }
 
       .details {
@@ -420,6 +457,14 @@
         .free-food {
           left: 24px;
         }
+
+        .pitch {
+          grid-template-columns: 1fr;
+        }
+
+        .welcome-note {
+          width: 100%;
+        }
       }
 
       @page {
@@ -482,20 +527,50 @@
             <span class="script">for a Restless World</span>
           </h1>
 
-          <p class="hook">
-            In an anxious and uncertain world,<br />
-            is there still <em>truly</em> good news?
-          </p>
+          <div class="pitch">
+            <div class="pitch-copy">
+              <p class="hook">
+                In an anxious and uncertain world,<br />
+                is there still <em>truly</em> good news?
+              </p>
 
-          <p class="subhook">
-            Join us for a welcoming introduction to the Christian gospel,<br />
-            followed by open Q&amp;A and thoughtful discussion.
-          </p>
+              <p class="subhook">
+                Join us for a welcoming introduction to the Christian gospel,<br />
+                followed by open Q&amp;A and thoughtful discussion.
+              </p>
+            </div>
 
-          <p class="subhook">
-            Christians, seekers, skeptics, and the simply curious are all
-            welcome.
-          </p>
+            <div class="welcome-note">
+              Everyone<br />
+              is welcome!
+              <svg
+                class="welcome-swoosh"
+                viewBox="0 0 132 26"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.4"
+                stroke-linecap="round"
+                aria-hidden="true"
+              >
+                <path
+                  d="M4 8c26 12 62 16 92 9 12-3 14-9 6-11-6-1.6-13 1-16 6"
+                />
+              </svg>
+              <svg
+                class="welcome-heart"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.9"
+                stroke-linecap="round"
+                aria-hidden="true"
+              >
+                <path
+                  d="M12 20.5S3.5 15.2 3.5 9.6A4.6 4.6 0 0 1 12 7a4.6 4.6 0 0 1 8.5 2.6c0 5.6-8.5 10.9-8.5 10.9Z"
+                />
+              </svg>
+            </div>
+          </div>
         </section>
 
         <section class="details" aria-label="Event details and registration">
