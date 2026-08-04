@@ -5,6 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Good News for a Restless World</title>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
     <style>
       :root {
         --olive-dark: #142414;
@@ -16,6 +23,7 @@
         --white: #ffffff;
         --ink: #161812;
         --muted: rgba(255, 255, 255, 0.78);
+        --script: "Caveat", "Segoe Script", "Brush Script MT", cursive;
       }
 
       * {
@@ -55,7 +63,7 @@
         display: flex;
         min-height: 100%;
         flex-direction: column;
-        padding: 48px 54px 42px;
+        padding: 48px 54px 61px;
       }
 
       .topbar {
@@ -190,204 +198,160 @@
 
       .hook {
         max-width: 610px;
-        margin: 30px 0 0;
-        color: rgba(255, 255, 255, 0.92);
-        font-size: 24px;
-        font-weight: 650;
-        line-height: 1.25;
+        margin: 44px 0 0;
+        color: rgba(255, 255, 255, 0.95);
+        font-size: 25px;
+        font-weight: 750;
+        line-height: 1.32;
         text-shadow: 0 6px 24px rgba(0, 0, 0, 0.32);
       }
 
+      .hook em {
+        color: var(--gold);
+        font-family: Georgia, "Times New Roman", serif;
+        font-weight: 700;
+      }
+
       .subhook {
-        max-width: 570px;
-        margin: 13px 0 0;
-        color: rgba(255, 255, 255, 0.78);
+        max-width: 560px;
+        margin: 28px 0 0;
+        color: rgba(255, 255, 255, 0.82);
         font-size: 15px;
         font-weight: 500;
-        line-height: 1.55;
+        line-height: 1.6;
       }
 
-      .timeline {
-        display: flex;
-        align-items: flex-start;
-        gap: 12px;
-        margin: 30px 0 0;
-        max-width: 640px;
-      }
-
-      .tl-step {
-        display: flex;
-        flex-direction: column;
-        gap: 7px;
-      }
-
-      .tl-top {
-        display: flex;
-        align-items: center;
-        gap: 11px;
-      }
-
-      .tl-dot {
-        flex-shrink: 0;
-        width: 13px;
-        height: 13px;
-        border-radius: 50%;
-        background: var(--gold);
-        box-shadow: 0 0 0 4px rgba(242, 199, 92, 0.18);
-      }
-
-      .tl-time {
-        color: var(--cream);
-        font-size: 15px;
-        font-weight: 800;
-        letter-spacing: 0.01em;
-        white-space: nowrap;
-        text-shadow: 0 3px 14px rgba(0, 0, 0, 0.35);
-      }
-
-      .tl-label {
-        padding-left: 24px;
-        color: #fff9df;
-        font-size: 15px;
-        font-weight: 900;
-        letter-spacing: 0.05em;
-        text-transform: uppercase;
-        text-shadow: 0 3px 14px rgba(0, 0, 0, 0.35);
-      }
-
-      .tl-label--break {
-        position: relative;
-        color: var(--gold);
-      }
-
-      .tl-note {
-        position: absolute;
-        top: calc(100% + 2px);
-        left: 0;
-        width: 100%;
-        /* color: var(--gold); */
-        color: rgba(240, 132, 32, 0.92);
-        font-size: 26px;
-        font-weight: 700;
-        letter-spacing: 0.04em;
-        text-transform: uppercase;
-        text-align: center;
-        white-space: nowrap;
-        text-shadow: 0 3px 14px rgba(0, 0, 0, 0.35);
-      }
-
-      .tl-line {
-        flex: 1;
-        min-width: 22px;
-        height: 3px;
-        margin-top: 5px;
-        border-radius: 999px;
-        background: linear-gradient(
-          90deg,
-          rgba(242, 199, 92, 0.85),
-          rgba(143, 167, 90, 0.85)
-        );
+      .subhook + .subhook {
+        margin-top: 17px;
       }
 
       .details {
         display: grid;
-        grid-template-columns: 1fr auto;
-        align-items: end;
-        gap: 28px;
-        margin-top: 28px;
+        grid-template-columns: minmax(0, 1fr) 176px;
+        align-items: start;
+        gap: 80px;
+        margin-top: 14px;
       }
 
-      .info-card {
+      .when-card {
         position: relative;
         display: grid;
-        gap: 18px;
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        border-radius: 28px;
-        padding: 23px 24px;
-        background: linear-gradient(
-          135deg,
-          rgba(20, 36, 20, 0.8),
-          rgba(80, 107, 47, 0.65)
-        );
-        box-shadow: 0 20px 55px rgba(0, 0, 0, 0.22);
-      }
-
-      .info-olive-branch {
-        position: absolute;
-        z-index: 2;
-        bottom: -23px;
-        left: 58%;
-        width: 170px;
-        height: auto;
-        pointer-events: none;
-        filter: drop-shadow(0 8px 10px rgba(0, 0, 0, 0.28));
-        transform: translateX(-50%);
-      }
-
-      .meta {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
         gap: 14px;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        border-radius: 26px;
+        padding: 20px 26px 22px;
+        background: rgba(26, 43, 23, 0.42);
+        box-shadow: 0 18px 45px rgba(0, 0, 0, 0.2);
+        backdrop-filter: blur(3px);
       }
 
-      .meta-item {
-        min-height: 108px;
-        border: 1px solid rgba(255, 255, 255, 0.05);
-        border-radius: 19px;
-        padding: 18px 20px;
-        background: rgba(133, 155, 98, 0.25);
-      }
-
-      .meta-item span {
-        display: block;
-        margin-bottom: 7px;
-        color: rgba(255, 255, 255, 0.58);
-        font-size: 9px;
-        font-weight: 900;
-        letter-spacing: 0.18em;
-        text-transform: uppercase;
-      }
-
-      .meta-item strong {
-        display: block;
-        color: #fff9df;
-        font-size: 17px;
-        font-weight: 850;
-        line-height: 1.12;
-      }
-
-      .tags {
+      .when-row {
         display: flex;
-        flex-wrap: wrap;
-        gap: 9px;
+        align-items: center;
+        gap: 22px;
       }
 
-      .tag {
-        border-radius: 999px;
-        padding: 8px 11px;
-        background: rgba(255, 214, 98, 0.18);
-        color: #fff3c2;
-        font-size: 11px;
+      .when-row svg {
+        flex-shrink: 0;
+        width: 38px;
+        height: 38px;
+        color: var(--gold);
+      }
+
+      .when-day {
+        display: block;
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 20px;
+        font-weight: 600;
+        line-height: 1.3;
+        text-shadow: 0 3px 14px rgba(0, 0, 0, 0.35);
+      }
+
+      .when-date {
+        display: block;
+        color: var(--white);
+        font-size: 30px;
         font-weight: 850;
-        letter-spacing: 0.04em;
+        letter-spacing: -0.01em;
+        line-height: 1.15;
+        text-shadow: 0 6px 22px rgba(0, 0, 0, 0.34);
+      }
+
+      .when-time {
+        color: var(--gold);
+        font-size: 30px;
+        font-weight: 850;
+        letter-spacing: -0.01em;
+        text-shadow: 0 6px 22px rgba(0, 0, 0, 0.34);
+      }
+
+      .free-food {
+        position: absolute;
+        top: calc(100% + 1px);
+        left: 92px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: #c45a12;
+        font-family: var(--script);
+        font-size: 47px;
+        font-weight: 700;
+        letter-spacing: 0.02em;
+        line-height: 1;
         text-transform: uppercase;
+        white-space: nowrap;
+        text-shadow:
+          -1px -1px 0 rgba(20, 14, 4, 0.85),
+          1px -1px 0 rgba(20, 14, 4, 0.85),
+          -1px 1px 0 rgba(20, 14, 4, 0.85),
+          1px 1px 0 rgba(20, 14, 4, 0.85),
+          0 0 6px rgba(20, 14, 4, 0.55),
+          0 4px 14px rgba(20, 14, 4, 0.5);
+        transform: rotate(-4deg);
+      }
+
+      .free-food-chevron {
+        flex-shrink: 0;
+        width: 30px;
+        height: 36px;
+        color: #c45a12;
+        filter: drop-shadow(0 2px 4px rgba(20, 14, 4, 0.55));
+      }
+
+      .free-food-underline {
+        position: absolute;
+        top: calc(100% - 2px);
+        left: 42px;
+        width: 200px;
+        height: 14px;
+        color: #c45a12;
+        filter: drop-shadow(0 2px 4px rgba(20, 14, 4, 0.55));
       }
 
       .qr-wrap {
         display: grid;
-        width: 164px;
+        width: 176px;
         justify-items: center;
-        gap: 10px;
-        border-radius: 27px;
-        padding: 15px;
-        background: rgba(255, 247, 223, 0.95);
+        gap: 14px;
+        border-radius: 24px;
+        padding: 15px 15px 17px;
+        background: rgba(253, 248, 236, 0.96);
         color: var(--ink);
         box-shadow: 0 18px 48px rgba(0, 0, 0, 0.28);
       }
 
-      .qr-wrap img {
-        width: 132px;
-        height: 132px;
+      .qr-card {
+        display: grid;
+        width: 100%;
+        place-items: center;
+        border-radius: 8px;
+        padding: 7px;
+        background: var(--white);
+      }
+
+      .qr-card img {
+        width: 100%;
+        height: auto;
         object-fit: contain;
       }
 
@@ -400,19 +364,11 @@
       }
 
       .website {
-        color: rgba(22, 24, 18, 0.68);
+        margin-top: 3px;
+        color: rgba(22, 24, 18, 0.62);
         font-size: 10px;
         font-weight: 800;
-      }
-
-      .footer-note {
-        margin-top: 15px;
-        color: rgba(255, 255, 255, 0.64);
-        font-size: 11px;
-        font-weight: 600;
-        letter-spacing: 0.08em;
         text-align: center;
-        text-transform: uppercase;
       }
 
       @media (max-width: 760px) {
@@ -454,32 +410,15 @@
 
         .details {
           grid-template-columns: 1fr;
+          gap: 60px;
         }
 
         .qr-wrap {
           width: 100%;
-          grid-template-columns: auto 1fr;
-          justify-items: start;
-          text-align: left;
         }
 
-        .qr-wrap img {
-          width: 116px;
-          height: 116px;
-        }
-
-        .meta {
-          grid-template-columns: 1fr;
-        }
-
-        .timeline {
-          flex-direction: column;
-          align-items: stretch;
-          gap: 14px;
-        }
-
-        .tl-line {
-          display: none;
+        .free-food {
+          left: 24px;
         }
       }
 
@@ -544,99 +483,98 @@
           </h1>
 
           <p class="hook">
-            In an anxious and uncertain world, is there still truly good news?
+            In an anxious and uncertain world,<br />
+            is there still <em>truly</em> good news?
           </p>
 
           <p class="subhook">
-            A welcoming introduction to the Christian gospel, followed by open
-            Q&amp;A and thoughtful discussion. Christians, seekers, skeptics,
-            and the simply curious are all welcome.
+            Join us for a welcoming introduction to the Christian gospel,<br />
+            followed by open Q&amp;A and thoughtful discussion.
           </p>
 
-          <div class="timeline" aria-label="Event schedule">
-            <div class="tl-step">
-              <div class="tl-top">
-                <span class="tl-dot"></span>
-                <span class="tl-time">4:30 &ndash; 6:10 PM</span>
-              </div>
-              <div class="tl-label">Section 1</div>
-            </div>
-
-            <div class="tl-line" aria-hidden="true"></div>
-
-            <div class="tl-step">
-              <div class="tl-top">
-                <span class="tl-dot"></span>
-                <span class="tl-time">6:20 &ndash; 7:20 PM</span>
-              </div>
-              <div class="tl-label tl-label--break">
-                Dinner Break
-                <span class="tl-note">(Free Food!)</span>
-              </div>
-            </div>
-
-            <div class="tl-line" aria-hidden="true"></div>
-
-            <div class="tl-step">
-              <div class="tl-top">
-                <span class="tl-dot"></span>
-                <span class="tl-time">7:30 &ndash; 9:00 PM</span>
-              </div>
-              <div class="tl-label">Section 2 + Q&amp;A</div>
-            </div>
-          </div>
+          <p class="subhook">
+            Christians, seekers, skeptics, and the simply curious are all
+            welcome.
+          </p>
         </section>
 
         <section class="details" aria-label="Event details and registration">
-          <div>
-            <div class="info-card">
-              <div class="meta">
-                <!-- <div class="meta-item">
-                  <span>What</span>
-                  <strong>Gospel Talk</strong>
-                </div> -->
-
-                <div class="meta-item">
-                  <span>Where</span>
-                  <strong>McGill University Leacock 232</strong>
-                </div>
-
-                <div class="meta-item">
-                  <span>Language</span>
-                  <strong>Chinese Mandarin</strong>
-                </div>
-
-                <div class="meta-item">
-                  <span>For</span>
-                  <strong>Mandarin-Speaking University Students</strong>
-                </div>
-              </div>
-
-              <img
-                class="info-olive-branch"
-                src="olive_branch.png"
-                alt=""
+          <div class="when-card">
+            <div class="when-row">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.7"
+                stroke-linecap="round"
                 aria-hidden="true"
-              />
-              <!-- 
-              <div class="tags">
-                <span class="tag">Christianity</span>
-                <span class="tag">Meaning</span>
-                <span class="tag">Hope</span>
-                <span class="tag">Discussion</span>
-              </div> -->
+              >
+                <rect x="3" y="5" width="18" height="16" rx="3.5" />
+                <path d="M8 3v4M16 3v4M3 10h18" />
+                <path
+                  d="M8 14h.01M12 14h.01M16 14h.01M8 17.5h.01M12 17.5h.01M16 17.5h.01"
+                  stroke-width="2.4"
+                />
+              </svg>
+
+              <div>
+                <span class="when-day">Saturday</span>
+                <strong class="when-date">September 12, 2026</strong>
+              </div>
             </div>
 
-            <div class="footer-note">
-              Scan for time, location, and registration
+            <div class="when-row">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.7"
+                stroke-linecap="round"
+                aria-hidden="true"
+              >
+                <circle cx="12" cy="12" r="9" />
+                <path d="M12 7v5.4l3.6 2.4" />
+              </svg>
+
+              <strong class="when-time">5:00 PM &ndash; 9:00 PM</strong>
+            </div>
+
+            <div class="free-food">
+              <svg
+                class="free-food-chevron"
+                viewBox="0 0 26 30"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.8"
+                stroke-linecap="round"
+                aria-hidden="true"
+              >
+                <path d="M4 5l8 10-8 10" />
+                <path d="M15 8l5 7-5 7" />
+              </svg>
+
+              Free Food!
+              <svg
+                class="free-food-underline"
+                viewBox="0 0 208 14"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="3"
+                stroke-linecap="round"
+                aria-hidden="true"
+              >
+                <path d="M3 10C52 3 138 2 205 6" />
+              </svg>
             </div>
           </div>
 
           <aside class="qr-wrap" aria-label="Registration QR code">
-            <img
-              src="evangilism_event_qr_code.png"
-              alt="QR code for event registration"
-            />
+            <div class="qr-card">
+              <img
+                src="evangilism_event_qr_code.png"
+                alt="QR code for event registration"
+              />
+            </div>
             <div>
               <strong>Scan to Register</strong>
               <div class="website">www.goccc.ca</div>
