@@ -1,0 +1,815 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Good News for a Restless World</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --olive-dark: #142414;
+        --olive: #506b2f;
+        --olive-soft: #8fa75a;
+        --gold: #f2c75c;
+        --warm-gold: #eaa34b;
+        --cream: #fff7df;
+        --white: #ffffff;
+        --ink: #161812;
+        --muted: rgba(255, 255, 255, 0.78);
+        --script: "Caveat", "Segoe Script", "Brush Script MT", cursive;
+        --gold-metal: linear-gradient(
+          150deg,
+          #fff4cf 0%,
+          #f2c75c 18%,
+          #b8862c 34%,
+          #ffeba9 50%,
+          #e0ab3c 66%,
+          #8f6418 84%,
+          #f7d778 100%
+        );
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        min-height: 100%;
+        background: #1f2518;
+        font-family: Inter, Avenir, "Segoe UI", Helvetica, Arial, sans-serif;
+        color: var(--white);
+      }
+
+      body {
+        display: grid;
+        place-items: center;
+        padding: 28px;
+      }
+
+      .poster {
+        position: relative;
+        width: min(100%, 820px);
+        aspect-ratio: 8.5 / 11;
+        overflow: hidden;
+        background:
+          url("poster_bg.png") center / cover no-repeat,
+          #1f2518;
+        box-shadow: 0 28px 90px rgba(0, 0, 0, 0.55);
+        isolation: isolate;
+      }
+
+      .content {
+        position: relative;
+        z-index: 3;
+        display: flex;
+        min-height: 100%;
+        flex-direction: column;
+        padding: 48px 54px 61px;
+      }
+
+      .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+        min-height: 58px;
+        margin: -10px -54px 0;
+        padding: 9px 54px;
+        background: rgba(55, 83, 48, 0.94);
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.05),
+          0 8px 24px rgba(19, 30, 15, 0.16);
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 13px;
+        min-width: 0;
+      }
+
+      .brand img {
+        width: 36px;
+        height: 36px;
+        object-fit: contain;
+        filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.25));
+      }
+
+      .club-text {
+        display: grid;
+        gap: 2px;
+        text-transform: uppercase;
+        letter-spacing: 0.13em;
+      }
+
+      .club-text strong {
+        font-size: 14px;
+        font-weight: 850;
+      }
+
+      .club-text span {
+        color: var(--muted);
+        font-size: 9px;
+        font-weight: 700;
+      }
+
+      .presented {
+        border: 1px solid rgba(231, 207, 129, 0.58);
+        border-radius: 999px;
+        padding: 8px 15px;
+        background: rgba(32, 56, 30, 0.18);
+        color: rgba(255, 247, 217, 0.92);
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        backdrop-filter: blur(14px);
+      }
+
+      .hero {
+        display: grid;
+        flex: 1;
+        align-content: center;
+        padding: 38px 0 28px;
+      }
+
+      .eyebrow {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        width: fit-content;
+        margin-bottom: 20px;
+        border-left: 5px solid var(--gold);
+        padding: 0 0 0 14px;
+        color: var(--cream);
+        font-size: 16px;
+        font-weight: 750;
+        letter-spacing: 0.13em;
+        text-transform: uppercase;
+        text-shadow: 0 4px 20px rgba(0, 0, 0, 0.28);
+      }
+
+      .eyebrow p {
+        margin: 0;
+        line-height: 1.15;
+      }
+
+      h1 {
+        max-width: 720px;
+        margin: 0;
+        text-transform: uppercase;
+        letter-spacing: -0.055em;
+        line-height: 0.82;
+        font-size: clamp(74px, 15vw, 142px);
+        font-weight: 950;
+        text-shadow:
+          0 8px 0 rgba(26, 36, 18, 0.28),
+          0 20px 55px rgba(0, 0, 0, 0.36);
+      }
+
+      .title-good {
+        display: block;
+        color: #fff8dc;
+      }
+
+      .title-news {
+        display: block;
+        color: transparent;
+        -webkit-text-stroke: 2px rgba(255, 255, 255, 0.88);
+        text-shadow:
+          0 8px 0 rgba(26, 36, 18, 0.18),
+          0 18px 55px rgba(0, 0, 0, 0.32);
+      }
+
+      .script {
+        display: block;
+        margin-top: -10px;
+        margin-left: 11px;
+        color: var(--gold);
+        font-family:
+          "Brush Script MT", "Segoe Script", "Snell Roundhand", cursive;
+        font-size: clamp(54px, 10vw, 100px);
+        font-weight: 400;
+        letter-spacing: -0.04em;
+        line-height: 0.9;
+        text-transform: none;
+        text-shadow: 0 12px 32px rgba(59, 40, 8, 0.45);
+        transform: rotate(-3deg);
+      }
+
+      .pitch {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        align-items: center;
+        justify-content: start;
+        gap: 22px;
+        margin-top: 44px;
+      }
+
+      .pitch-copy {
+        min-width: 0;
+      }
+
+      .hook {
+        max-width: 610px;
+        margin: 0;
+        color: rgba(255, 255, 255, 0.95);
+        font-size: 25px;
+        font-weight: 750;
+        line-height: 1.32;
+        text-shadow: 0 6px 24px rgba(0, 0, 0, 0.32);
+      }
+
+      .hook em {
+        color: var(--gold);
+        font-family: Georgia, "Times New Roman", serif;
+        font-weight: 700;
+      }
+
+      .subhook {
+        max-width: 560px;
+        margin: 28px 0 0;
+        color: rgba(255, 255, 255, 0.82);
+        font-size: 15px;
+        font-weight: 500;
+        line-height: 1.6;
+      }
+
+      .welcome-note {
+        position: relative;
+        width: 150px;
+        color: var(--gold);
+        font-family: var(--script);
+        font-size: 34px;
+        font-weight: 600;
+        line-height: 0.85;
+        white-space: nowrap;
+        text-shadow: 0 6px 20px rgba(45, 30, 6, 0.45);
+        transform: translate(-25px, -20px) rotate(-15deg);
+      }
+
+      .welcome-heart {
+        position: absolute;
+        top: -2px;
+        right: 6px;
+        width: 21px;
+        height: 21px;
+      }
+
+      .welcome-swoosh {
+        display: block;
+        width: 118px;
+        height: 18px;
+        margin: 1px 0 0 6px;
+      }
+
+      .details {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 164px;
+        align-items: start;
+        gap: 80px;
+        margin-top: 14px;
+      }
+
+      .when-card {
+        position: relative;
+        display: grid;
+        gap: 14px;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        border-radius: 26px;
+        padding: 20px 26px 22px;
+        background: rgba(26, 43, 23, 0.42);
+        box-shadow: 0 18px 45px rgba(0, 0, 0, 0.2);
+        backdrop-filter: blur(3px);
+      }
+
+      .when-row {
+        display: flex;
+        align-items: center;
+        gap: 22px;
+      }
+
+      .when-row svg {
+        flex-shrink: 0;
+        width: 38px;
+        height: 38px;
+        color: var(--gold);
+      }
+
+      .when-day {
+        display: block;
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 20px;
+        font-weight: 600;
+        line-height: 1.3;
+        text-shadow: 0 3px 14px rgba(0, 0, 0, 0.35);
+      }
+
+      .when-date {
+        display: block;
+        color: var(--white);
+        font-size: 30px;
+        font-weight: 850;
+        letter-spacing: -0.01em;
+        line-height: 1.15;
+        text-shadow: 0 6px 22px rgba(0, 0, 0, 0.34);
+      }
+
+      .when-time {
+        color: var(--gold);
+        font-size: 30px;
+        font-weight: 850;
+        letter-spacing: -0.01em;
+        text-shadow: 0 6px 22px rgba(0, 0, 0, 0.34);
+      }
+
+      .free-food {
+        position: absolute;
+        top: calc(100% + 1px);
+        left: 92px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: #c45a12;
+        font-family: var(--script);
+        font-size: 47px;
+        font-weight: 700;
+        letter-spacing: 0.02em;
+        line-height: 1;
+        text-transform: uppercase;
+        white-space: nowrap;
+        text-shadow:
+          -1px -1px 0 rgba(20, 14, 4, 0.85),
+          1px -1px 0 rgba(20, 14, 4, 0.85),
+          -1px 1px 0 rgba(20, 14, 4, 0.85),
+          1px 1px 0 rgba(20, 14, 4, 0.85),
+          0 0 6px rgba(20, 14, 4, 0.55),
+          0 4px 14px rgba(20, 14, 4, 0.5);
+        transform: rotate(-4deg);
+      }
+
+      .free-food-chevron {
+        flex-shrink: 0;
+        width: 30px;
+        height: 36px;
+        color: #c45a12;
+        filter: drop-shadow(0 2px 4px rgba(20, 14, 4, 0.55));
+      }
+
+      .free-food-underline {
+        position: absolute;
+        top: calc(100% - 2px);
+        left: 42px;
+        width: 200px;
+        height: 14px;
+        color: #c45a12;
+        filter: drop-shadow(0 2px 4px rgba(20, 14, 4, 0.55));
+      }
+
+      .qr-column {
+        position: relative;
+        display: grid;
+        justify-items: center;
+        width: 164px;
+        margin-top: -8px;
+      }
+
+      .scan-note {
+        position: absolute;
+        bottom: calc(100% + 14px);
+        right: 60px;
+        color: var(--gold);
+        font-family: var(--script);
+        font-size: 34px;
+        font-weight: 600;
+        line-height: 0.9;
+        white-space: nowrap;
+        text-shadow: 0 6px 20px rgba(45, 30, 6, 0.45);
+        transform: rotate(-7deg);
+      }
+
+      .scan-arrow {
+        position: absolute;
+        top: -6px;
+        left: calc(100% + 14px);
+        width: 60px;
+        height: 65px;
+      }
+
+      .qr-wrap {
+        position: relative;
+        display: grid;
+        width: 100%;
+        justify-items: center;
+        gap: 10px;
+        overflow: hidden;
+        border: 3px solid transparent;
+        border-radius: 28px;
+        padding: 14px 13px 11px;
+        background:
+          linear-gradient(
+              168deg,
+              rgba(32, 50, 24, 0.95),
+              rgba(14, 26, 12, 0.97)
+            )
+            padding-box,
+          var(--gold-metal) border-box;
+        box-shadow:
+          0 0 28px rgba(242, 199, 92, 0.55),
+          0 0 72px rgba(242, 199, 92, 0.28),
+          0 16px 36px rgba(0, 0, 0, 0.42),
+          inset 0 0 24px rgba(242, 199, 92, 0.22);
+      }
+
+      /* Soft light pooling in the top-left, as if lit from above. */
+      .qr-wrap::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        background:
+          radial-gradient(
+            120% 70% at 20% -10%,
+            rgba(255, 240, 195, 0.28),
+            transparent 62%
+          ),
+          linear-gradient(160deg, rgba(255, 255, 255, 0.16), transparent 38%);
+        pointer-events: none;
+      }
+
+      .qr-wrap::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        background: linear-gradient(
+          112deg,
+          transparent 40%,
+          rgba(255, 255, 255, 0.14) 46%,
+          rgba(255, 248, 219, 0.42) 50%,
+          rgba(255, 255, 255, 0.14) 54%,
+          transparent 60%
+        );
+        background-size: 300% 100%;
+        background-position: 150% 0;
+        animation: qr-shine 5.5s ease-in-out infinite;
+        pointer-events: none;
+      }
+
+      @keyframes qr-shine {
+        0%,
+        62% {
+          background-position: 150% 0;
+        }
+        100% {
+          background-position: -50% 0;
+        }
+      }
+
+      .qr-card {
+        position: relative;
+        display: grid;
+        width: 100%;
+        place-items: center;
+        border: 2px solid transparent;
+        border-radius: 18px;
+        padding: 8px;
+        background:
+          linear-gradient(165deg, #fffdf2, #fff3d6) padding-box,
+          var(--gold-metal) border-box;
+        box-shadow:
+          0 8px 22px rgba(0, 0, 0, 0.3),
+          0 0 20px rgba(242, 199, 92, 0.4);
+      }
+
+      .qr-card img {
+        width: 100%;
+        height: auto;
+        object-fit: contain;
+      }
+
+      .qr-cta {
+        width: 100%;
+        border: 2px solid transparent;
+        border-radius: 999px;
+        padding: 8px 4px;
+        background:
+          linear-gradient(
+              180deg,
+              rgba(52, 86, 42, 0.97),
+              rgba(20, 42, 17, 0.97)
+            )
+            padding-box,
+          var(--gold-metal) border-box;
+        box-shadow:
+          0 0 16px rgba(242, 199, 92, 0.4),
+          inset 0 1px 0 rgba(255, 243, 208, 0.22);
+        color: #fff3d2;
+        font-size: 12px;
+        font-weight: 900;
+        letter-spacing: 0.04em;
+        white-space: nowrap;
+        text-align: center;
+        text-transform: uppercase;
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.55);
+      }
+
+      .website {
+        background: linear-gradient(180deg, #fff6da, #f2c75c 55%, #cf9a34);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 0.03em;
+        filter: drop-shadow(0 1px 5px rgba(242, 199, 92, 0.5));
+      }
+
+      @media (max-width: 760px) {
+        body {
+          padding: 12px;
+        }
+
+        .content {
+          padding: 36px 32px 30px;
+        }
+
+        .topbar {
+          min-height: 52px;
+          margin: -8px -32px 0;
+          padding: 8px 32px;
+        }
+
+        .brand {
+          gap: 9px;
+        }
+
+        .brand img {
+          width: 31px;
+          height: 31px;
+        }
+
+        .club-text strong {
+          font-size: 11px;
+        }
+
+        .club-text span {
+          font-size: 7px;
+        }
+
+        .presented {
+          padding: 7px 10px;
+          font-size: 8px;
+        }
+
+        .details {
+          grid-template-columns: 1fr;
+          gap: 60px;
+        }
+
+        .qr-column {
+          width: 100%;
+          margin-top: 0;
+        }
+
+        .scan-note {
+          position: static;
+          margin-bottom: 4px;
+          transform: none;
+        }
+
+        .scan-arrow {
+          display: none;
+        }
+
+        .free-food {
+          left: 24px;
+        }
+
+        .pitch {
+          grid-template-columns: 1fr;
+        }
+
+        .welcome-note {
+          width: 100%;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .qr-wrap::after {
+          animation: none;
+        }
+      }
+
+      @page {
+        size: letter;
+        margin: 0;
+      }
+
+      @media print {
+        html,
+        body {
+          width: 8.5in;
+          height: 11in;
+          margin: 0;
+          padding: 0;
+          background: white;
+        }
+
+        body {
+          display: block;
+        }
+
+        .poster {
+          width: 8.5in;
+          height: 11in;
+          box-shadow: none;
+          print-color-adjust: exact;
+          -webkit-print-color-adjust: exact;
+        }
+
+        /* The moving highlight would freeze mid-sweep on paper. */
+        .qr-wrap::after {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <main class="poster" aria-label="Good News for a Restless World poster">
+      <section class="content">
+        <header class="topbar">
+          <div class="brand">
+            <img
+              src="bigLogo.png"
+              alt="Green Olive Chinese Christian Club logo"
+            />
+            <div class="club-text">
+              <strong>Green Olive</strong>
+              <span>McGill Chinese Christian Club</span>
+            </div>
+          </div>
+
+          <div class="presented">Campus Event</div>
+        </header>
+
+        <section class="hero">
+          <div class="eyebrow">
+            <p>Speaker: WuTao Hong (Phil)</p>
+            <p>McGill Theology Graduate Student</p>
+          </div>
+
+          <h1>
+            <span class="title-good">Good</span>
+            <span class="title-news">News</span>
+            <span class="script">for a Restless World</span>
+          </h1>
+
+          <div class="pitch">
+            <div class="pitch-copy">
+              <p class="hook">
+                In an anxious and uncertain world,<br />
+                is there still <em>truly</em> good news?
+              </p>
+
+              <p class="subhook">
+                Join us for a welcoming introduction to the Christian gospel,<br />
+                followed by open Q&amp;A and thoughtful discussion.
+              </p>
+            </div>
+
+            <div class="welcome-note">
+              Everyone<br />
+              is welcome!
+              <svg
+                class="welcome-swoosh"
+                viewBox="0 0 132 26"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.4"
+                stroke-linecap="round"
+                aria-hidden="true"
+              >
+                <path
+                  d="M4 8c26 12 62 16 92 9 12-3 14-9 6-11-6-1.6-13 1-16 6"
+                />
+              </svg>
+              <svg
+                class="welcome-heart"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.9"
+                stroke-linecap="round"
+                aria-hidden="true"
+              >
+                <path
+                  d="M12 20.5S3.5 15.2 3.5 9.6A4.6 4.6 0 0 1 12 7a4.6 4.6 0 0 1 8.5 2.6c0 5.6-8.5 10.9-8.5 10.9Z"
+                />
+              </svg>
+            </div>
+          </div>
+        </section>
+
+        <section class="details" aria-label="Event details and registration">
+          <div class="when-card">
+            <div class="when-row">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.7"
+                stroke-linecap="round"
+                aria-hidden="true"
+              >
+                <rect x="3" y="5" width="18" height="16" rx="3.5" />
+                <path d="M8 3v4M16 3v4M3 10h18" />
+                <path
+                  d="M8 14h.01M12 14h.01M16 14h.01M8 17.5h.01M12 17.5h.01M16 17.5h.01"
+                  stroke-width="2.4"
+                />
+              </svg>
+
+              <div>
+                <span class="when-day">Saturday</span>
+                <strong class="when-date">September 12, 2026</strong>
+              </div>
+            </div>
+
+            <div class="when-row">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.7"
+                stroke-linecap="round"
+                aria-hidden="true"
+              >
+                <circle cx="12" cy="12" r="9" />
+                <path d="M12 7v5.4l3.6 2.4" />
+              </svg>
+
+              <strong class="when-time">5:00 PM &ndash; 9:00 PM</strong>
+            </div>
+
+            <div class="free-food">
+              <svg
+                class="free-food-chevron"
+                viewBox="0 0 26 30"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.8"
+                stroke-linecap="round"
+                aria-hidden="true"
+              >
+                <path d="M4 5l8 10-8 10" />
+                <path d="M15 8l5 7-5 7" />
+              </svg>
+
+              Free Food!
+              <svg
+                class="free-food-underline"
+                viewBox="0 0 208 14"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="3"
+                stroke-linecap="round"
+                aria-hidden="true"
+              >
+                <path d="M3 10C52 3 138 2 205 6" />
+              </svg>
+            </div>
+          </div>
+
+          <div class="qr-column">
+            <div class="scan-note">
+              Scan me!
+              <img class="scan-arrow" src="scan_arrow.png" alt="" />
+            </div>
+
+            <aside class="qr-wrap" aria-label="Registration QR code">
+              <div class="qr-card">
+                <img
+                  src="evangilism_event_qr_code.png"
+                  alt="QR code for event registration"
+                />
+              </div>
+              <div class="qr-cta">Scan to Register</div>
+              <div class="website">www.goccc.ca</div>
+            </aside>
+          </div>
+        </section>
+      </section>
+    </main>
+  </body>
+</html>
