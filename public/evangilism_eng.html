@@ -17,7 +17,7 @@
         --olive-dark: #142414;
         --olive: #506b2f;
         --olive-soft: #8fa75a;
-        --gold: #f2c75c;
+        --gold: #F2CA40;
         --warm-gold: #eaa34b;
         --cream: #fff7df;
         --white: #ffffff;
@@ -153,6 +153,10 @@
         line-height: 1.15;
       }
 
+      .eyebrow p:first-child {
+        color: var(--gold);
+      }
+
       h1 {
         max-width: 720px;
         margin: 0;
@@ -274,6 +278,7 @@
         position: relative;
         display: grid;
         gap: 14px;
+        margin-top: -28px;
         border: 1px solid rgba(255, 255, 255, 0.14);
         border-radius: 26px;
         padding: 20px 26px 22px;
@@ -322,14 +327,24 @@
         text-shadow: 0 6px 22px rgba(0, 0, 0, 0.34);
       }
 
+      .when-location {
+        color: var(--white);
+        font-size: 25px;
+        font-weight: 700;
+        letter-spacing: -0.01em;
+        line-height: 1.2;
+        white-space: nowrap;
+        text-shadow: 0 6px 22px rgba(0, 0, 0, 0.34);
+      }
+
       .free-food {
         position: absolute;
-        top: calc(100% + 1px);
+        top: calc(100% - 9px);
         left: 92px;
         display: flex;
         align-items: center;
         gap: 12px;
-        color: #c45a12;
+        color: #f47e01;
         font-family: var(--script);
         font-size: 47px;
         font-weight: 700;
@@ -351,7 +366,7 @@
         flex-shrink: 0;
         width: 30px;
         height: 36px;
-        color: #c45a12;
+        color: #f47e01;
         filter: drop-shadow(0 2px 4px rgba(20, 14, 4, 0.55));
       }
 
@@ -361,7 +376,7 @@
         left: 42px;
         width: 200px;
         height: 14px;
-        color: #c45a12;
+        color: #f47e01;
         filter: drop-shadow(0 2px 4px rgba(20, 14, 4, 0.55));
       }
 
@@ -663,6 +678,23 @@
               </svg>
 
               <strong class="when-time">5:00 PM &ndash; 9:00 PM</strong>
+            </div>
+
+            <div class="when-row">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.7"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M12 21s-7-5.8-7-11.2a7 7 0 1 1 14 0C19 15.2 12 21 12 21Z" />
+                <circle cx="12" cy="9.8" r="2.4" />
+              </svg>
+
+              <strong class="when-location">McGill University Leacock 232</strong>
             </div>
 
             <div class="free-food">
