@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "export:posters": "node scripts/export-posters.mjs",
     "postinstall": "prisma generate"
   },
   "packageManager": "npm@10.5.2",
@@ -52,6 +53,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "15.2.0",
+    "playwright": "^1.62.1",
     "prisma": "^6.5.0",
     "tailwindcss": "^4",
     "typescript": "^5"

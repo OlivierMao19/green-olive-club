@@ -54,6 +54,8 @@
         width: min(100%, 820px);
         aspect-ratio: 8.5 / 11;
         overflow: hidden;
+        container-type: inline-size;
+        container-name: poster;
         background:
           url("poster_bg.png") center / cover no-repeat,
           #1f2518;
@@ -169,7 +171,7 @@
         margin: 0;
         letter-spacing: -0.015em;
         line-height: 1;
-        font-size: clamp(78px, 14vw, 142px);
+        font-size: clamp(78px, 17.32cqw, 142px);
         font-weight: 950;
         text-shadow:
           0 8px 0 rgba(26, 36, 18, 0.28),
@@ -201,7 +203,7 @@
         color: var(--gold);
         white-space: nowrap;
         font-family: var(--script);
-        font-size: clamp(80px, 15.5vw, 150px);
+        font-size: clamp(80px, 18.29cqw, 150px);
         font-weight: 400;
         letter-spacing: 0.18em;
         line-height: 1;
@@ -415,7 +417,7 @@
         text-transform: uppercase;
       }
 
-      @media (max-width: 760px) {
+      @media screen and (max-width: 760px) {
         body {
           padding: 12px;
         }
@@ -498,6 +500,7 @@
           height: 11in;
           margin: 0;
           padding: 0;
+          overflow: hidden;
           background: white;
         }
 
@@ -508,9 +511,18 @@
         .poster {
           width: 8.5in;
           height: 11in;
+          max-width: none;
           box-shadow: none;
           print-color-adjust: exact;
           -webkit-print-color-adjust: exact;
+        }
+
+        h1 {
+          font-size: 142px;
+        }
+
+        .script {
+          font-size: 150px;
         }
       }
     </style>
@@ -641,7 +653,7 @@
 
             <aside class="qr-wrap" aria-label="报名二维码">
               <div class="qr-card">
-                <img src="evangilism_event_qr_code.png" alt="活动报名二维码" />
+                <img src="poster_qr_code.png" alt="活动报名二维码" />
               </div>
               <div class="qr-cta">扫码报名</div>
             </aside>

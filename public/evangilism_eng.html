@@ -17,7 +17,7 @@
         --olive-dark: #142414;
         --olive: #506b2f;
         --olive-soft: #8fa75a;
-        --gold: #F2CA40;
+        --gold: #f2ca40;
         --warm-gold: #eaa34b;
         --cream: #fff7df;
         --white: #ffffff;
@@ -50,6 +50,8 @@
         width: min(100%, 820px);
         aspect-ratio: 8.5 / 11;
         overflow: hidden;
+        container-type: inline-size;
+        container-name: poster;
         background:
           url("poster_bg.png") center / cover no-repeat,
           #1f2518;
@@ -163,7 +165,7 @@
         text-transform: uppercase;
         letter-spacing: -0.055em;
         line-height: 0.82;
-        font-size: clamp(74px, 15vw, 142px);
+        font-size: clamp(74px, 17.32cqw, 142px);
         font-weight: 950;
         text-shadow:
           0 8px 0 rgba(26, 36, 18, 0.28),
@@ -191,7 +193,7 @@
         color: var(--gold);
         font-family:
           "Brush Script MT", "Segoe Script", "Snell Roundhand", cursive;
-        font-size: clamp(54px, 10vw, 100px);
+        font-size: clamp(54px, 12.2cqw, 100px);
         font-weight: 400;
         letter-spacing: -0.04em;
         line-height: 0.9;
@@ -463,7 +465,7 @@
         text-transform: uppercase;
       }
 
-      @media (max-width: 760px) {
+      @media screen and (max-width: 760px) {
         body {
           padding: 12px;
         }
@@ -545,6 +547,7 @@
           height: 11in;
           margin: 0;
           padding: 0;
+          overflow: hidden;
           background: white;
         }
 
@@ -555,9 +558,18 @@
         .poster {
           width: 8.5in;
           height: 11in;
+          max-width: none;
           box-shadow: none;
           print-color-adjust: exact;
           -webkit-print-color-adjust: exact;
+        }
+
+        h1 {
+          font-size: 142px;
+        }
+
+        .script {
+          font-size: 100px;
         }
       }
     </style>
@@ -690,11 +702,15 @@
                 stroke-linejoin="round"
                 aria-hidden="true"
               >
-                <path d="M12 21s-7-5.8-7-11.2a7 7 0 1 1 14 0C19 15.2 12 21 12 21Z" />
+                <path
+                  d="M12 21s-7-5.8-7-11.2a7 7 0 1 1 14 0C19 15.2 12 21 12 21Z"
+                />
                 <circle cx="12" cy="9.8" r="2.4" />
               </svg>
 
-              <strong class="when-location">McGill University Leacock 232</strong>
+              <strong class="when-location"
+                >McGill University Leacock 232</strong
+              >
             </div>
 
             <div class="free-food">
@@ -735,7 +751,7 @@
             <aside class="qr-wrap" aria-label="Registration QR code">
               <div class="qr-card">
                 <img
-                  src="evangilism_event_qr_code.png"
+                  src="poster_qr_code.png"
                   alt="QR code for event registration"
                 />
               </div>
