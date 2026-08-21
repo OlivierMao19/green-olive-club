@@ -319,7 +319,7 @@ export default function EventPage({
               {currentEvent.title}
             </h1>
 
-            <p className="mb-6 text-base leading-relaxed text-emerald-900/72 md:text-lg">
+            <p className="mb-6 whitespace-pre-wrap text-base leading-relaxed text-emerald-900/72 md:text-lg">
               {currentEvent.description}
             </p>
 
