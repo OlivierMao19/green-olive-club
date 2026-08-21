@@ -119,29 +119,30 @@ export default function RegistrationDetailsForm({
       </div>
 
       <div className="space-y-2">
-        <button
-          type="button"
-          onClick={handleToggleNonMcGill}
-          className="text-xs text-emerald-700 underline-offset-2 hover:underline"
-        >
-          {isNonMcGill ? "From McGill?" : "Not from McGill?"}
-        </button>
-        <Label
-          htmlFor={`${idPrefix}-mcgillId`}
-          className="flex items-center gap-2"
-        >
-          <IdCard className="h-4 w-4 text-green-700" />
-          {isNonMcGill ? "Student ID" : "McGill Student ID"}
-        </Label>
+        <div className="flex items-center justify-between gap-3">
+          <Label
+            htmlFor={`${idPrefix}-mcgillId`}
+            className="flex items-center gap-2"
+          >
+            <IdCard className="h-4 w-4 text-green-700" />
+            {isNonMcGill ? "Student ID" : "McGill Student ID"}
+            <span className="font-normal text-muted-foreground">(opt.)</span>
+          </Label>
+          <button
+            type="button"
+            onClick={handleToggleNonMcGill}
+            className="shrink-0 text-xs text-emerald-700 underline-offset-2 hover:underline"
+          >
+            {isNonMcGill ? "From McGill?" : "Not from McGill?"}
+          </button>
+        </div>
         <Input
           id={`${idPrefix}-mcgillId`}
           name="mcgillId"
           value={formData.mcgillId}
           onChange={handleChange}
           onBlur={handleBlur}
-          placeholder={
-            isNonMcGill ? "Your student ID (optional)" : "Your McGill ID (optional)"
-          }
+          placeholder={isNonMcGill ? "Your student ID" : "Your McGill ID"}
         />
       </div>
 
@@ -153,6 +154,7 @@ export default function RegistrationDetailsForm({
           >
             <GraduationCap className="h-4 w-4 text-green-700" />
             School
+            <span className="font-normal text-muted-foreground">(opt.)</span>
           </Label>
           <Input
             id={`${idPrefix}-school`}
@@ -160,7 +162,7 @@ export default function RegistrationDetailsForm({
             value={formData.school}
             onChange={handleChange}
             onBlur={handleBlur}
-            placeholder="Your school name (optional)"
+            placeholder="Your school name"
           />
         </div>
       )}
