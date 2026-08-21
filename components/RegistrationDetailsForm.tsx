@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { User, Mail, IdCard } from "lucide-react";
+import { GraduationCap, IdCard, Mail, User } from "lucide-react";
 import {
   type RegistrationDetails,
   normalizeRegistrationDetails,
@@ -29,9 +29,14 @@ export default function RegistrationDetailsForm({
   const [formData, setFormData] = useState(() =>
     normalizeRegistrationDetails(initialData)
   );
+  const [isNonMcGill, setIsNonMcGill] = useState(
+    () => Boolean(initialData.school?.trim())
+  );
 
   useEffect(() => {
-    setFormData(normalizeRegistrationDetails(initialData));
+    const normalized = normalizeRegistrationDetails(initialData);
+    setFormData(normalized);
+    setIsNonMcGill(Boolean(normalized.school.trim()));
   }, [initialData]);
 
   const handleChange = (
@@ -54,12 +59,25 @@ export default function RegistrationDetailsForm({
     }));
   };
 
+  const handleToggleNonMcGill = () => {
+    setIsNonMcGill((prev) => {
+      if (prev) {
+        setFormData((current) => ({ ...current, school: "" }));
+      }
+      return !prev;
+    });
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
 
     try {
-      await onSubmit(trimRegistrationDetails(formData));
+      const trimmed = trimRegistrationDetails(formData);
+      await onSubmit({
+        ...trimmed,
+        school: isNonMcGill ? trimmed.school : "",
+      });
     } finally {
       setIsLoading(false);
     }
@@ -101,12 +119,19 @@ export default function RegistrationDetailsForm({
       </div>
 
       <div className="space-y-2">
+        <button
+          type="button"
+          onClick={handleToggleNonMcGill}
+          className="text-xs text-emerald-700 underline-offset-2 hover:underline"
+        >
+          {isNonMcGill ? "From McGill?" : "Not from McGill?"}
+        </button>
         <Label
           htmlFor={`${idPrefix}-mcgillId`}
           className="flex items-center gap-2"
         >
           <IdCard className="h-4 w-4 text-green-700" />
-          McGill ID
+          {isNonMcGill ? "Student ID" : "McGill Student ID"}
         </Label>
         <Input
           id={`${idPrefix}-mcgillId`}
@@ -114,10 +139,31 @@ export default function RegistrationDetailsForm({
           value={formData.mcgillId}
           onChange={handleChange}
           onBlur={handleBlur}
-          placeholder="Your McGill ID"
-          required
+          placeholder={
+            isNonMcGill ? "Your student ID (optional)" : "Your McGill ID (optional)"
+          }
         />
       </div>
+
+      {isNonMcGill && (
+        <div className="space-y-2">
+          <Label
+            htmlFor={`${idPrefix}-school`}
+            className="flex items-center gap-2"
+          >
+            <GraduationCap className="h-4 w-4 text-green-700" />
+            School
+          </Label>
+          <Input
+            id={`${idPrefix}-school`}
+            name="school"
+            value={formData.school}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            placeholder="Your school name (optional)"
+          />
+        </div>
+      )}
 
       <div className="flex justify-end">
         <Button

@@ -31,6 +31,7 @@ type EventPagePayload = {
     name: string;
     email: string;
     mcgillId: string;
+    school: string;
   } | null;
   isAdmin: boolean;
   isRecurring: boolean;

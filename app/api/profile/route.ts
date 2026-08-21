@@ -17,6 +17,7 @@ export async function GET() {
                 name: true,
                 email: true,
                 mcgillId: true,
+                school: true,
             }
         })
 
@@ -43,7 +44,10 @@ export async function POST(req: Request) {
             where: {
                 id: session!.user!.id
             }, data: {
-                name: data.name, email: data.email, mcgillId: data.mcgillId,
+                name: data.name,
+                email: data.email,
+                mcgillId: data.mcgillId || null,
+                school: data.school || null,
             },
         })
 

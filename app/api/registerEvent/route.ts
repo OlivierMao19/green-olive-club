@@ -9,6 +9,7 @@ type RegisterEventBody = {
   name?: string;
   email?: string;
   mcgillId?: string;
+  school?: string;
 };
 
 async function eventExists(eventId: string): Promise<boolean> {
@@ -117,11 +118,12 @@ export async function POST(req: Request) {
 
     if (sessionUserId) {
       const details =
-        body.name && body.email && body.mcgillId
+        body.name && body.email
           ? trimRegistrationDetails({
               name: body.name,
               email: body.email,
-              mcgillId: body.mcgillId,
+              mcgillId: body.mcgillId ?? "",
+              school: body.school ?? "",
             })
           : null;
 
@@ -131,18 +133,19 @@ export async function POST(req: Request) {
           data: {
             name: details.name,
             email: details.email,
-            mcgillId: details.mcgillId,
+            mcgillId: details.mcgillId || null,
+            school: details.school || null,
           },
         });
       } else {
         const user = await prisma.user.findUnique({
           where: { id: sessionUserId },
-          select: { name: true, email: true, mcgillId: true },
+          select: { name: true, email: true },
         });
 
-        if (!user?.name?.trim() || !user.email?.trim() || !user.mcgillId?.trim()) {
+        if (!user?.name?.trim() || !user.email?.trim()) {
           return NextResponse.json(
-            { message: "Please provide your name, email, and McGill ID" },
+            { message: "Please provide your name and email" },
             { status: 400 }
           );
         }
@@ -177,9 +180,9 @@ export async function POST(req: Request) {
       );
     }
 
-    if (!body.name || !body.email || !body.mcgillId) {
+    if (!body.name || !body.email) {
       return NextResponse.json(
-        { message: "Name, email, and McGill ID are required" },
+        { message: "Name and email are required" },
         { status: 400 }
       );
     }
@@ -187,7 +190,8 @@ export async function POST(req: Request) {
     const details = trimRegistrationDetails({
       name: body.name,
       email: body.email,
-      mcgillId: body.mcgillId,
+      mcgillId: body.mcgillId ?? "",
+      school: body.school ?? "",
     });
 
     const existingUser = await prisma.user.findUnique({
@@ -236,7 +240,8 @@ export async function POST(req: Request) {
         eventId,
         name: details.name,
         email: details.email,
-        mcgillId: details.mcgillId,
+        mcgillId: details.mcgillId || null,
+        school: details.school || null,
       },
     });
 
