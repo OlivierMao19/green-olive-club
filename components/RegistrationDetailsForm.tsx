@@ -59,13 +59,8 @@ export default function RegistrationDetailsForm({
     }));
   };
 
-  const handleToggleNonMcGill = () => {
-    setIsNonMcGill((prev) => {
-      if (prev) {
-        setFormData((current) => ({ ...current, school: "" }));
-      }
-      return !prev;
-    });
+  const handleShowNonMcGill = () => {
+    setIsNonMcGill(true);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -128,13 +123,15 @@ export default function RegistrationDetailsForm({
             {isNonMcGill ? "Student ID" : "McGill Student ID"}
             <span className="font-normal text-muted-foreground">(opt.)</span>
           </Label>
-          <button
-            type="button"
-            onClick={handleToggleNonMcGill}
-            className="shrink-0 text-xs text-emerald-700 underline-offset-2 hover:underline"
-          >
-            {isNonMcGill ? "From McGill?" : "Not from McGill?"}
-          </button>
+          {!isNonMcGill && (
+            <button
+              type="button"
+              onClick={handleShowNonMcGill}
+              className="shrink-0 text-xs text-emerald-700 underline-offset-2 hover:underline"
+            >
+              Not from McGill?
+            </button>
+          )}
         </div>
         <Input
           id={`${idPrefix}-mcgillId`}
