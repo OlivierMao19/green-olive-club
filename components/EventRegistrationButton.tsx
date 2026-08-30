@@ -200,6 +200,7 @@ export default function EventRegistrationButton({
             <DialogDescription>{dialogDescription}</DialogDescription>
           </DialogHeader>
           <RegistrationDetailsForm
+            key={formDialogOpen ? eventId : "closed"}
             initialData={formInitialData}
             onSubmit={handleFormSubmit}
             submitLabel="Register"

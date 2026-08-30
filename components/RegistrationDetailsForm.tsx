@@ -14,6 +14,8 @@ import {
   trimRegistrationDetails,
 } from "@/lib/registrationDetails";
 
+const EMPTY_CUSTOM_ANSWERS: CustomAnswers = {};
+
 interface RegistrationDetailsFormProps {
   initialData: RegistrationDetails;
   onSubmit: (
@@ -33,7 +35,7 @@ export default function RegistrationDetailsForm({
   submitLabel = "Submit",
   idPrefix = "registration",
   customFields = [],
-  initialCustomAnswers = {},
+  initialCustomAnswers,
   showProfileFields = true,
 }: RegistrationDetailsFormProps) {
   const [isLoading, setIsLoading] = useState(false);
@@ -41,7 +43,7 @@ export default function RegistrationDetailsForm({
     normalizeRegistrationDetails(initialData)
   );
   const [customAnswers, setCustomAnswers] = useState<CustomAnswers>(
-    initialCustomAnswers
+    () => initialCustomAnswers ?? EMPTY_CUSTOM_ANSWERS
   );
   const [isNonMcGill, setIsNonMcGill] = useState(
     () => Boolean(initialData.school?.trim())
@@ -52,10 +54,6 @@ export default function RegistrationDetailsForm({
     setFormData(normalized);
     setIsNonMcGill(Boolean(normalized.school.trim()));
   }, [initialData]);
-
-  useEffect(() => {
-    setCustomAnswers(initialCustomAnswers);
-  }, [initialCustomAnswers]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
