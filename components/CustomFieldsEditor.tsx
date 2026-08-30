@@ -1,7 +1,5 @@
 "use client";
 
-import type React from "react";
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -28,42 +26,11 @@ export default function CustomFieldsEditor({
   fields,
   onChange,
 }: CustomFieldsEditorProps) {
-  const [newLabel, setNewLabel] = useState("");
-  const [newType, setNewType] = useState<CustomFieldType>("text");
-  const [newRequired, setNewRequired] = useState(false);
-  const [newOptions, setNewOptions] = useState("");
-
-  function handleAddField() {
-    const label = newLabel.trim();
-    if (!label) return;
-
-    const options =
-      newType === "select"
-        ? newOptions
-            .split("\n")
-            .map((option) => option.trim())
-            .filter(Boolean)
-        : undefined;
-
-    if (newType === "select" && (!options || options.length === 0)) {
-      alert("Please add at least one option for dropdown fields.");
-      return;
-    }
-
+  function addDraftField() {
     onChange([
       ...fields,
-      createCustomField({
-        label,
-        type: newType,
-        required: newRequired,
-        options,
-      }),
+      createCustomField({ label: "", type: "text", required: false }),
     ]);
-
-    setNewLabel("");
-    setNewType("text");
-    setNewRequired(false);
-    setNewOptions("");
   }
 
   function updateField(index: number, updates: Partial<CustomField>) {
@@ -89,14 +56,15 @@ export default function CustomFieldsEditor({
   }
 
   return (
-    <div className="space-y-4 rounded-xl border border-dashed border-emerald-200 bg-emerald-50/40 p-4">
+    <div className="space-y-4">
       <div>
         <h3 className="text-sm font-semibold text-emerald-900">
           Additional registration fields
         </h3>
         <p className="mt-1 text-sm text-emerald-900/65">
           Ask attendees for extra information when they register, such as
-          dietary restrictions or shirt size.
+          dietary restrictions or shirt size. Fields are saved when you create
+          or update the event.
         </p>
       </div>
 
@@ -180,6 +148,7 @@ export default function CustomFieldsEditor({
                               .filter(Boolean),
                           })
                         }
+                        placeholder={"Vegetarian\nVegan\nGluten-free\nNone"}
                         className="min-h-[90px]"
                       />
                     </div>
@@ -226,69 +195,15 @@ export default function CustomFieldsEditor({
         </div>
       )}
 
-      <div className="space-y-3 rounded-lg border border-emerald-100 bg-white p-3">
-        <p className="text-sm font-medium text-emerald-900">Add a field</p>
-        <div className="grid gap-3 sm:grid-cols-2">
-          <div className="space-y-2 sm:col-span-2">
-            <Label htmlFor="new-custom-field-label">Label</Label>
-            <Input
-              id="new-custom-field-label"
-              value={newLabel}
-              onChange={(e) => setNewLabel(e.target.value)}
-              placeholder="e.g. Dietary restrictions"
-            />
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="new-custom-field-type">Type</Label>
-            <select
-              id="new-custom-field-type"
-              value={newType}
-              onChange={(e) => setNewType(e.target.value as CustomFieldType)}
-              className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
-            >
-              {Object.entries(FIELD_TYPE_LABELS).map(([value, label]) => (
-                <option key={value} value={value}>
-                  {label}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <label className="flex items-center gap-2 pt-8 text-sm text-emerald-900">
-            <input
-              type="checkbox"
-              checked={newRequired}
-              onChange={(e) => setNewRequired(e.target.checked)}
-              className="rounded border-emerald-300"
-            />
-            Required
-          </label>
-        </div>
-
-        {newType === "select" && (
-          <div className="space-y-2">
-            <Label htmlFor="new-custom-field-options">Options (one per line)</Label>
-            <Textarea
-              id="new-custom-field-options"
-              value={newOptions}
-              onChange={(e) => setNewOptions(e.target.value)}
-              placeholder={"Vegetarian\nVegan\nGluten-free\nNone"}
-              className="min-h-[90px]"
-            />
-          </div>
-        )}
-
-        <Button
-          type="button"
-          variant="outline"
-          className="rounded-full border-emerald-200"
-          onClick={handleAddField}
-        >
-          <Plus className="mr-2 h-4 w-4" />
-          Add field
-        </Button>
-      </div>
+      <Button
+        type="button"
+        variant="outline"
+        className="rounded-full border-emerald-200"
+        onClick={addDraftField}
+      >
+        <Plus className="mr-2 h-4 w-4" />
+        Add field
+      </Button>
     </div>
   );
 }

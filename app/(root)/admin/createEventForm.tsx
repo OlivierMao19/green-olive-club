@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import CustomFieldsEditor from "@/components/CustomFieldsEditor";
-import type { CustomField } from "@/lib/customFields";
+import { finalizeCustomFieldsForSave, type CustomField } from "@/lib/customFields";
 import { useRouter } from "next/navigation";
 
 export default function CreateEventForm() {
@@ -36,6 +36,12 @@ export default function CreateEventForm() {
 
     const scheduledAt = new Date(isoDateTime);
 
+    const customFieldsResult = finalizeCustomFieldsForSave(customFields);
+    if (!customFieldsResult.valid) {
+      alert(customFieldsResult.message);
+      return;
+    }
+
     console.log({
       title,
       description,
@@ -52,7 +58,7 @@ export default function CreateEventForm() {
           location,
           scheduledAt,
           recurrence,
-          customFields,
+          customFields: customFieldsResult.fields,
         }),
       });
       if (!response.ok) {

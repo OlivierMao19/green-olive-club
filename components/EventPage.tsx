@@ -17,7 +17,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import type { DeleteEventScope } from "@/lib/eventSeries";
-import { parseCustomFields, type CustomField } from "@/lib/customFields";
+import { parseCustomFields, finalizeCustomFieldsForSave, type CustomField } from "@/lib/customFields";
 import type { Event } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import { useEffect, useState, type FormEvent } from "react";
@@ -246,6 +246,12 @@ export default function EventPage({
       return;
     }
 
+    const customFieldsResult = finalizeCustomFieldsForSave(editCustomFields);
+    if (!customFieldsResult.valid) {
+      alert(customFieldsResult.message);
+      return;
+    }
+
     setIsSaving(true);
 
     try {
@@ -258,7 +264,7 @@ export default function EventPage({
           description: editDescription,
           location: editLocation,
           scheduledAt: new Date(editDateTime).toISOString(),
-          customFields: editCustomFields,
+          customFields: customFieldsResult.fields,
         }),
       });
 

@@ -87,6 +87,36 @@ export function sanitizeCustomFieldsForSave(value: unknown): CustomField[] {
   }));
 }
 
+export type FinalizeCustomFieldsResult =
+  | { valid: true; fields: CustomField[] }
+  | { valid: false; message: string };
+
+export function finalizeCustomFieldsForSave(
+  fields: CustomField[]
+): FinalizeCustomFieldsResult {
+  const labeledFields = fields.filter((field) => field.label.trim());
+
+  for (const field of labeledFields) {
+    if (field.type === "select") {
+      const options = (field.options ?? [])
+        .map((option) => option.trim())
+        .filter(Boolean);
+
+      if (options.length === 0) {
+        return {
+          valid: false,
+          message: `Please add at least one option for "${field.label.trim()}".`,
+        };
+      }
+    }
+  }
+
+  return {
+    valid: true,
+    fields: sanitizeCustomFieldsForSave(labeledFields),
+  };
+}
+
 export function hasCustomFields(fields: CustomField[] | unknown): boolean {
   return parseCustomFields(fields).length > 0;
 }
