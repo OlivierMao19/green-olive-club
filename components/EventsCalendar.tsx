@@ -115,8 +115,8 @@ export default function EventsCalendar({ isAdmin = false }) {
                 />
               ))}
               <Dialog open={attendeesOpen} onOpenChange={setAttendeesOpen}>
-                <DialogContent className="overflow-hidden p-2 md:max-w-[800px]">
-                  <DialogHeader className="p-6 pb-2">
+                <DialogContent className="flex max-h-[85vh] flex-col overflow-hidden p-2 md:max-w-[800px]">
+                  <DialogHeader className="shrink-0 p-6 pb-2">
                     <DialogTitle className="text-xl font-semibold text-emerald-900">
                       <div>
                         Attendees for {currentEvent ? currentEvent.title : ""}
@@ -126,7 +126,7 @@ export default function EventsCalendar({ isAdmin = false }) {
                       </div>
                     </DialogTitle>
                   </DialogHeader>
-                  <div className="p-6 pt-2">
+                  <div className="min-h-0 flex-1 overflow-y-auto p-6 pt-2">
                     <AttendeeTable
                       eventId={currentEvent ? String(currentEvent.id) : ""}
                     />

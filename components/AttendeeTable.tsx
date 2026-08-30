@@ -131,9 +131,9 @@ export default function AttendeeTable({ eventId }: AttendeeTableProps) {
       </div>
 
       {sortedAttendees.length > 0 ? (
-        <div className="border rounded-md overflow-hidden">
+        <div className="max-h-[min(24rem,50vh)] overflow-auto overscroll-contain rounded-md border">
           <Table>
-            <TableHeader>
+            <TableHeader className="sticky top-0 z-10 bg-background [&_th]:bg-background">
               <TableRow>
                 <TableHead className="w-[200px]">
                   <Button
