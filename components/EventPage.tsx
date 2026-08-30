@@ -3,6 +3,7 @@
 import { ArrowLeft, Calendar, MapPin, Pencil, Trash2, Upload } from "lucide-react";
 import EventRegistrationButton from "@/components/EventRegistrationButton";
 import EventShareButton from "@/components/EventShareButton";
+import CustomFieldsEditor from "@/components/CustomFieldsEditor";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -16,6 +17,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import type { DeleteEventScope } from "@/lib/eventSeries";
+import { parseCustomFields, type CustomField } from "@/lib/customFields";
 import type { Event } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import { useEffect, useState, type FormEvent } from "react";
@@ -65,6 +67,7 @@ export default function EventPage({
   const [editDescription, setEditDescription] = useState("");
   const [editLocation, setEditLocation] = useState("");
   const [editDateTime, setEditDateTime] = useState("");
+  const [editCustomFields, setEditCustomFields] = useState<CustomField[]>([]);
   const [isSaving, setIsSaving] = useState(false);
   const router = useRouter();
 
@@ -231,6 +234,7 @@ export default function EventPage({
     setEditDescription(currentEvent.description ?? "");
     setEditLocation(currentEvent.location ?? "");
     setEditDateTime(toDatetimeLocalValue(new Date(currentEvent.scheduledAt)));
+    setEditCustomFields(parseCustomFields(currentEvent.customFields));
     setEditDialogOpen(true);
   }
 
@@ -254,6 +258,7 @@ export default function EventPage({
           description: editDescription,
           location: editLocation,
           scheduledAt: new Date(editDateTime).toISOString(),
+          customFields: editCustomFields,
         }),
       });
 
@@ -296,6 +301,7 @@ export default function EventPage({
   }
 
   const scheduledAt = new Date(currentEvent.scheduledAt);
+  const customFields = parseCustomFields(currentEvent.customFields);
 
   return (
     <div className="site-shell py-8 md:py-10">
@@ -352,6 +358,7 @@ export default function EventPage({
                 eventId={currentEvent.id}
                 initialRegistrationStatus={initialRegistrationStatus}
                 userDetails={userDetails}
+                customFields={customFields}
               />
 
               <EventShareButton
@@ -458,6 +465,10 @@ export default function EventPage({
                 required
               />
             </div>
+            <CustomFieldsEditor
+              fields={editCustomFields}
+              onChange={setEditCustomFields}
+            />
             <DialogFooter className="gap-2 sm:gap-0">
               <Button
                 type="button"
