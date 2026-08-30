@@ -16,6 +16,11 @@ import {
   setGuestRegistrationEmail,
 } from "@/lib/guestRegistrationStorage";
 import {
+  type CustomAnswers,
+  type CustomField,
+  hasCustomFields,
+} from "@/lib/customFields";
+import {
   type RegistrationDetails,
   hasCompleteRegistrationDetails,
 } from "@/lib/registrationDetails";
@@ -27,6 +32,7 @@ interface EventRegistrationButtonProps {
   eventId: string;
   initialRegistrationStatus?: boolean;
   userDetails?: RegistrationDetails | null;
+  customFields?: CustomField[];
 }
 
 export default function EventRegistrationButton({
@@ -34,6 +40,7 @@ export default function EventRegistrationButton({
   eventId,
   initialRegistrationStatus = false,
   userDetails = null,
+  customFields = [],
 }: EventRegistrationButtonProps) {
   const [isRegistered, setIsRegistered] = useState(initialRegistrationStatus);
   const [isLoading, setIsLoading] = useState(false);
@@ -42,6 +49,7 @@ export default function EventRegistrationButton({
   const router = useRouter();
 
   const hasCompleteProfile = hasCompleteRegistrationDetails(userDetails);
+  const eventHasCustomFields = hasCustomFields(customFields);
 
   useEffect(() => {
     if (userId) {
@@ -59,12 +67,15 @@ export default function EventRegistrationButton({
     }
   }, [userId, eventId, initialRegistrationStatus]);
 
-  async function submitRegistration(details?: RegistrationDetails) {
+  async function submitRegistration(
+    details?: RegistrationDetails,
+    customAnswers?: CustomAnswers
+  ) {
     setIsLoading(true);
 
     try {
       const action = isRegistered ? "unregister" : "register";
-      const payload: Record<string, string> = {
+      const payload: Record<string, unknown> = {
         eventId,
         action,
       };
@@ -76,6 +87,10 @@ export default function EventRegistrationButton({
         payload.school = details.school;
       } else if (!userId && action === "unregister" && guestEmail) {
         payload.email = guestEmail;
+      }
+
+      if (customAnswers) {
+        payload.customAnswers = customAnswers;
       }
 
       const response = await fetch("/api/registerEvent", {
@@ -121,7 +136,7 @@ export default function EventRegistrationButton({
       return;
     }
 
-    if (userId && hasCompleteProfile) {
+    if (userId && hasCompleteProfile && !eventHasCustomFields) {
       await submitRegistration();
       return;
     }
@@ -129,8 +144,11 @@ export default function EventRegistrationButton({
     setFormDialogOpen(true);
   }
 
-  async function handleFormSubmit(details: RegistrationDetails) {
-    await submitRegistration(details);
+  async function handleFormSubmit(
+    details: RegistrationDetails,
+    customAnswers?: CustomAnswers
+  ) {
+    await submitRegistration(details, customAnswers);
   }
 
   const formInitialData = useMemo<RegistrationDetails>(
@@ -147,6 +165,17 @@ export default function EventRegistrationButton({
       userDetails?.school,
     ]
   );
+
+  const showProfileFields = !userId || !hasCompleteProfile;
+  const dialogDescription = eventHasCustomFields
+    ? showProfileFields
+      ? userId
+        ? "Please confirm your details and answer the questions below to register."
+        : "Enter your details and answer the questions below to register."
+      : "Please answer the questions below to complete your registration."
+    : userId
+      ? "Please confirm your details to register. They will be saved to your profile."
+      : "Enter your details to register without an account.";
 
   return (
     <>
@@ -168,17 +197,15 @@ export default function EventRegistrationButton({
         <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-lg">
           <DialogHeader>
             <DialogTitle>Register for this event</DialogTitle>
-            <DialogDescription>
-              {userId
-                ? "Please confirm your details to register. They will be saved to your profile."
-                : "Enter your details to register without an account."}
-            </DialogDescription>
+            <DialogDescription>{dialogDescription}</DialogDescription>
           </DialogHeader>
           <RegistrationDetailsForm
             initialData={formInitialData}
             onSubmit={handleFormSubmit}
             submitLabel="Register"
             idPrefix="event-registration"
+            customFields={customFields}
+            showProfileFields={showProfileFields}
           />
         </DialogContent>
       </Dialog>
