@@ -1,5 +1,6 @@
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
+import { sanitizeCustomFieldsForSave } from "@/lib/customFields";
 import { deleteEventImage } from "@/lib/services";
 import {
   createRecurringEvent,
@@ -23,9 +24,10 @@ function isDeleteScope(value: string): value is DeleteEventScope {
 
 export async function POST(req: Request) {
   try {
-    const { title, description, location, scheduledAt, recurrence } =
+    const { title, description, location, scheduledAt, recurrence, customFields } =
       await req.json();
     const parsedDate = new Date(scheduledAt);
+    const sanitizedCustomFields = sanitizeCustomFieldsForSave(customFields);
 
     if (Number.isNaN(parsedDate.getTime())) {
       return NextResponse.json(
@@ -41,6 +43,8 @@ export async function POST(req: Request) {
         location,
         scheduledAt: parsedDate,
         recurrence,
+        customFields:
+          sanitizedCustomFields.length > 0 ? sanitizedCustomFields : undefined,
       });
 
       return NextResponse.json(
@@ -55,6 +59,8 @@ export async function POST(req: Request) {
         description,
         location,
         scheduledAt: parsedDate,
+        customFields:
+          sanitizedCustomFields.length > 0 ? sanitizedCustomFields : undefined,
       },
     });
     return NextResponse.json(
@@ -77,7 +83,8 @@ export async function PATCH(req: Request) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
     }
 
-    const { id, title, description, location, scheduledAt } = await req.json();
+    const { id, title, description, location, scheduledAt, customFields } =
+      await req.json();
 
     if (!id) {
       return NextResponse.json(
@@ -129,6 +136,9 @@ export async function PATCH(req: Request) {
         ...(description !== undefined && { description }),
         ...(location !== undefined && { location }),
         ...(parsedDate !== undefined && { scheduledAt: parsedDate }),
+        ...(customFields !== undefined && {
+          customFields: sanitizeCustomFieldsForSave(customFields),
+        }),
       },
     });
 

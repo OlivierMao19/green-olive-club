@@ -1,5 +1,10 @@
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
+import {
+  parseCustomFields,
+  validateCustomAnswers,
+  type CustomAnswers,
+} from "@/lib/customFields";
 import { trimRegistrationDetails } from "@/lib/registrationDetails";
 import { NextResponse } from "next/server";
 
@@ -10,15 +15,14 @@ type RegisterEventBody = {
   email?: string;
   mcgillId?: string;
   school?: string;
+  customAnswers?: CustomAnswers;
 };
 
-async function eventExists(eventId: string): Promise<boolean> {
-  const event = await prisma.event.findUnique({
+async function getEventRegistrationConfig(eventId: string) {
+  return prisma.event.findUnique({
     where: { id: eventId },
-    select: { id: true },
+    select: { id: true, customFields: true },
   });
-
-  return Boolean(event);
 }
 
 export async function POST(req: Request) {
@@ -34,10 +38,12 @@ export async function POST(req: Request) {
       );
     }
 
-    if (!(await eventExists(eventId))) {
+    const event = await getEventRegistrationConfig(eventId);
+    if (!event) {
       return NextResponse.json({ message: "Event not found" }, { status: 404 });
     }
 
+    const customFields = parseCustomFields(event.customFields);
     const sessionUserId = session?.user?.id;
 
     if (action === "unregister") {
@@ -116,6 +122,21 @@ export async function POST(req: Request) {
       return NextResponse.json({ message: "Invalid action" }, { status: 400 });
     }
 
+    const customAnswersValidation = validateCustomAnswers(
+      customFields,
+      body.customAnswers
+    );
+
+    if (!customAnswersValidation.valid) {
+      return NextResponse.json(
+        { message: customAnswersValidation.message },
+        { status: 400 }
+      );
+    }
+
+    const validatedCustomAnswers =
+      customFields.length > 0 ? customAnswersValidation.answers : undefined;
+
     if (sessionUserId) {
       const details =
         body.name && body.email
@@ -171,6 +192,9 @@ export async function POST(req: Request) {
         data: {
           user: { connect: { id: sessionUserId } },
           event: { connect: { id: eventId } },
+          ...(validatedCustomAnswers && {
+            customAnswers: validatedCustomAnswers,
+          }),
         },
       });
 
@@ -242,6 +266,9 @@ export async function POST(req: Request) {
         email: details.email,
         mcgillId: details.mcgillId || null,
         school: details.school || null,
+        ...(validatedCustomAnswers && {
+          customAnswers: validatedCustomAnswers,
+        }),
       },
     });
 

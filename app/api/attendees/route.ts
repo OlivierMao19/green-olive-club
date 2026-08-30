@@ -1,4 +1,8 @@
 import { prisma } from "@/lib/prisma";
+import {
+  normalizeCustomAnswers,
+  parseCustomFields,
+} from "@/lib/customFields";
 import { NextResponse } from "next/server";
 
 export async function GET(req: Request) {
@@ -13,12 +17,24 @@ export async function GET(req: Request) {
       );
     }
 
+    const event = await prisma.event.findUnique({
+      where: { id: eventId },
+      select: { customFields: true },
+    });
+
+    if (!event) {
+      return NextResponse.json({ error: "Event not found" }, { status: 404 });
+    }
+
+    const customFields = parseCustomFields(event.customFields);
+
     const [userAttendees, guestAttendees] = await Promise.all([
       prisma.userOnEvent.findMany({
         select: {
           user: true,
           userId: true,
           createdAt: true,
+          customAnswers: true,
         },
         where: { eventId },
         orderBy: { createdAt: "asc" },
@@ -38,6 +54,9 @@ export async function GET(req: Request) {
         school: attendee.user.school ?? "",
         registrationDate: attendee.createdAt,
         isGuest: false,
+        customAnswers: normalizeCustomAnswers(
+          attendee.customAnswers as Record<string, string> | null
+        ),
       })),
       ...guestAttendees.map((guest) => ({
         id: guest.id,
@@ -47,6 +66,9 @@ export async function GET(req: Request) {
         school: guest.school ?? "",
         registrationDate: guest.createdAt,
         isGuest: true,
+        customAnswers: normalizeCustomAnswers(
+          guest.customAnswers as Record<string, string> | null
+        ),
       })),
     ].sort(
       (a, b) =>
@@ -54,7 +76,7 @@ export async function GET(req: Request) {
         new Date(b.registrationDate).getTime()
     );
 
-    return NextResponse.json(attendees, { status: 200 });
+    return NextResponse.json({ customFields, attendees }, { status: 200 });
   } catch (error) {
     console.error("Error fetching attendees:", error);
     return NextResponse.json(
