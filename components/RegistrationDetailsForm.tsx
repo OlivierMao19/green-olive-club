@@ -6,6 +6,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { GraduationCap, IdCard, Mail, User } from "lucide-react";
+import CustomFieldsForm from "@/components/CustomFieldsForm";
+import type { CustomAnswers, CustomField } from "@/lib/customFields";
 import {
   type RegistrationDetails,
   normalizeRegistrationDetails,
@@ -14,9 +16,15 @@ import {
 
 interface RegistrationDetailsFormProps {
   initialData: RegistrationDetails;
-  onSubmit: (data: RegistrationDetails) => Promise<void>;
+  onSubmit: (
+    data: RegistrationDetails,
+    customAnswers?: CustomAnswers
+  ) => Promise<void>;
   submitLabel?: string;
   idPrefix?: string;
+  customFields?: CustomField[];
+  initialCustomAnswers?: CustomAnswers;
+  showProfileFields?: boolean;
 }
 
 export default function RegistrationDetailsForm({
@@ -24,10 +32,16 @@ export default function RegistrationDetailsForm({
   onSubmit,
   submitLabel = "Submit",
   idPrefix = "registration",
+  customFields = [],
+  initialCustomAnswers = {},
+  showProfileFields = true,
 }: RegistrationDetailsFormProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState(() =>
     normalizeRegistrationDetails(initialData)
+  );
+  const [customAnswers, setCustomAnswers] = useState<CustomAnswers>(
+    initialCustomAnswers
   );
   const [isNonMcGill, setIsNonMcGill] = useState(
     () => Boolean(initialData.school?.trim())
@@ -38,6 +52,10 @@ export default function RegistrationDetailsForm({
     setFormData(normalized);
     setIsNonMcGill(Boolean(normalized.school.trim()));
   }, [initialData]);
+
+  useEffect(() => {
+    setCustomAnswers(initialCustomAnswers);
+  }, [initialCustomAnswers]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -69,10 +87,13 @@ export default function RegistrationDetailsForm({
 
     try {
       const trimmed = trimRegistrationDetails(formData);
-      await onSubmit({
-        ...trimmed,
-        school: isNonMcGill ? trimmed.school : "",
-      });
+      await onSubmit(
+        {
+          ...trimmed,
+          school: isNonMcGill ? trimmed.school : "",
+        },
+        customFields.length > 0 ? customAnswers : undefined
+      );
     } finally {
       setIsLoading(false);
     }
@@ -80,6 +101,8 @@ export default function RegistrationDetailsForm({
 
   return (
     <form onSubmit={(e) => void handleSubmit(e)} className="space-y-6">
+      {showProfileFields && (
+        <>
       <div className="space-y-2">
         <Label htmlFor={`${idPrefix}-name`} className="flex items-center gap-2">
           <User className="h-4 w-4 text-green-700" />
@@ -163,6 +186,15 @@ export default function RegistrationDetailsForm({
           />
         </div>
       )}
+        </>
+      )}
+
+      <CustomFieldsForm
+        fields={customFields}
+        values={customAnswers}
+        onChange={setCustomAnswers}
+        idPrefix={`${idPrefix}-custom`}
+      />
 
       <div className="flex justify-end">
         <Button
