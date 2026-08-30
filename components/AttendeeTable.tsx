@@ -35,25 +35,35 @@ export default function AttendeeTable({ eventId }: AttendeeTableProps) {
   const [eventAttendees, setEventAttendees] = useState<Attendee[]>([]);
 
   useEffect(() => {
+    if (!eventId) {
+      setEventAttendees([]);
+      return;
+    }
+
     const fetchAttendees = async () => {
       try {
         const response = await fetch(`/api/attendees?eventId=${eventId}`, {
           method: "GET",
         });
         const data = await response.json();
+        if (!response.ok || !Array.isArray(data)) {
+          console.error("Error fetching attendees:", data);
+          setEventAttendees([]);
+          return;
+        }
         const eventAttendees = data.map((attendee: {
           id: string;
           email: string;
           name: string;
-          mcgillId: string;
-          school: string;
+          mcgillId: string | null;
+          school: string | null;
           registrationDate: string;
           isGuest: boolean;
         }) => ({
           id: attendee.id,
           email: attendee.email,
           name: attendee.name,
-          mcgillId: attendee.mcgillId,
+          mcgillId: attendee.mcgillId ?? "",
           school: attendee.school ?? "",
           registrationDate: new Date(attendee.registrationDate),
           isGuest: attendee.isGuest,
@@ -61,6 +71,7 @@ export default function AttendeeTable({ eventId }: AttendeeTableProps) {
         setEventAttendees(eventAttendees);
       } catch (error) {
         console.error("Error fetching attendees:", error);
+        setEventAttendees([]);
       }
     };
     fetchAttendees();
