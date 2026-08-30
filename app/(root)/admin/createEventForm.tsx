@@ -6,6 +6,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import CustomFieldsEditor from "@/components/CustomFieldsEditor";
+import type { CustomField } from "@/lib/customFields";
 import { useRouter } from "next/navigation";
 
 export default function CreateEventForm() {
@@ -16,6 +18,7 @@ export default function CreateEventForm() {
   const [recurrence, setRecurrence] = useState<"NONE" | "WEEKLY" | "BIWEEKLY">(
     "NONE"
   );
+  const [customFields, setCustomFields] = useState<CustomField[]>([]);
 
   const router = useRouter();
 
@@ -49,6 +52,7 @@ export default function CreateEventForm() {
           location,
           scheduledAt,
           recurrence,
+          customFields,
         }),
       });
       if (!response.ok) {
@@ -59,6 +63,7 @@ export default function CreateEventForm() {
       setDateTime("");
       setLocation("");
       setRecurrence("NONE");
+      setCustomFields([]);
       alert(
         recurrence === "NONE"
           ? `Event created successfully scheduled at: ${dateTime}`
@@ -160,6 +165,13 @@ export default function CreateEventForm() {
               Will be converted to ISO 8601 format (YYYY-MM-DDTHH:MM:SSZ) on
               submission
             </p>
+          </div>
+
+          <div className="mt-6">
+            <CustomFieldsEditor
+              fields={customFields}
+              onChange={setCustomFields}
+            />
           </div>
 
           <Button type="submit" className="px-8 py-2 mt-4">
