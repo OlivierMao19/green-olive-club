@@ -20,6 +20,7 @@ interface Attendee {
   email: string;
   name: string;
   mcgillId: string;
+  school: string;
   registrationDate: Date;
   isGuest: boolean;
 }
@@ -45,6 +46,7 @@ export default function AttendeeTable({ eventId }: AttendeeTableProps) {
           email: string;
           name: string;
           mcgillId: string;
+          school: string;
           registrationDate: string;
           isGuest: boolean;
         }) => ({
@@ -52,6 +54,7 @@ export default function AttendeeTable({ eventId }: AttendeeTableProps) {
           email: attendee.email,
           name: attendee.name,
           mcgillId: attendee.mcgillId,
+          school: attendee.school ?? "",
           registrationDate: new Date(attendee.registrationDate),
           isGuest: attendee.isGuest,
         }));
@@ -69,7 +72,8 @@ export default function AttendeeTable({ eventId }: AttendeeTableProps) {
     return (
       attendee.name.toLowerCase().includes(searchLower) ||
       attendee.email.toLowerCase().includes(searchLower) ||
-      attendee.mcgillId.toLowerCase().includes(searchLower)
+      attendee.mcgillId.toLowerCase().includes(searchLower) ||
+      attendee.school.toLowerCase().includes(searchLower)
     );
   });
 
@@ -163,7 +167,18 @@ export default function AttendeeTable({ eventId }: AttendeeTableProps) {
                     onClick={() => requestSort("mcgillId")}
                     className="hover:bg-transparent px-0"
                   >
-                    mcGill Id
+                    Student ID
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                  </Button>
+                </TableHead>
+
+                <TableHead className="hidden md:table-cell">
+                  <Button
+                    variant="ghost"
+                    onClick={() => requestSort("school")}
+                    className="hover:bg-transparent px-0"
+                  >
+                    School
                     <ArrowUpDown className="ml-2 h-4 w-4" />
                   </Button>
                 </TableHead>
@@ -202,7 +217,11 @@ export default function AttendeeTable({ eventId }: AttendeeTableProps) {
                   <TableCell>{attendee.email}</TableCell>
 
                   <TableCell className="font-medium hidden md:table-cell">
-                    {attendee.mcgillId}
+                    {attendee.mcgillId || "—"}
+                  </TableCell>
+
+                  <TableCell className="hidden md:table-cell">
+                    {attendee.school || "—"}
                   </TableCell>
 
                   <TableCell className="hidden md:table-cell">

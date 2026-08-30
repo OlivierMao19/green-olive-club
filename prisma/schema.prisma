@@ -17,6 +17,7 @@ model User {
   updatedAt     DateTime        @updatedAt
   isAdmin       Boolean         @default(false)
   mcgillId      String?
+  school        String?
   accounts      Account[]
   Authenticator Authenticator[]
   sessions      Session[]
@@ -71,7 +72,8 @@ model GuestRegistration {
   eventId   String
   name      String
   email     String
-  mcgillId  String
+  mcgillId  String?
+  school    String?
   createdAt DateTime @default(now())
   event     Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
 

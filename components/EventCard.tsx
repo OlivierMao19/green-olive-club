@@ -202,7 +202,9 @@ export default function EventCard(props: EventCardProps) {
           </Button>
         </div>
 
-        <p className={`mb-4 leading-relaxed ${descriptionClassName}`}>
+        <p
+          className={`mb-4 whitespace-pre-wrap leading-relaxed ${descriptionClassName}`}
+        >
           {event.description}
         </p>
 

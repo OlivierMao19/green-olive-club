@@ -21,7 +21,7 @@ export default async function Event({
   const user = userId
     ? await prisma.user.findUnique({
         where: { id: userId },
-        select: { name: true, email: true, mcgillId: true },
+        select: { name: true, email: true, mcgillId: true, school: true },
       })
     : null;
 
@@ -30,6 +30,7 @@ export default async function Event({
         name: user.name ?? "",
         email: user.email ?? "",
         mcgillId: user.mcgillId ?? "",
+        school: user.school ?? "",
       }
     : null;
 

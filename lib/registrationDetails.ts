@@ -2,6 +2,7 @@ export type RegistrationDetails = {
   name: string;
   email: string;
   mcgillId: string;
+  school: string;
 };
 
 export function normalizeRegistrationDetails(
@@ -11,6 +12,7 @@ export function normalizeRegistrationDetails(
     name: details?.name ?? "",
     email: details?.email ?? "",
     mcgillId: details?.mcgillId ?? "",
+    school: details?.school ?? "",
   };
 }
 
@@ -21,15 +23,12 @@ export function trimRegistrationDetails(
     name: details.name.trim(),
     email: details.email.trim().toLowerCase(),
     mcgillId: details.mcgillId.trim(),
+    school: details.school.trim(),
   };
 }
 
 export function hasCompleteRegistrationDetails(
   details: Partial<RegistrationDetails> | null | undefined
 ): details is RegistrationDetails {
-  return Boolean(
-    details?.name?.trim() &&
-      details?.email?.trim() &&
-      details?.mcgillId?.trim()
-  );
+  return Boolean(details?.name?.trim() && details?.email?.trim());
 }

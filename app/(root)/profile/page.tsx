@@ -4,13 +4,14 @@ import { useState, useEffect } from "react"
 import ProfileForm from "./profile-form"
 import { normalizeRegistrationDetails } from "@/lib/registrationDetails"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { IdCard, LoaderIcon, Mail, User } from "lucide-react"
+import { GraduationCap, IdCard, LoaderIcon, Mail, User } from "lucide-react"
 
 export default function ProfilePage() {
     const [profileData, setProfileData] = useState({
         name: "",
         email: "",
-        mcgillId: ""
+        mcgillId: "",
+        school: "",
     });
 
     const [loading, setLoading] = useState(true);
@@ -43,6 +44,8 @@ export default function ProfilePage() {
         </div>
     }
 
+    const isNonMcGill = Boolean(profileData.school.trim());
+    const studentIdLabel = isNonMcGill ? "Student ID" : "McGill Student ID";
 
     return (
         <div className="site-shell py-8 md:py-10">
@@ -65,9 +68,17 @@ export default function ProfilePage() {
                     <div className="flex items-center gap-2">
                         <IdCard className="h-4 w-4 text-emerald-700" />
                         <p className="text-sm font-medium text-emerald-900/80">
-                            <span className="text-emerald-900/60">McGill ID:</span> {profileData.mcgillId || "Not provided"}
+                            <span className="text-emerald-900/60">{studentIdLabel}:</span> {profileData.mcgillId || "Not provided"}
                         </p>
                     </div>
+                    {isNonMcGill && (
+                        <div className="flex items-center gap-2">
+                            <GraduationCap className="h-4 w-4 text-emerald-700" />
+                            <p className="text-sm font-medium text-emerald-900/80">
+                                <span className="text-emerald-900/60">School:</span> {profileData.school}
+                            </p>
+                        </div>
+                    )}
                 </div>
 
                 <Card className="w-full max-w-2xl mx-auto border-emerald-100/80 bg-white/90">

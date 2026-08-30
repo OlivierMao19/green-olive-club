@@ -73,6 +73,7 @@ export default function EventRegistrationButton({
         payload.name = details.name;
         payload.email = details.email;
         payload.mcgillId = details.mcgillId;
+        payload.school = details.school;
       } else if (!userId && action === "unregister" && guestEmail) {
         payload.email = guestEmail;
       }
@@ -137,8 +138,14 @@ export default function EventRegistrationButton({
       name: userDetails?.name ?? "",
       email: userDetails?.email ?? "",
       mcgillId: userDetails?.mcgillId ?? "",
+      school: userDetails?.school ?? "",
     }),
-    [userDetails?.name, userDetails?.email, userDetails?.mcgillId]
+    [
+      userDetails?.name,
+      userDetails?.email,
+      userDetails?.mcgillId,
+      userDetails?.school,
+    ]
   );
 
   return (
