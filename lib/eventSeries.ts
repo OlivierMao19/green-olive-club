@@ -13,6 +13,7 @@ type SeriesFields = {
   description?: string | null;
   location?: string | null;
   imageId?: string | null;
+  customFields?: unknown;
 };
 
 function buildEventData(
@@ -26,6 +27,7 @@ function buildEventData(
     description: series.description,
     location: series.location,
     imageId: series.imageId,
+    customFields: series.customFields ?? undefined,
     scheduledAt,
   };
 }
@@ -42,7 +44,7 @@ export async function ensureFutureInstances(seriesId: string): Promise<void> {
   const now = new Date();
   const horizonEnd = getHorizonEnd(now);
 
-  const [futureEvents, exceptions] = await Promise.all([
+  const [futureEvents, exceptions, templateEvent] = await Promise.all([
     prisma.event.findMany({
       where: {
         seriesId,
@@ -55,7 +57,20 @@ export async function ensureFutureInstances(seriesId: string): Promise<void> {
       where: { seriesId },
       select: { scheduledAt: true },
     }),
+    prisma.event.findFirst({
+      where: { seriesId },
+      orderBy: { scheduledAt: "desc" },
+      select: { customFields: true },
+    }),
   ]);
+
+  const seriesFields: SeriesFields = {
+    title: series.title,
+    description: series.description,
+    location: series.location,
+    imageId: series.imageId,
+    customFields: templateEvent?.customFields ?? undefined,
+  };
 
   const blockedDates = new Set(
     exceptions.map((e) => e.scheduledAt.getTime())
@@ -107,7 +122,7 @@ export async function ensureFutureInstances(seriesId: string): Promise<void> {
       });
 
       if (!exists) {
-        toCreate.push(buildEventData(seriesId, series, new Date(cursor)));
+        toCreate.push(buildEventData(seriesId, seriesFields, new Date(cursor)));
         plannedCount++;
       }
     }
