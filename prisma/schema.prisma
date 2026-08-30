@@ -59,6 +59,7 @@ model Event {
   scheduledAt       DateTime
   location          String?
   imageId           String?
+  customFields      Json?
   seriesId          String?
   series            EventSeries?        @relation(fields: [seriesId], references: [id], onDelete: SetNull)
   attendees         UserOnEvent[]
@@ -68,25 +69,27 @@ model Event {
 }
 
 model GuestRegistration {
-  id        String   @id @default(cuid())
-  eventId   String
-  name      String
-  email     String
-  mcgillId  String?
-  school    String?
-  createdAt DateTime @default(now())
-  event     Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  id            String   @id @default(cuid())
+  eventId       String
+  name          String
+  email         String
+  mcgillId      String?
+  school        String?
+  customAnswers Json?
+  createdAt     DateTime @default(now())
+  event         Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
 
   @@unique([eventId, email])
 }
 
 model UserOnEvent {
-  id        String   @id @default(cuid())
-  userId    String
-  eventId   String
-  createdAt DateTime @default(now())
-  event     Event    @relation(fields: [eventId], references: [id])
-  user      User     @relation(fields: [userId], references: [id])
+  id            String   @id @default(cuid())
+  userId        String
+  eventId       String
+  customAnswers Json?
+  createdAt     DateTime @default(now())
+  event         Event    @relation(fields: [eventId], references: [id])
+  user          User     @relation(fields: [userId], references: [id])
 
   @@unique([userId, eventId])
 }
