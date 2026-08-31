@@ -121,7 +121,7 @@ export default function EventsCalendar({ isAdmin = false }) {
                       Attendees for {currentEvent ? currentEvent.title : ""}
                     </DialogTitle>
                   </DialogHeader>
-                  <div className="min-h-0 flex-1 overflow-y-auto p-6 pt-2">
+                  <div className="flex min-h-0 flex-1 flex-col overflow-hidden p-6 pt-2">
                     <AttendeeTable
                       eventId={currentEvent ? String(currentEvent.id) : ""}
                     />

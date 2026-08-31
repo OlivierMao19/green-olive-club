@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   Table,
   TableBody,
@@ -31,6 +31,184 @@ interface Attendee {
 }
 
 type SortableKey = keyof Attendee | `custom:${string}`;
+
+type CompactGridLayout = {
+  columns: number;
+  rows: number;
+  fontSize: number;
+  gap: number;
+  padding: number;
+  maxLines: number;
+};
+
+const COMPACT_LINE_HEIGHT = 1.2;
+const COMPACT_CELL_PADDING = 4;
+
+function estimateLineCount(
+  name: string,
+  cellWidth: number,
+  fontSize: number
+): number {
+  const charWidth = fontSize * 0.52;
+  const charsPerLine = Math.max(
+    1,
+    Math.floor((cellWidth - COMPACT_CELL_PADDING * 2) / charWidth)
+  );
+
+  return Math.max(1, Math.ceil(name.length / charsPerLine));
+}
+
+function maxLineCount(
+  names: string[],
+  cellWidth: number,
+  fontSize: number
+): number {
+  return Math.max(
+    1,
+    ...names.map((name) => estimateLineCount(name, cellWidth, fontSize))
+  );
+}
+
+function computeCompactGridLayout(
+  names: string[],
+  width: number,
+  height: number
+): CompactGridLayout {
+  const count = names.length;
+  const padding = 10;
+  const minGap = 4;
+  const idealGap = 6;
+  const minFontSize = 10;
+  const maxFontSize = 14;
+  const minCellWidth = 64;
+
+  if (count === 0 || width <= 0 || height <= 0) {
+    return {
+      columns: 2,
+      rows: 1,
+      fontSize: maxFontSize,
+      gap: idealGap,
+      padding,
+      maxLines: 1,
+    };
+  }
+
+  const maxColumns = Math.min(
+    count,
+    Math.max(2, Math.floor((width - padding * 2 + minGap) / (minCellWidth + minGap)))
+  );
+
+  let best: CompactGridLayout | null = null;
+
+  for (let columns = 2; columns <= maxColumns; columns++) {
+    const rows = Math.ceil(count / columns);
+    const gap = count > 30 ? minGap : idealGap;
+    const cellWidth = (width - padding * 2 - (columns - 1) * gap) / columns;
+    const cellHeight = (height - padding * 2 - (rows - 1) * gap) / rows;
+
+    if (cellWidth < minCellWidth || cellHeight < minFontSize * COMPACT_LINE_HEIGHT + COMPACT_CELL_PADDING * 2) {
+      continue;
+    }
+
+    for (let fontSize = maxFontSize; fontSize >= minFontSize; fontSize -= 0.5) {
+      const linesNeeded = maxLineCount(names, cellWidth, fontSize);
+      const maxLinesAllowed = Math.max(
+        1,
+        Math.floor(
+          (cellHeight - COMPACT_CELL_PADDING * 2) / (fontSize * COMPACT_LINE_HEIGHT)
+        )
+      );
+
+      if (linesNeeded > maxLinesAllowed) {
+        continue;
+      }
+
+      const candidate: CompactGridLayout = {
+        columns,
+        rows,
+        fontSize,
+        gap,
+        padding,
+        maxLines: linesNeeded,
+      };
+
+      if (
+        !best ||
+        candidate.fontSize > best.fontSize ||
+        (candidate.fontSize === best.fontSize &&
+          candidate.maxLines < best.maxLines) ||
+        (candidate.fontSize === best.fontSize &&
+          candidate.maxLines === best.maxLines &&
+          (count > 20
+            ? candidate.columns > best.columns
+            : candidate.columns < best.columns))
+      ) {
+        best = candidate;
+      }
+
+      break;
+    }
+  }
+
+  if (!best) {
+    const columns = maxColumns;
+    const rows = Math.ceil(count / columns);
+    const gap = minGap;
+    const cellWidth = (width - padding * 2 - (columns - 1) * gap) / columns;
+    const cellHeight = (height - padding * 2 - (rows - 1) * gap) / rows;
+    const maxLinesAllowed = Math.max(
+      1,
+      Math.floor(
+        (cellHeight - COMPACT_CELL_PADDING * 2) / (minFontSize * COMPACT_LINE_HEIGHT)
+      )
+    );
+    const linesNeeded = Math.min(
+      maxLinesAllowed,
+      maxLineCount(names, cellWidth, minFontSize)
+    );
+
+    best = {
+      columns,
+      rows,
+      fontSize: minFontSize,
+      gap,
+      padding,
+      maxLines: Math.max(1, linesNeeded),
+    };
+  }
+
+  return best;
+}
+
+function useElementSize<T extends HTMLElement>(enabled: boolean) {
+  const ref = useRef<T>(null);
+  const [size, setSize] = useState({ width: 0, height: 0 });
+
+  useEffect(() => {
+    if (!enabled) {
+      return;
+    }
+
+    const element = ref.current;
+    if (!element) {
+      return;
+    }
+
+    const updateSize = () => {
+      const { width, height } = element.getBoundingClientRect();
+      setSize({ width, height });
+    };
+
+    updateSize();
+
+    const observer = new ResizeObserver(updateSize);
+    observer.observe(element);
+
+    return () => observer.disconnect();
+  }, [enabled]);
+
+  return { ref, width: size.width, height: size.height };
+}
 
 export default function AttendeeTable({ eventId }: AttendeeTableProps) {
   const [searchTerm, setSearchTerm] = useState("");
@@ -157,12 +335,22 @@ export default function AttendeeTable({ eventId }: AttendeeTableProps) {
     setSortConfig({ key, direction });
   };
 
-  const scrollAreaClassName =
-    "max-h-[min(29rem,60vh)] overflow-auto overscroll-contain rounded-md border";
+  const { ref: compactGridRef, width: compactWidth, height: compactHeight } =
+    useElementSize<HTMLDivElement>(viewMode === "compact");
+
+  const attendeeNames = useMemo(
+    () => sortedAttendees.map((attendee) => attendee.name),
+    [sortedAttendees]
+  );
+
+  const compactLayout = useMemo(
+    () => computeCompactGridLayout(attendeeNames, compactWidth, compactHeight),
+    [attendeeNames, compactWidth, compactHeight]
+  );
 
   return (
-    <div className="w-full animate-scale-in">
-      <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center">
+    <div className="flex min-h-0 w-full flex-1 flex-col animate-scale-in">
+      <div className="mb-4 flex shrink-0 flex-col gap-3 sm:flex-row sm:items-center">
         <div className="relative flex-1">
           <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500" />
           <Input
@@ -190,21 +378,42 @@ export default function AttendeeTable({ eventId }: AttendeeTableProps) {
 
       {sortedAttendees.length > 0 ? (
         viewMode === "compact" ? (
-          <div className={scrollAreaClassName}>
-            <ul className="grid grid-cols-2 gap-2 p-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+          <div
+            ref={compactGridRef}
+            className="min-h-0 flex-1 overflow-hidden rounded-md border"
+          >
+            <ul
+              className="grid h-full w-full"
+              style={{
+                gridTemplateColumns: `repeat(${compactLayout.columns}, minmax(0, 1fr))`,
+                gridTemplateRows: `repeat(${compactLayout.rows}, minmax(0, 1fr))`,
+                gap: compactLayout.gap,
+                padding: compactLayout.padding,
+              }}
+            >
               {sortedAttendees.map((attendee) => (
                 <li
                   key={attendee.id}
-                  className="truncate rounded-md border border-emerald-100 bg-emerald-50/50 px-2.5 py-2 text-sm font-medium text-emerald-950"
-                  title={attendee.name}
+                  className="flex min-h-0 items-center justify-center overflow-hidden rounded-md border border-emerald-100 bg-emerald-50/50 p-1 font-medium text-emerald-950"
                 >
-                  {attendee.name}
+                  <span
+                    className="w-full text-center leading-tight break-words hyphens-auto"
+                    style={{
+                      fontSize: compactLayout.fontSize,
+                      display: "-webkit-box",
+                      WebkitLineClamp: compactLayout.maxLines,
+                      WebkitBoxOrient: "vertical",
+                      overflow: "hidden",
+                    }}
+                  >
+                    {attendee.name}
+                  </span>
                 </li>
               ))}
             </ul>
           </div>
         ) : (
-        <div className={scrollAreaClassName}>
+        <div className="min-h-0 flex-1 overflow-auto overscroll-contain rounded-md border">
           <Table>
             <TableHeader className="sticky top-0 z-10 bg-background [&_th]:bg-background">
               <TableRow>
@@ -331,7 +540,7 @@ export default function AttendeeTable({ eventId }: AttendeeTableProps) {
         </div>
       )}
 
-      <div className="mt-4 text-sm text-gray-500">
+      <div className="mt-4 shrink-0 text-sm text-gray-500">
         {filteredAttendees.length} attendee
         {filteredAttendees.length !== 1 ? "s" : ""} found
       </div>
