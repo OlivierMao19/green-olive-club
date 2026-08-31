@@ -115,15 +115,10 @@ export default function EventsCalendar({ isAdmin = false }) {
                 />
               ))}
               <Dialog open={attendeesOpen} onOpenChange={setAttendeesOpen}>
-                <DialogContent className="flex max-h-[85vh] flex-col overflow-hidden p-2 md:max-w-[800px]">
+                <DialogContent className="flex max-h-[92vh] flex-col overflow-hidden p-2 md:max-w-[960px]">
                   <DialogHeader className="shrink-0 p-6 pb-2">
                     <DialogTitle className="text-xl font-semibold text-emerald-900">
-                      <div>
-                        Attendees for {currentEvent ? currentEvent.title : ""}
-                        <p className="text-sm text-gray-600 md:hidden">
-                          Flip screen for all details
-                        </p>
-                      </div>
+                      Attendees for {currentEvent ? currentEvent.title : ""}
                     </DialogTitle>
                   </DialogHeader>
                   <div className="min-h-0 flex-1 overflow-y-auto p-6 pt-2">

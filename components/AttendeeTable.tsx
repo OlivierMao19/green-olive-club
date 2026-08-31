@@ -9,8 +9,11 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Search, ArrowUpDown } from "lucide-react";
 import type { CustomField } from "@/lib/customFields";
+
+type AttendeeViewMode = "full" | "compact";
 
 interface AttendeeTableProps {
   eventId: string;
@@ -31,6 +34,7 @@ type SortableKey = keyof Attendee | `custom:${string}`;
 
 export default function AttendeeTable({ eventId }: AttendeeTableProps) {
   const [searchTerm, setSearchTerm] = useState("");
+  const [viewMode, setViewMode] = useState<AttendeeViewMode>("full");
   const [sortConfig, setSortConfig] = useState<{
     key: SortableKey;
     direction: "ascending" | "descending";
@@ -153,9 +157,12 @@ export default function AttendeeTable({ eventId }: AttendeeTableProps) {
     setSortConfig({ key, direction });
   };
 
+  const scrollAreaClassName =
+    "max-h-[min(29rem,60vh)] overflow-auto overscroll-contain rounded-md border";
+
   return (
     <div className="w-full animate-scale-in">
-      <div className="flex items-center mb-4">
+      <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center">
         <div className="relative flex-1">
           <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500" />
           <Input
@@ -166,10 +173,38 @@ export default function AttendeeTable({ eventId }: AttendeeTableProps) {
             className="pl-9"
           />
         </div>
+        <Tabs
+          value={viewMode}
+          onValueChange={(value) => setViewMode(value as AttendeeViewMode)}
+        >
+          <TabsList className="h-9 w-full sm:w-auto">
+            <TabsTrigger value="full" className="flex-1 sm:flex-none">
+              Full
+            </TabsTrigger>
+            <TabsTrigger value="compact" className="flex-1 sm:flex-none">
+              Compact
+            </TabsTrigger>
+          </TabsList>
+        </Tabs>
       </div>
 
       {sortedAttendees.length > 0 ? (
-        <div className="max-h-[min(24rem,50vh)] overflow-auto overscroll-contain rounded-md border">
+        viewMode === "compact" ? (
+          <div className={scrollAreaClassName}>
+            <ul className="grid grid-cols-2 gap-2 p-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+              {sortedAttendees.map((attendee) => (
+                <li
+                  key={attendee.id}
+                  className="truncate rounded-md border border-emerald-100 bg-emerald-50/50 px-2.5 py-2 text-sm font-medium text-emerald-950"
+                  title={attendee.name}
+                >
+                  {attendee.name}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ) : (
+        <div className={scrollAreaClassName}>
           <Table>
             <TableHeader className="sticky top-0 z-10 bg-background [&_th]:bg-background">
               <TableRow>
@@ -289,6 +324,7 @@ export default function AttendeeTable({ eventId }: AttendeeTableProps) {
             </TableBody>
           </Table>
         </div>
+        )
       ) : (
         <div className="text-center py-8 border rounded-md">
           <p className="text-gray-500">No attendees found</p>
