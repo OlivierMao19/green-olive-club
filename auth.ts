@@ -23,7 +23,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     verifyRequest: "/login/verify-request",
   },
   providers: [
-    GitHub,
+    GitHub({
+      clientId: process.env.AUTH_GITHUB_ID!,
+      clientSecret: process.env.AUTH_GITHUB_SECRET!,
+      issuer: "https://github.com/login/oauth",
+    }),
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
