@@ -80,9 +80,9 @@ export const helpersList: ExecutiveInfo[] = [
     role: "Junior Developer",
     email: "olivier.mao@mail.mcgill.ca",
     phone: "514-298-0081",
-    imagePath: "logo.png",
+    imagePath: "OlivierBadmintonGreenolive.jpeg",
     description:
-"As a former competitive badminton athlete and experienced coach, I bring a strong background in the sport and a passion for sharing it with the GOCCC community. I help bring badminton events and services to the club, while also contributing my technical skills to the creation and development of the GOCCC website.",
+"As a former national competitive badminton athlete and experienced coach, I bring a strong background in the sport and a passion for sharing it with the GOCCC community. I help bring badminton events and services to the club, while also contributing my technical skills to the creation and development of the GOCCC website.",
   },
 ];
 
