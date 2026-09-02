@@ -82,7 +82,7 @@ export const helpersList: ExecutiveInfo[] = [
     phone: "514-298-0081",
     imagePath: "logo.png",
     description:
-      "As a former competitive badminton athlete and current coach, I bring years of experience in the sport to the GOCCC community. Through the club, I hope to help organize badminton events and offer badminton-related services for members of all levels. I also assisted with the creation and development of the GOCCC website, helping build a space where our community can stay connected and discover upcoming activities.",
+"As a former competitive badminton athlete and experienced coach, I bring a strong background in the sport and a passion for sharing it with the GOCCC community. I help bring badminton events and services to the club, while also contributing my technical skills to the creation and development of the GOCCC website.",
   },
 ];
 
